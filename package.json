@@ -1,0 +1,24 @@
+{
+  "name": "fantasyrealmfront",
+  "version": "1.0.0",
+  "description": "Ce site est un site vitrine pour FantasyRealm Online",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nedirjasmine302-bit/FantasyRealmFront.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nedirjasmine302-bit/FantasyRealmFront/issues"
+  },
+  "homepage": "https://github.com/nedirjasmine302-bit/FantasyRealmFront#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.8"
+  }
+}

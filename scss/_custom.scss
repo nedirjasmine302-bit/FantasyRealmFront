@@ -3,6 +3,26 @@
 
 // Include any default variables overrides here (though functions won't be available)
 
+// couleurs principales
+$primary: #6F8CFF;
+$secondary: #B07CFF;
+
+// couleurs sombres
+$dark: #1A213D;
+$black: #0B0F1F;
+
+// couleurs des cards
+$card-bg-primary: #222B4A;    
+$card-bg-secondary: #13172A;  
+
+// couleurs d'état
+$success: #3ED598;
+$danger: #E25353;
+$warning: #F5B942;
+
+$font-family-sans-serif: "Alegreya", sans-serif !default;
+$font-family-serif: "Cinzel", serif !default;
+
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 

@@ -54,3 +54,4 @@ window.onpopstate = LoadContentPage;
 window.route = routeEvent;
 // Chargement du contenu de la page au chargement initial
 LoadContentPage();
+

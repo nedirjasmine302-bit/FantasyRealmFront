@@ -1,2 +1,99 @@
 @import url("/node_modules/bootstrap-icons/font/bootstrap-icons.css");
 @import 'custom';
+
+
+html {
+  font-size: 16px; /* base desktop */
+}
+
+
+.navbar, h1, footer{
+    background-color: $dark;
+    border-bottom: none;
+}
+
+
+/* Navbar */ 
+
+.navbar {
+    display: flex;                   /* aligne logo + menu sur la même ligne */
+    justify-content: space-between; /* logo à gauche, menu à droite */
+    align-items: center;           /* centre verticalement logo et menu */
+    padding: 1rem;                /* au lieu de 15px */
+}
+
+
+.logo a {
+    font-size: 2rem;      /* 32px */ 
+    font-weight: bold;
+    letter-spacing: 0.04rem;       /* 4% → 0.04rem */
+    font-family: $font-family-serif;
+    text-decoration: none;
+    -webkit-text-stroke: 0.5px white;
+    text-shadow: 0px 6px 4px rgba(0, 0, 0, 0.50);
+
+    background: linear-gradient(to right, $primary, $secondary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.menu {
+    display: flex;                /* transforme la liste en ligne */
+    gap: 1.5rem;                  /* espace entre chaque lien */
+    list-style: none;             /* supprime les puces */
+    margin: 0;
+    padding: 0;
+}
+
+
+.menu a{
+    text-decoration: none;
+    color: white;
+    font-family: $font-family-serif;
+    font-size: 0.9375rem;         /* 15px */
+}
+
+
+/* Footer */
+
+.footer{
+    display: flex;             /* active flexbox sur le footer */
+    flex-direction: column;    /* organise les enfants en colonne */
+    align-items: center;       /* centre horizontalement */
+    justify-content: center;   /* centre verticalement si nécessaire */
+    padding: 2rem;             /* au lieu de 30px */
+}
+.footer p {
+    color: white;
+    font-family: $font-family-sans-serif;
+    font-size: 0.9375rem;       /* 15px */
+    text-align: center;
+}
+
+/* Conteneur des liens */
+.footer-links {
+    color: white;
+    display: flex;              /* active le flexbox sur le conteneur */
+    justify-content: center;    /* centre les liens horizontalement */
+    gap: 0.625rem;                  /* 10px - espace entre chaque lien */
+}
+
+/* Styles pour chaque lien */
+.footer-links a {
+    color: $primary;
+    text-decoration: none;
+    font-size: 0.9375rem;   /* 15px */
+}
+
+.footer-links a:hover{
+    color: $secondary;
+    text-decoration: underline
+}
+
+
+
+
+
+
+
+

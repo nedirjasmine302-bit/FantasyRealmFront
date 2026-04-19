@@ -18,27 +18,25 @@ const getRouteByUrl = (url) => {
     return route404;
   }
 };
-// Fonction pour charger le contenu de la page
+
+
 const LoadContentPage = async () => {
   const path = window.location.pathname;
-  // Récupération de l'URL actuelle
   const actualRoute = getRouteByUrl(path);
-  // Récupération du contenu HTML de la route
+
   const html = await fetch(actualRoute.pathHtml).then((data) => data.text());
-  // Ajout du contenu HTML à l'élément avec l'ID "main-page"
   document.getElementById("main-page").innerHTML = html;
-  // Ajout du contenu JavaScript
+
   if (actualRoute.pathJS != "") {
-    // Création d'une balise script
     var scriptTag = document.createElement("script");
-    scriptTag.setAttribute("type", "text/javascript");
-    scriptTag.setAttribute("src", actualRoute.pathJS);
-    // Ajout de la balise script au corps du document
-    document.querySelector("body").appendChild(scriptTag);
+    scriptTag.src = actualRoute.pathJS;
+    document.body.appendChild(scriptTag);
   }
-  // Changement du titre de la page
+
   document.title = actualRoute.title + " - " + websiteName;
 };
+
+
 // Fonction pour gérer les événements de routage (clic sur les liens)
 const routeEvent = (event) => {
   event = event || window.event;
@@ -54,4 +52,3 @@ window.onpopstate = LoadContentPage;
 window.route = routeEvent;
 // Chargement du contenu de la page au chargement initial
 LoadContentPage();
-

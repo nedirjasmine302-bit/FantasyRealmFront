@@ -1,0 +1,23 @@
+// Scrollbar globale 
+::-webkit-scrollbar {
+  width: 11px;
+}
+
+// Fond 
+::-webkit-scrollbar-track {
+  background: #04050a; 
+}
+
+// Barre 
+::-webkit-scrollbar-thumb {
+  background: #0f2a4d; 
+  border-radius: 999px;
+  border: 2px solid #05060b;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+// Hover 
+::-webkit-scrollbar-thumb:hover {
+  background: #174070; 
+  box-shadow: 0 0 6px rgba(23, 64, 112, 0.45);
+}

@@ -1,0 +1,23 @@
+// Couleurs principales
+$primary: #6F8CFF;
+$secondary: #B07CFF;
+
+// Couleurs sombres
+$dark: #1A213D;
+$black: #0B0F1F;
+
+// Couleurs des cards
+$card-bg-primary: #222B4A;    
+$card-bg-secondary: #13172A;  
+
+// Couleurs d'état
+$success: #3ED598;
+$danger: #E25353;
+$warning: #F5B942;
+
+// Typographies
+$font-family-sans-serif: "Nunito", sans-serif !default;
+$font-family-serif: "Cinzel", serif !default;
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+

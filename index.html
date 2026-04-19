@@ -4,52 +4,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>FantasyRealm Online</title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="scss/main.css"/>
+  <!-- Styles -->
+  <link rel="stylesheet" href="scss/main.css" />
 
-  <!-- Google Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family=Cinzel:wght@400..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 
   <!-- Scripts -->
+  <script src="./assets/js/main.js" defer></script>
   <script type="module" src="./Router/router.js"></script>
   <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
 </head>
 
+
 <body>
+  <header>
+    <nav class="navbar">
+      <h1 class="logo">
+        <a href="/">FantasyRealm Online</a>
+      </h1>
 
-<header>
-  <nav class="navbar">
-    <h1 class="logo"><a href="/">FantasyRealm Online</a></h1>
+      <button class="burger" onclick="toggleMenu()">
+        <i class="bi bi-list"></i>
+      </button>
 
-    <ul class="menu">
-      <li><a href="/">Accueil</a></li>
-      <li><a href="contact.html">Personnages</a></li>
-      <li><a href="contact.html">Contacts</a></li>
-      <li><a href="contact.html">Gestion</a></li>
-      <li><a href="contact.html">Mon Espace</a></li>
-      <li><a href="login.html">Connexion/Déconnexion</a></li>
-    </ul>
-  </nav>
-</header>
+      <ul class="menu">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="contact.html">Personnages</a></li>
+        <li><a href="contact.html">Contacts</a></li>
+        <li><a href="contact.html">Gestion</a></li>
+        <li><a href="contact.html">Mon Espace</a></li>
+        <li><a href="login.html">Connexion/Déconnexion</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<main id="main-page">
-  <!--Le contenu de la page sera injectée ici-->
-</main>
 
-<footer class="footer">
-  <p>© 2026 PixelVerse Studios - Tous droits réservés</p>
-  <p>FantasyRealm Online - Système de gestion de personnages</p>
+  <main class="main" id="main-page">
+    <!-- Le contenu des pages sera injecté ici -->
+  </main>
 
-  <div class="footer-links">
-    <a href="#">Mentions légales</a> |
-    <a href="#">Conditions Générales de Vente</a> |
-    <a href="#">Politique de confidentialité</a>
-  </div>
-</footer>
 
+  <footer class="footer">
+    <p>© 2026 PixelVerse Studios - Tous droits réservés</p>
+    <p>FantasyRealm Online - Système de gestion de personnages</p>
+
+    <div class="footer-links">
+      <a href="#">Mentions légales</a>
+      <span>|</span>
+      <a href="#">Conditions Générales de Vente</a>
+      <span>|</span>
+      <a href="#">Politique de confidentialité</a>
+    </div>
+  </footer>
 </body>
 </html>

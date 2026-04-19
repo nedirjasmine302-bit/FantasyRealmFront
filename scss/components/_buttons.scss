@@ -16,3 +16,19 @@
     box-shadow: 0 6px 20px rgba(0,0,0,0.6);
   }
 }
+
+.btn-primary {
+  background-color: $primary;
+
+  &:hover {
+    background-color: darken($primary, 3%);
+  }
+}
+
+.btn-secondary {
+  background-color: $secondary;
+
+  &:hover {
+    background-color: darken($secondary, 3%);
+  }
+}

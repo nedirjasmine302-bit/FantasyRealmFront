@@ -1,17 +1,24 @@
-@import url("/node_modules/bootstrap-icons/font/bootstrap-icons.css");
+// Abstracts 
+@import "abstracts/variables";
+@import "abstracts/mixins";
 
-@import "base/custom";
-@import "base/mixins";        // ← TA MIXIN DOIT ÊTRE ICI
+// Vendors 
+@import "vendor/bootstrap";
+@import "vendor/icons";
+
+// Base 
 @import "base/root";
-@import "base/variables";
+@import "base/animations";
+@import "base/reset";
 
-@import "components/animations";
-@import "components/scrollbar";
+// Layout 
+@import "layout/header";
+@import "layout/footer";
+
+// Components 
 @import "components/buttons";
+@import "components/scrollbar";
 @import "components/hero";
 
-
-@import "layout/footer";
-@import "layout/header";
-
+// Pages
 @import "pages/home";

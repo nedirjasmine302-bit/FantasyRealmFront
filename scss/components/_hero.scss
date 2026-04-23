@@ -11,7 +11,7 @@
   &::before {
     @include abs.pseudo-base(1);
     inset: 0;
-    background: url('../images/font-hero.jpg') center/cover no-repeat;
+    background: url('../images/fond-hero.webp') center/cover no-repeat;
     opacity: 0.4;
   }
 

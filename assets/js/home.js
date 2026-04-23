@@ -1,4 +1,4 @@
-// Pour afficher les animations
+// Animation d'apparition des éléments de la page au scroll
 function initReveal() {
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {

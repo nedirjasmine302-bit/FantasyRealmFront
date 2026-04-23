@@ -12278,7 +12278,7 @@ footer {
   position: absolute;
   z-index: 1;
   inset: 0;
-  background: url("../images/font-hero.jpg") center/cover no-repeat;
+  background: url("../images/fond-hero.webp") center/cover no-repeat;
   opacity: 0.4;
 }
 .hero .container {
@@ -12421,7 +12421,7 @@ footer {
   height: calc(100% - 2rem);
   transform: translateX(-50%);
   border-radius: 0.3rem;
-  background: url("../images/font-presentation.jpg") center/cover no-repeat;
+  background: url("../images/fond-presentation.webp") center/cover no-repeat;
   opacity: 0.7;
   transition: transform 0.45s ease, opacity 0.45s ease;
 }

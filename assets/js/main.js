@@ -1,4 +1,14 @@
 // Animation du burger
+// Le click
+function initBurger() {
+  const burger = document.querySelector(".burger");
+
+  burger.addEventListener("click", () => {
+    toggleMenu();
+  });
+}
+
+// Ouvrir/Fermer
 function toggleMenu() {
   const menu = document.querySelector(".menu");
   const navbar = document.querySelector(".navbar");
@@ -17,3 +27,7 @@ function toggleMenu() {
     navbar.classList.add("menu-open");
   }
 }
+
+
+// Lance le js de la page Home quand elle est chargée
+initBurger();

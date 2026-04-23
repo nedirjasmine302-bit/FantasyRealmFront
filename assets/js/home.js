@@ -40,7 +40,7 @@ function initAboutTilt() {
 
 // Animation des cards 
 // Le click
-const initCards = () => {
+function initCards() {
   const cards = document.querySelectorAll(".card-box");
 
   cards.forEach(card => {
@@ -51,7 +51,7 @@ const initCards = () => {
 };
 
 // Ouvrir/Fermer
-const toggleCard = (card) => {
+function toggleCard(card) {
   const item = card.parentElement;
   const detail = card.nextElementSibling;
   const icon = card.querySelector(".toggle");
@@ -87,8 +87,8 @@ const toggleCard = (card) => {
 };
 
 
-// Lance les animations quand la page Home est chargée
-  initCards();
+// Lance le js de la page Home quand elle est chargée
   initReveal();
   initAboutTilt();
+  initCards();
 

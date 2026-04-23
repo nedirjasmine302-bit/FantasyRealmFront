@@ -1,10 +1,13 @@
+@use "../abstracts/all" as abs;
+
+
 .main {
-  background-color: $black;
+  background-color: abs.$black;
 }
 
 .navbar,
 footer {
-  background-color: $dark;
+  background-color: abs.$dark;
   border-bottom: none;
 }
 
@@ -17,7 +20,7 @@ footer {
 
 .logo,
 .logo a {
-  @include logo-style(2rem);
+  @include abs.logo-style(2rem);
 }
 
 .navbar .logo {
@@ -38,7 +41,7 @@ footer {
 
 .menu a {
   text-decoration: none;
-  @include text-style(0.93rem, $font-family-serif);
+  @include abs.text-style(0.93rem, abs.$font-family-serif);
 }
 
 .burger {
@@ -49,7 +52,7 @@ footer {
   font-size: 2rem;
   cursor: pointer;
   padding: 0.3rem;
-  @include anim-transition(transform);
+  @include abs.anim-transition(transform);
 
   &:hover {
     transform: scale(1.1);
@@ -109,7 +112,7 @@ footer {
     transform: translateY(0);
 
     max-height: 260px;
-    background: $dark;
+    background: abs.$dark;
 
     li {
       animation: fadeInUp 0.7s forwards;
@@ -151,7 +154,7 @@ footer {
   }
 
   .menu a {
-    @include text-style(0.9rem, $font-family-serif);
+    @include abs.text-style(0.9rem, abs.$font-family-serif);
   }
 
   // Animations

@@ -1,6 +1,6 @@
 // Pour afficher les animations
 function initReveal() {
-  const observer = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("show");
@@ -8,9 +8,11 @@ function initReveal() {
     });
   });
 
-  document.querySelectorAll(".fade-up, .scale-in, .blur-in")
-    .forEach(el => observer.observe(el));
+  const elements = document.querySelectorAll(".fade-up, .scale-in, .blur-in");
+
+  elements.forEach(el => observer.observe(el));
 }
+
 
 // Animation de l'image (Section: About)
 function initAboutTilt() {
@@ -35,41 +37,58 @@ function initAboutTilt() {
   });
 }
 
-// Animation des cards (ouvrir/fermer)
-function toggleCard(card) {
+
+// Animation des cards 
+// Le click
+const initCards = () => {
+  const cards = document.querySelectorAll(".card-box");
+
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      toggleCard(card);
+    });
+  });
+};
+
+// Ouvrir/Fermer
+const toggleCard = (card) => {
   const item = card.parentElement;
-  item.classList.toggle("open");
-
-  const allCards = document.querySelectorAll(".feature-card");
-  const allDetails = document.querySelectorAll(".feature-detail");
-
-  allCards.forEach(c => {
-    if (c !== card) {
-      c.parentElement.classList.remove("open");
-      c.classList.remove("active");
-      const icon = c.querySelector(".toggle");
-      icon.classList.remove("bi-dash");
-      icon.classList.add("bi-plus");
-    }
-  });
-
-  allDetails.forEach(d => {
-    if (d !== card.nextElementSibling) {
-      d.classList.remove("show");
-    }
-  });
-
   const detail = card.nextElementSibling;
   const icon = card.querySelector(".toggle");
+  const allItems = document.querySelectorAll(".card-item");
 
+  allItems.forEach(otherItem => {
+    if (otherItem !== item) {
+      otherItem.classList.remove("open");
+
+      const otherBox = otherItem.querySelector(".card-box");
+      const otherDetail = otherItem.querySelector(".card-detail");
+      const otherIcon = otherItem.querySelector(".toggle");
+
+      otherBox.classList.remove("active");
+      otherDetail.classList.remove("show");
+
+      otherIcon.classList.remove("bi-dash");
+      otherIcon.classList.add("bi-plus");
+    }
+  });
+
+  item.classList.toggle("open");
   card.classList.toggle("active");
   detail.classList.toggle("show");
 
-  icon.classList.toggle("bi-plus", !card.classList.contains("active"));
-  icon.classList.toggle("bi-dash", card.classList.contains("active"));
-}
+  if (card.classList.contains("active")) {
+    icon.classList.remove("bi-plus");
+    icon.classList.add("bi-dash");
+  } else {
+    icon.classList.remove("bi-dash");
+    icon.classList.add("bi-plus");
+  }
+};
+
 
 // Lance les animations quand la page Home est chargée
+  initCards();
   initReveal();
   initAboutTilt();
 

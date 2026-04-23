@@ -1,18 +1,21 @@
+@use "../abstracts/all" as abs;
+
+
 // Section: Hero 
 .hero {
 
   h1.logo {
-    @include logo-style(2.6rem);
+    @include abs.logo-style(2.6rem);
     margin-bottom: 0.1rem;
   }
 
   .lien {
-    @include text-style(0.9rem);
+    @include abs.text-style(0.9rem);
     margin-bottom: 3rem;
   }
 
   .hero-description {
-    @include text-style();
+    @include abs.text-style();
     max-width: 80rem;
     margin: 0 auto 1.5rem auto;
     margin-bottom: 1.2rem;
@@ -32,7 +35,7 @@
   }
 
   h2 {
-    @include text-style(1.7rem, $font-family-serif);
+    @include abs.text-style(1.7rem, abs.$font-family-serif);
     color: white;
   }
 
@@ -59,9 +62,9 @@
     flex-shrink: 0;
 
     &::before {
-      @include pseudo-base(1);
+      @include abs.pseudo-base(1);
       inset: -0.3rem;
-      background: $secondary;
+      background: abs.$secondary;
       opacity: 0.22;
       border-radius: 0.5rem;
       transform: rotate(-3deg);
@@ -90,17 +93,17 @@
     z-index: 2;
     transform-style: preserve-3d;
     transform: scale(1);
-    @include anim-transition(transform, .25s);
+    @include abs.anim-transition(transform, .25s);
   }
 
   .about-title {
-    @include title-style();
+    @include abs.title-style();
     margin: 0 0 1.5rem 0;
     justify-self: center;
   }
 
   .about-text {
-    @include text-style();
+    @include abs.text-style();
     max-width: 30rem;
 
     p {
@@ -117,10 +120,10 @@
   position: relative;
   padding: 4.5rem 1.5rem;
   text-align: center;
-  @include anim-transition(transform, .5s);
+  @include abs.anim-transition(transform, .5s);
 
   &::before {
-    @include pseudo-base(0);
+    @include abs.pseudo-base(0);
     top: 1rem;
     left: 50%;
     width: 85%;
@@ -133,7 +136,7 @@
   }
 
   &::after {
-    @include pseudo-base(1);
+    @include abs.pseudo-base(1);
     top: 2.5rem;
     left: 50%;
     width: 70%;
@@ -161,13 +164,13 @@
   }
 
   .presentation-title {
-    @include title-style();
+    @include abs.title-style();
     max-width: 70%;
     margin: 0 auto 2.5rem auto;
   }
 
   p {
-    @include text-style();
+    @include abs.text-style();
     max-width: 60%;
     margin: 1.6rem auto;
     line-height: 1.6rem;
@@ -182,7 +185,7 @@
   padding-bottom: 10.7rem;
 
   .cards-title {
-    @include title-style();
+    @include abs.title-style();
     max-width: 97%;
     margin: 0 auto 3.5rem;
   }
@@ -202,7 +205,7 @@
     position: relative;
 
     &::before {
-      @include pseudo-base(0);
+      @include abs.pseudo-base(0);
       top: 0.8rem;
       left: 0.8rem;
       width: calc(100% - 1.6rem);
@@ -213,7 +216,7 @@
         rgba(80,120,255,0.25),
         rgba(150,80,255,0.25)
       );
-      @include anim-transition();
+      @include abs.anim-transition();
     }
 
     &:hover::before {
@@ -225,7 +228,7 @@
     }
 
     &:hover .card-box {
-      background-color: darken($secondary, 3%);
+      background-color: darken(abs.$secondary, 3%);
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(0,0,0,0.6);
     }
@@ -239,20 +242,20 @@
 
   .card-box {
     position: relative;
-    background-color: $primary;
+    background-color: abs.$primary;
     color: white;
     padding: 0.9rem 1.7rem;
     border-radius: 0.6rem;
     cursor: pointer;
     text-align: center;
     z-index: 2;
-    @include anim-transition();
+    @include abs.anim-transition();
 
     box-shadow: 0 4px 15px rgba(0,0,0,0.25);
 
     &:hover {
       transform: none;
-      background-color: $primary;
+      background-color: abs.$primary;
       box-shadow: none;
     }
 
@@ -287,7 +290,7 @@
     }
 
     &.active {
-      background-color: $secondary;
+      background-color: abs.$secondary;
     }
   }
 
@@ -316,7 +319,7 @@
     }
 
     &::before {
-      @include pseudo-base(1);
+      @include abs.pseudo-base(1);
       inset: 0;
       background: rgba(176, 124, 255, 0.7);
     }
@@ -327,8 +330,8 @@
     }
 
     p {
-      @include text-style();
-      max-width: 20rem;
+      @include abs.text-style();
+      max-width: 18rem;
       margin: 0 auto;
       line-height: 1.6rem;
     }
@@ -345,7 +348,7 @@
   justify-content: center;
   padding: 5rem 2rem;
   overflow: visible;
-  @include anim-transition(transform, .45s);
+  @include abs.anim-transition(transform, .45s);
 
   &:hover {
     transform: translateY(-8px);
@@ -395,23 +398,23 @@
   }
 
   .cta-title {
-    @include title-style(1.8rem);
+    @include abs.title-style(1.8rem);
     margin-bottom: 0;
   }
 
   .cta-text {
-    @include text-style();
+    @include abs.text-style();
     max-width: 24rem;
     margin: 1rem auto;
     line-height: 1.8rem;
 
     a.btn {
       @extend .btn;
-      background-color: $secondary;
+      background-color: abs.$secondary;
       margin-top: 1.5rem;
 
       &:hover {
-        background-color: darken($secondary, 3%);
+        background-color: darken(abs.$secondary, 3%);
       }
     }
   }
@@ -461,8 +464,8 @@
   .hero {
     h2 { font-size: 1.5rem; }
     h1.logo { font-size: 2.4rem; }
-    .lien { @include text-style(0.8rem); }
-    .hero-description { @include text-style(1rem); }
+    .lien { @include abs.text-style(0.8rem); }
+    .hero-description { @include abs.text-style(1rem); }
 
     .hero-buttons {
       gap: 6rem;
@@ -485,22 +488,22 @@
     }
 
     .about-title {
-      @include title-style(1.9rem);
+      @include abs.title-style(1.9rem);
     }
 
     .about-text {
-      @include text-style(1rem);
+      @include abs.text-style(1rem);
     }
   }
 
   // Section: Presentation
   .presentation {
     .presentation-title {
-      @include title-style(1.9rem);
+      @include abs.title-style(1.9rem);
     }
 
     p {
-      @include text-style(1rem);
+      @include abs.text-style(1rem);
       line-height: 1.4rem;
     }
   }
@@ -516,7 +519,7 @@
     }
 
     .cards-title {
-      @include title-style(1.9rem);
+      @include abs.title-style(1.9rem);
     }
 
     .card-box {
@@ -531,7 +534,7 @@
     }
 
     .cta-text {
-      @include text-style(1rem);
+      @include abs.text-style(1rem);
     }
 
     a.btn {
@@ -570,9 +573,9 @@
 
   // Section: Hero
   .hero {
-    h2 { @include text-style(1.3rem); }
+    h2 { @include abs.text-style(1.3rem); }
     h1.logo { font-size: 2.2rem; }
-    .lien { @include text-style(0.7rem); }
+    .lien { @include abs.text-style(0.7rem); }
 
     .hero-description {
       font-size: 1rem;
@@ -639,7 +642,7 @@
     }
 
     .cta-title {
-      @include title-style(1.5rem);
+      @include abs.title-style(1.5rem);
       margin-bottom: 0.5rem;
     }
 
@@ -651,7 +654,7 @@
     a.btn {
       width: 12rem;
       height: 2.3rem;
-      @include text-style(0.9rem);
+      @include abs.text-style(0.9rem);
       margin-top: 1rem;
     }
   }

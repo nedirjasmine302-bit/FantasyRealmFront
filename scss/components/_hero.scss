@@ -1,3 +1,6 @@
+@use "../abstracts/all" as abs;
+
+
 .hero {
   position: relative;
   display: flex;
@@ -6,7 +9,7 @@
   padding: 4.5rem 1rem 2rem 1rem;
 
   &::before {
-    @include pseudo-base(1);
+    @include abs.pseudo-base(1);
     inset: 0;
     background: url('../images/font-hero.jpg') center/cover no-repeat;
     opacity: 0.4;

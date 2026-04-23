@@ -1,3 +1,6 @@
+@use "../abstracts/all" as abs;
+
+
 .footer {
   display: flex;
   flex-direction: column;
@@ -7,7 +10,7 @@
 }
 
 .footer p {
-  @include text-style(0.9rem);
+  @include abs.text-style(0.9rem);
 }
 
 .footer-links {
@@ -16,7 +19,7 @@
   align-items: center;
   gap: 0.6rem;
   margin-right: 0.6rem;
-  @include text-style(0.93rem);
+  @include abs.text-style(0.93rem);
 }
 
 .footer-links a {
@@ -24,11 +27,11 @@
   justify-content: center;
   flex-wrap: nowrap;
   text-decoration: none;
-  @include text-style(0.93rem, $font-family-sans-serif, $primary);
+  @include abs.text-style(0.93rem, abs.$font-family-sans-serif, abs.$primary);
 }
 
 .footer-links a:hover {
-  color: $secondary;
+  color: abs.$secondary;
   text-decoration: underline;
 }
 

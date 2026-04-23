@@ -1,24 +1,23 @@
-// Abstracts 
-@import "abstracts/variables";
-@import "abstracts/mixins";
+// Abstracts (design system)
+@use "abstracts/all";
 
-// Vendors 
-@import "vendor/bootstrap";
-@import "vendor/icons";
+// Vendors
+@use "vendor/bootstrap";
+@use "vendor/icons";
 
-// Base 
-@import "base/root";
-@import "base/animations";
-@import "base/reset";
+// Base
+@use "base/root";
+@use "base/animations";
+@use "base/reset";
 
-// Layout 
-@import "layout/header";
-@import "layout/footer";
+// Layout
+@use "layout/header";
+@use "layout/footer";
 
-// Components 
-@import "components/buttons";
-@import "components/scrollbar";
-@import "components/hero";
+// Components
+@use "components/buttons";
+@use "components/scrollbar";
+@use "components/hero";
 
 // Pages
-@import "pages/home";
+@use "pages/home";

@@ -1,3 +1,6 @@
+@use "../abstracts/variables" as var;
+
+
 // Pour les animations et transitions
 @mixin anim-transition($props: all, $time: .3s, $ease: ease) {
   transition: $props $time $ease;
@@ -15,13 +18,13 @@
   font-size: $size;
   font-weight: bold;
   letter-spacing: 0.04rem;
-  font-family: $font-family-serif;
+  font-family: var.$font-family-serif;
   text-decoration: none;
 
   -webkit-text-stroke: 0.5px white;
   text-shadow: 0px 6px 4px rgba(0, 0, 0, 0.5);
 
-  background: linear-gradient(to right, $primary, $secondary);
+  background: linear-gradient(to right, var.$primary, var.$secondary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -29,7 +32,7 @@
 //Pour les textes 
 @mixin text-style(
   $size: 1.1rem,
-  $family: $font-family-sans-serif,
+  $family: var.$font-family-sans-serif,
   $color: white,
   $align: center,
 ) {
@@ -42,9 +45,9 @@
 //Pour les titres 
 @mixin title-style(
   $size: 2rem,
-  $color: $secondary,
+  $color: var.$secondary,
   $align: center,
-  $family: $font-family-serif,
+  $family: var.$font-family-serif,
   $weight: bold
 ) {
   font-family: $family;

@@ -91,4 +91,3 @@ function toggleCard(card) {
   initReveal();
   initAboutTilt();
   initCards();
-

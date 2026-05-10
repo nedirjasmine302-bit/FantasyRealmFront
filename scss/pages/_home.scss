@@ -4,6 +4,11 @@
 // Section: Hero 
 .hero {
 
+  .container{
+    position: relative;
+    z-index: 2;
+  }
+
   h1.logo {
     @include abs.logo-style(2.6rem);
     margin-bottom: 0.1rem;

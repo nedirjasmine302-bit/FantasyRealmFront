@@ -12536,6 +12536,10 @@ footer {
     padding: 0 1rem;
   }
 }
+.hero .container {
+  position: relative;
+  z-index: 2;
+}
 .hero h1.logo {
   font-size: 2.6rem;
   font-weight: bold;

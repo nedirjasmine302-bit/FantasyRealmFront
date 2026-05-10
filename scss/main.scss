@@ -16,8 +16,10 @@
 
 // Components
 @use "components/buttons";
+@use "components/filters";
 @use "components/scrollbar";
 @use "components/hero";
 
 // Pages
 @use "pages/home";
+@use "pages/character";

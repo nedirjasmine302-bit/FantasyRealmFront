@@ -12519,6 +12519,9 @@ footer {
   .hero .hero-container {
     margin: 10rem 0;
   }
+  .hero .hero-subtitle {
+    padding: 0 1rem;
+  }
 }
 @media (max-width: 386px) {
   .hero .hero-title {

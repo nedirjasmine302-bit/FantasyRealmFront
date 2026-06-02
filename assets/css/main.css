@@ -12172,7 +12172,6 @@ footer {
   justify-content: center;
   padding: 2rem;
 }
-
 .footer p {
   font-family: "Nunito", sans-serif;
   font-size: 0.9rem;
@@ -12191,7 +12190,6 @@ footer {
   color: white;
   text-align: center;
 }
-
 .footer-links a {
   display: flex;
   justify-content: center;
@@ -12202,7 +12200,6 @@ footer {
   color: #6F8CFF;
   text-align: center;
 }
-
 .footer-links a:hover {
   color: #B07CFF;
   text-decoration: underline;

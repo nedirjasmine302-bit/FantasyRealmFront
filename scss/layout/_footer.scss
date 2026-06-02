@@ -7,10 +7,10 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-}
 
-.footer p {
-  @include abs.text-style(0.9rem);
+  p {
+    @include abs.text-style(0.9rem);
+  }
 }
 
 .footer-links {
@@ -20,20 +20,21 @@
   gap: 0.6rem;
   margin-right: 0.6rem;
   @include abs.text-style(0.93rem);
+
+  a {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    text-decoration: none;
+    @include abs.text-style(0.93rem, abs.$font-family-sans-serif, abs.$primary);
+
+    &:hover {
+      color: abs.$secondary;
+      text-decoration: underline;
+    }
+  }
 }
 
-.footer-links a {
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap;
-  text-decoration: none;
-  @include abs.text-style(0.93rem, abs.$font-family-sans-serif, abs.$primary);
-}
-
-.footer-links a:hover {
-  color: abs.$secondary;
-  text-decoration: underline;
-}
 
 // Responsive
 @media (max-width: 337px) {

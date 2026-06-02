@@ -20,6 +20,7 @@
 
     &:hover {
       transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
     }
 
     .info-box {
@@ -48,14 +49,7 @@
       position: absolute;
       top: 0.8rem;
       right: 1rem;
-      font-size: 1.6rem;
-      color: abs.$primary;
-      @include abs.anim-transition(color);
-      z-index: 3;
-
-      &.active {
-        color: abs.$primary;
-      }
+      @include abs.heart-icon();
     }
 
     .creator-tag {
@@ -110,13 +104,9 @@
 
       .heart {
         font-size: 1.4rem;
-        color: abs.$secondary;
+        color: abs.$primary;
         cursor: pointer;
         @include abs.anim-transition(color);
-
-        &:hover {
-          color: abs.$primary;
-        }
       }
     }
   }

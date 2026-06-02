@@ -35,3 +35,13 @@
     background-color: darken(abs.$secondary, 3%);
   }
 }
+
+.btn-ghost-secondary {
+  background-color: rgba(abs.$secondary, 0.2);
+  border: 1px solid abs.$secondary;
+
+  &:hover {
+    background-color: rgba(abs.$secondary, 0.30);
+    border: 1px solid abs.$secondary;
+  }
+}

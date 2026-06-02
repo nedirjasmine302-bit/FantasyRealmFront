@@ -56,3 +56,18 @@
   color: $color;
   text-align: $align;
 }
+
+//Pour les éléments qui sont désactivés
+@mixin state-disabled() {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(40%);
+}
+
+//Pour l’icône cœur
+@mixin heart-icon($size: 1.6rem) {
+  font-size: $size;
+  color: var.$primary;
+  cursor: pointer;
+  z-index: 3;
+}

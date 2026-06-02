@@ -1,0 +1,330 @@
+@use "../abstracts/all" as abs;
+
+
+// Section: Global layout
+.characters-layout {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.layout-container {
+  width: 100%;
+  max-width: 70rem;
+  padding: 0 6rem;
+  margin: 0 auto;
+}
+
+
+// Section: Top buttons
+.characters-top-actions {
+  margin-top: 4.5rem;
+  margin-bottom: 3rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .actions-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+}
+
+
+// Section: My characters
+.characters-section {
+  padding-top: 0;
+  padding-bottom: 4rem;
+
+  .characters-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+
+  .character-card {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1rem;
+    text-align: left;
+
+    width: 100%;
+    max-width: 60rem;
+    min-height: 15rem;
+    padding: 0.5rem;
+
+    background: abs.$card-bg-primary;
+    border-radius: 0.4rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+
+    @include abs.anim-transition(transform, 0.3s);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .character-img-wrapper {
+      width: 16rem;
+      height: 16rem;
+      background: abs.$dark;
+      border-radius: 0.3rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .character-img {
+      width: 160%;
+      height: auto;
+      position: absolute;
+      top: 2rem;
+      object-fit: cover;
+      object-position: 50% 20%;
+      transform: scale(1.1);
+    }
+
+    .character-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: flex-start;
+      height: 100%;
+      margin-top: 0.9rem;
+
+      .character-name {
+        @include abs.title-style(2.5rem, white, left);
+        margin-bottom: 0.3rem;
+      }
+
+      .card-buttons {
+        margin: 0.5rem 0;
+        align-self: flex-start;
+
+        .btn {
+          width: auto;
+          padding: 0 1rem;
+          height: 2.3rem;
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .card-actions {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: auto;
+      margin-right: 0.5rem;
+      align-self: flex-end;
+
+      @include abs.text-style(0.93rem);
+
+      a {
+        display: flex;
+        justify-content: center;
+        flex-wrap: nowrap;
+        text-decoration: none;
+
+        @include abs.text-style(
+          0.9rem,
+          abs.$font-family-sans-serif,
+          abs.$primary
+        );
+      }
+
+      span {
+        color: white;
+      }
+
+      a:nth-of-type(1):hover {
+        color: abs.$secondary;
+        text-decoration: underline;
+      }
+
+      a:nth-of-type(3):hover {
+        color: abs.$danger;
+        text-decoration: underline;
+      }
+    }
+
+    .fav-btn {
+      background: transparent;
+      border: none;
+      position: absolute;
+      top: 0.7rem;
+      right: 1rem;
+
+      .heart {
+        @include abs.heart-icon(1.8rem);
+      }
+    }
+
+    &:not(:has(.status-valid)) .heart {
+      opacity: 0.35;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    &:has(.status-valid) .heart {
+      opacity: 1;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    &:has(.status-pending),
+    &:has(.status-refused) {
+      .card-buttons .btn-secondary {
+        @include abs.state-disabled();
+      }
+    }
+
+    &:has(.card-buttons:first-of-type .btn-secondary)
+      .card-buttons:nth-of-type(2) .btn-secondary {
+      @include abs.state-disabled();
+    }
+  }
+
+  .character-card:has(.status-pending) .action-modifier,
+  .character-card:has(.status-pending) .action-dupliquer {
+    @include abs.state-disabled();
+  }
+
+  .character-card:has(.status-refused) .action-dupliquer {
+    @include abs.state-disabled();
+  }
+}
+
+
+// Responsive 
+@media (max-width: 650px) {
+
+  // Section: My characters
+  .characters-section {
+    .character-card {
+      align-items: flex-start;
+    }
+
+    .character-img-wrapper {
+      width: 14rem;
+      height: 14rem;
+      flex-shrink: 0;
+    }
+
+    .character-img {
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform: none;
+    }
+  }
+}
+
+
+@media (max-width: 540px) {
+
+  // Section: My characters
+  .characters-section {
+    .characters-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      width: 100%;
+      max-width: 60rem;
+      margin: 0 auto;
+      justify-items: center;
+    }
+
+    .character-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+      max-width: 19rem;
+
+      .character-img-wrapper {
+        width: 18rem;
+        margin-bottom: 1rem;
+      }
+
+      .character-content {
+        width: 100%;
+        margin: 0;
+        align-items: center;
+        text-align: center;
+
+        .character-name {
+          width: 100%;
+          text-align: center;
+        }
+
+        .card-buttons {
+          align-self: center;
+        }
+      }
+
+      .status {
+        margin: 0.3rem 0 0.6rem;
+      }
+
+      .card-actions {
+        margin-top: 1rem;
+        margin-right: 0;
+        align-self: center;
+        justify-content: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 470px) {
+
+  // Section: My characters
+  .characters-section {
+    .characters-container {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+
+@media (max-width: 426px) {
+
+  // Section: Global layout
+  .layout-container {
+    padding: 0 5rem;
+  }
+
+  // Section: Top buttons
+  .characters-top-actions {
+    .actions-wrapper {
+      a.btn {
+        width: 12rem;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 350px) {
+
+  // Section: Global layout
+  .layout-container {
+    padding: 0 3rem;
+  }
+}

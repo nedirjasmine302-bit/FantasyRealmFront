@@ -29,5 +29,14 @@ function toggleMenu() {
 }
 
 
+// Test
+export function toggleMenuForTest(state) {
+  state.open = !state.open;
+  return state;
+}
+
+
 // Lance le js de la page Home quand elle est chargée
+if (typeof window !== "undefined") {
 initBurger();
+}

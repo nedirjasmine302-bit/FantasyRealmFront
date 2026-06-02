@@ -155,9 +155,19 @@ function initHearts() {
 }
 
 
+// Test pour la fonction de filtrage des pseudos (pour l'autocomplete)
+export function filterPseudosForTest(list, query) {
+  return list.filter(p =>
+    p.toLowerCase().startsWith(query.toLowerCase())
+  );
+}
+
+
 // Lance le js de la page Home quand elle est chargée
+if (typeof window !== "undefined") {
 initReveal();
 initCustomSelects();
 initAutocomplete();
 initCharacters();
 initHearts();
+}

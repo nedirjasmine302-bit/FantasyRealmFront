@@ -29,6 +29,7 @@ const LoadContentPage = async () => {
 
   if (actualRoute.pathJS != "") {
     var scriptTag = document.createElement("script");
+    scriptTag.type = "module";
     scriptTag.src = actualRoute.pathJS;
     document.body.appendChild(scriptTag);
   }

@@ -87,7 +87,16 @@ function toggleCard(card) {
 };
 
 
+// Test
+export function toggleCardForTest(card) {
+  card.active = !card.active;
+  return card;
+}
+
+
 // Lance le js de la page Home quand elle est chargée
+if (typeof window !== "undefined") {
   initReveal();
   initAboutTilt();
   initCards();
+}

@@ -41,6 +41,16 @@ function initHearts() {
 }
 
 
+// Test 
+export function toggleFavoriteForTest(fav, name) {
+  return fav.includes(name)
+    ? fav.filter(f => f !== name)
+    : [...fav, name];
+}
+
+
 // Lance le js de la page Home quand elle est chargée
+if (typeof window !== "undefined") {
 initReveal();
 initHearts();
+}

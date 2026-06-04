@@ -14,11 +14,11 @@ function initReveal() {
 }
 
 
-// Favoris (MODE TEST // Besoin API)
+// Favoris (Données fictives // Besoin API)
 let favoris = [];
 
 
-// Gestion des cœurs (MODE TEST // Besoin API)
+// Gestion des cœurs (Données fictives // Besoin API)
 function initHearts() {
   document.addEventListener("click", (e) => {
     if (!e.target.classList.contains("heart")) return;

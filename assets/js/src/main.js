@@ -31,5 +31,5 @@ function toggleMenu() {
 
 // Lance le js de la page Home quand elle est chargée
 if (typeof window !== "undefined") {
-initBurger();
+  initBurger();
 }

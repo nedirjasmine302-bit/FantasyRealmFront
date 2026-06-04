@@ -40,7 +40,7 @@ function initCustomSelects() {
 }
 
 
-// Complète automatiquement le pseudo (MODE TEST // Besoin API)
+// Complète automatiquement le pseudo (Données fictives // Besoin API)
 function initAutocomplete() {
   const pseudos = [
     "Jasmine", "Jason", "Julien", "Jade",

@@ -40,7 +40,7 @@ function initCustomSelects() {
 }
 
 
-// Complète automatiquement le pseudo (MODE TEST // Besoin API)
+// Complète automatiquement le pseudo (Données fictives // Besoin API)
 function initAutocomplete() {
   const pseudos = [
     "Jasmine", "Jason", "Julien", "Jade",
@@ -82,7 +82,7 @@ function initAutocomplete() {
 }
 
 
-// Affichage des personnages (MODE TEST // Besoin API)
+// Affichage des personnages (Données fictives // Besoin API)
 function initCharacters() {
   const characters = [
     { name: "Aelyra", creator: "Little_moon", image: "../assets/images/page_character/Aelyra.webp" },
@@ -124,15 +124,15 @@ function initCharacters() {
 }
 
 
-// Utilisateur connecté (MODE TEST // Besoin API)
+// Utilisateur connecté (Données fictives // Besoin API)
 const isLoggedIn = true;
 
 
-// Favoris (MODE TEST // Besoin API)
+// Favoris (Données fictives // Besoin API)
 let favoris = [];
 
 
-// Gestion des cœurs (MODE TEST // Besoin API)
+// Gestion des cœurs (Données fictives // Besoin API)
 function initHearts() {
   document.addEventListener("click", (e) => {
     if (!e.target.classList.contains("heart")) return;
@@ -165,9 +165,9 @@ export function filterPseudosForTest(list, query) {
 
 // Lance le js de la page Home quand elle est chargée
 if (typeof window !== "undefined") {
-initReveal();
-initCustomSelects();
-initAutocomplete();
-initCharacters();
-initHearts();
+  initReveal();
+  initCustomSelects();
+  initAutocomplete();
+  initCharacters();
+  initHearts();
 }

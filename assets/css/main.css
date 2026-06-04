@@ -12251,6 +12251,145 @@ footer {
   border: 1px solid #B07CFF;
 }
 
+.characters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 270px);
+  justify-content: center;
+  column-gap: 4rem;
+  margin-top: 5rem;
+}
+.characters .character-card {
+  background: #1A213D;
+  padding: 1.2rem;
+  border-radius: 0.6rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45);
+  transition: transform 0.3s ease;
+  margin-bottom: 4rem;
+}
+.characters .character-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+.characters .character-card .info-box {
+  background: #222B4A;
+  padding: 0.8rem 0.8rem;
+  border-radius: 0.4rem;
+  margin-top: -0.5rem;
+  text-align: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+  z-index: 2;
+  position: relative;
+}
+.characters .character-card .info-box .details {
+  display: inline-block;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  color: #6F8CFF;
+  text-align: center;
+  text-decoration: none;
+}
+.characters .character-card .info-box .details:hover {
+  color: #B07CFF;
+  text-decoration: underline;
+}
+.characters .character-card .heart {
+  position: absolute;
+  top: 0.8rem;
+  right: 1rem;
+  font-size: 1.6rem;
+  color: #6F8CFF;
+  cursor: pointer;
+  z-index: 3;
+}
+.characters .character-card .creator-tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(176, 124, 255, 0.3);
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  backdrop-filter: blur(2px);
+  z-index: 3;
+}
+.characters .character-card .creator-tag i {
+  font-size: 1rem;
+}
+.characters .character-card .img-wrapper {
+  width: 100%;
+  height: 15rem;
+  overflow: hidden;
+  position: relative;
+}
+.characters .character-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% -10%;
+}
+.characters .character-card h3 {
+  font-family: "Cinzel", serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 0.3rem;
+}
+.characters .character-card .creator {
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  color: white;
+  text-align: center;
+  margin-top: 0.2rem;
+}
+.characters .character-card .card-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.characters .character-card .card-actions .heart {
+  font-size: 1.4rem;
+  color: #6F8CFF;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+@media (max-width: 1200px) {
+  .characters {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  .characters .character-card .img-wrapper {
+    height: 20rem;
+  }
+  .characters .character-card img {
+    object-position: 50% -5%;
+  }
+}
+@media (max-width: 857px) {
+  .characters {
+    grid-template-columns: repeat(auto-fit, 220px);
+  }
+  .characters .character-card .img-wrapper {
+    height: 24rem;
+  }
+  .characters .character-card img {
+    object-position: 50% -5%;
+  }
+}
+@media (max-width: 600px) {
+  .characters {
+    padding-left: 7rem;
+    padding-right: 7rem;
+  }
+}
 .filters {
   position: relative;
   z-index: 2;
@@ -13198,145 +13337,6 @@ footer {
   }
   .about .about-img {
     width: 17rem;
-  }
-}
-.characters {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 270px);
-  justify-content: center;
-  column-gap: 4rem;
-  margin-top: 5rem;
-}
-.characters .character-card {
-  background: #1A213D;
-  padding: 1.2rem;
-  border-radius: 0.6rem;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45);
-  transition: transform 0.3s ease;
-  margin-bottom: 4rem;
-}
-.characters .character-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-}
-.characters .character-card .info-box {
-  background: #222B4A;
-  padding: 0.8rem 0.8rem;
-  border-radius: 0.4rem;
-  margin-top: -0.5rem;
-  text-align: center;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
-  z-index: 2;
-  position: relative;
-}
-.characters .character-card .info-box .details {
-  display: inline-block;
-  font-family: "Nunito", sans-serif;
-  font-size: 0.9rem;
-  color: #6F8CFF;
-  text-align: center;
-  text-decoration: none;
-}
-.characters .character-card .info-box .details:hover {
-  color: #B07CFF;
-  text-decoration: underline;
-}
-.characters .character-card .heart {
-  position: absolute;
-  top: 0.8rem;
-  right: 1rem;
-  font-size: 1.6rem;
-  color: #6F8CFF;
-  cursor: pointer;
-  z-index: 3;
-}
-.characters .character-card .creator-tag {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  background: rgba(176, 124, 255, 0.3);
-  padding: 0.25rem 0.6rem;
-  border-radius: 0.4rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: white;
-  font-size: 0.85rem;
-  font-weight: 600;
-  backdrop-filter: blur(2px);
-  z-index: 3;
-}
-.characters .character-card .creator-tag i {
-  font-size: 1rem;
-}
-.characters .character-card .img-wrapper {
-  width: 100%;
-  height: 15rem;
-  overflow: hidden;
-  position: relative;
-}
-.characters .character-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% -10%;
-}
-.characters .character-card h3 {
-  font-family: "Cinzel", serif;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
-  text-align: center;
-  margin-bottom: 0.3rem;
-}
-.characters .character-card .creator {
-  font-family: "Nunito", sans-serif;
-  font-size: 0.9rem;
-  color: white;
-  text-align: center;
-  margin-top: 0.2rem;
-}
-.characters .character-card .card-actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.characters .character-card .card-actions .heart {
-  font-size: 1.4rem;
-  color: #6F8CFF;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-@media (max-width: 1200px) {
-  .characters {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-  .characters .character-card .img-wrapper {
-    height: 20rem;
-  }
-  .characters .character-card img {
-    object-position: 50% -5%;
-  }
-}
-@media (max-width: 857px) {
-  .characters {
-    grid-template-columns: repeat(auto-fit, 220px);
-  }
-  .characters .character-card .img-wrapper {
-    height: 24rem;
-  }
-  .characters .character-card img {
-    object-position: 50% -5%;
-  }
-}
-@media (max-width: 600px) {
-  .characters {
-    padding-left: 7rem;
-    padding-right: 7rem;
   }
 }
 .characters-layout {

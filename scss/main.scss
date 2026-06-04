@@ -16,6 +16,7 @@
 
 // Components
 @use "components/buttons";
+@use "components/card-character";
 @use "components/filters";
 @use "components/scrollbar";
 @use "components/hero";
@@ -23,5 +24,4 @@
 
 // Pages
 @use "pages/home";
-@use "pages/character";
 @use "pages/my_space";

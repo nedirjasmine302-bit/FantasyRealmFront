@@ -1,0 +1,123 @@
+@use "../abstracts/all" as abs;
+
+.create-character {
+  padding-bottom: 4rem;
+
+  /* UPLOAD */
+  &__upload {
+    text-align: center;
+    margin: 3rem auto;
+
+    .section-title {
+      @include abs.title-style(2rem, white, center);
+      margin-bottom: 1.5rem;
+    }
+
+    .upload-box {
+      background: abs.$card-bg-primary;
+      border: 2px dashed rgba(abs.$primary, 0.5);
+      border-radius: 0.5rem;
+      padding: 3rem 1rem;
+      max-width: 30rem;
+      margin: 0 auto;
+      cursor: pointer;
+      @include abs.anim-transition(border-color);
+
+      &:hover {
+        border-color: abs.$primary;
+      }
+
+      .upload-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: abs.$primary;
+      }
+
+      p {
+        @include abs.text-style(1rem, abs.$font-family-sans-serif, white);
+      }
+    }
+  }
+
+  /* FORM */
+  &__form {
+    width: min(90%, 60rem);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+}
+
+/* CARDS */
+.form-card {
+  background: abs.$card-bg-secondary;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+
+  &.disabled {
+    @include abs.state-disabled();
+  }
+
+  .section-title {
+    @include abs.title-style(1.7rem, abs.$secondary, left);
+    margin-bottom: 1.5rem;
+  }
+
+  .sub-title {
+    @include abs.text-style(1.1rem, abs.$font-family-serif, abs.$secondary, left);
+    margin: 1.5rem 0 1rem;
+  }
+}
+
+/* FIELDS */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  label {
+    @include abs.text-style(0.9rem, abs.$font-family-serif, white, left);
+  }
+
+  input,
+  select,
+  textarea {
+    background: abs.$card-bg-primary;
+    border: 1px solid rgba(abs.$primary, 0.5);
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.25rem;
+    color: white;
+    @include abs.anim-transition(border-color);
+
+    &:focus {
+      border-color: abs.$primary;
+      outline: none;
+    }
+  }
+
+  textarea {
+    min-height: 6rem;
+    resize: vertical;
+  }
+}
+
+/* GRID */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* BUTTONS */
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}

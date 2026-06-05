@@ -12707,6 +12707,138 @@ footer {
   background: #3ED598;
 }
 
+.create-character {
+  padding-bottom: 4rem;
+  /* UPLOAD */
+}
+.create-character__upload {
+  text-align: center;
+  margin: 3rem auto;
+}
+.create-character__upload .section-title {
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.create-character__upload .upload-box {
+  background: #222B4A;
+  border: 2px dashed rgba(111, 140, 255, 0.5);
+  border-radius: 0.5rem;
+  padding: 3rem 1rem;
+  max-width: 30rem;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+.create-character__upload .upload-box:hover {
+  border-color: #6F8CFF;
+}
+.create-character__upload .upload-box .upload-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #6F8CFF;
+}
+.create-character__upload .upload-box p {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+}
+.create-character {
+  /* FORM */
+}
+.create-character__form {
+  width: min(90%, 60rem);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* CARDS */
+.form-card {
+  background: #13172A;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+.form-card.disabled {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(40%);
+}
+.form-card .section-title {
+  font-family: "Cinzel", serif;
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #B07CFF;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+.form-card .sub-title {
+  font-family: "Cinzel", serif;
+  font-size: 1.1rem;
+  color: #B07CFF;
+  text-align: left;
+  margin: 1.5rem 0 1rem;
+}
+
+/* FIELDS */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.field label {
+  font-family: "Cinzel", serif;
+  font-size: 0.9rem;
+  color: white;
+  text-align: left;
+}
+.field input,
+.field select,
+.field textarea {
+  background: #222B4A;
+  border: 1px solid rgba(111, 140, 255, 0.5);
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.25rem;
+  color: white;
+  transition: border-color 0.3s ease;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: #6F8CFF;
+  outline: none;
+}
+.field textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+/* GRID */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 700px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* BUTTONS */
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
 .hero .container {
   position: relative;
   z-index: 2;

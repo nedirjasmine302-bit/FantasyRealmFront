@@ -1,0 +1,160 @@
+<main class="create-character">
+
+  <!-- HERO -->
+  <section class="hero create-character__hero">
+    <div class="hero-container">
+      <h1 class="hero-title">CRÉER VOTRE PERSONNAGE</h1>
+      <p class="hero-subtitle">Importez votre héros et définissez ses caractéristiques.</p>
+    </div>
+  </section>
+
+  <!-- UPLOAD IMAGE -->
+  <section class="create-character__upload">
+    <h2 class="section-title">AJOUTEZ L’IMAGE DE VOTRE HÉROS</h2>
+
+    <div class="upload-box" id="uploadBox">
+      <div class="upload-icon">📁</div>
+      <p>Cliquez votre image ici ou déposez pour importer</p>
+      <input type="file" id="heroImage" accept="image/*" hidden>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section class="create-character__form">
+
+    <!-- IDENTITÉ -->
+    <div class="form-card">
+      <h2 class="section-title">IDENTITÉ</h2>
+
+      <div class="field">
+        <label for="name">Nom du personnage</label>
+        <input type="text" id="name" placeholder="Entrez un nom">
+      </div>
+
+      <div class="field">
+        <label for="gender">Genre</label>
+        <select id="gender">
+          <option value="">Sélectionnez</option>
+          <option value="male">Homme</option>
+          <option value="female">Femme</option>
+          <option value="other">Autre</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="description">Description</label>
+        <textarea id="description" placeholder="Décrivez votre personnage"></textarea>
+      </div>
+    </div>
+
+    <!-- APPARENCE -->
+    <div class="form-card">
+      <h2 class="section-title">APPARENCE</h2>
+
+      <h3 class="sub-title">Couleur</h3>
+      <div class="grid-3">
+        <div class="field">
+          <label>Cheveux</label>
+          <select>
+            <option>Blond</option>
+            <option>Brun</option>
+            <option>Noir</option>
+            <option>Roux</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Yeux</label>
+          <select>
+            <option>Bleu</option>
+            <option>Vert</option>
+            <option>Marron</option>
+            <option>Noisette</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Peau</label>
+          <select>
+            <option>Clair</option>
+            <option>Medium</option>
+            <option>Foncé</option>
+          </select>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Forme</h3>
+      <div class="grid-3">
+        <div class="field">
+          <label>Bouche</label>
+          <select>
+            <option>Fine</option>
+            <option>Normale</option>
+            <option>Pulpeuse</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Yeux</label>
+          <select>
+            <option>Ronds</option>
+            <option>En amande</option>
+            <option>Fermés</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Nez</label>
+          <select>
+            <option>Fin</option>
+            <option>Large</option>
+            <option>Pointu</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÉQUIPEMENTS -->
+    <div class="form-card">
+      <h2 class="section-title">ÉQUIPEMENTS</h2>
+
+      <p class="status status-pending">Votre personnage doit être validé par un employé avant d’accéder aux accessoires.</p>
+    </div>
+
+    <!-- ACCESSOIRES -->
+    <div class="form-card disabled">
+      <h2 class="section-title">ACCESSOIRES</h2>
+
+      <div class="grid-3">
+        <div class="field">
+          <label>Armure</label>
+          <select disabled>
+            <option>Standard</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Arme</label>
+          <select disabled>
+            <option>Standard</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Accessoire</label>
+          <select disabled>
+            <option>Standard</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="form-buttons">
+      <button class="btn btn-primary">Créer mon personnage</button>
+      <button class="btn btn-secondary">Annuler</button>
+    </div>
+
+  </section>
+
+</main>

@@ -7,6 +7,7 @@
     flex-direction: column;
     justify-content: center;
     padding: 4rem 1rem;
+    
   
     &::before {
       @include abs.pseudo-base(1);

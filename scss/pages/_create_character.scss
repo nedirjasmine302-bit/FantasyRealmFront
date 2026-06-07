@@ -1,123 +1,363 @@
 @use "../abstracts/all" as abs;
 
+
 .create-character {
   padding-bottom: 4rem;
+}
 
-  /* UPLOAD */
-  &__upload {
-    text-align: center;
-    margin: 3rem auto;
 
-    .section-title {
-      @include abs.title-style(2rem, white, center);
-      margin-bottom: 1.5rem;
-    }
+// Section: Upload image
+.create-character-upload {
+  text-align: center;
+  margin: 4.5rem auto;
+  margin-left: 3rem;
+  margin-right: 3rem;
 
-    .upload-box {
-      background: abs.$card-bg-primary;
-      border: 2px dashed rgba(abs.$primary, 0.5);
-      border-radius: 0.5rem;
-      padding: 3rem 1rem;
-      max-width: 30rem;
-      margin: 0 auto;
-      cursor: pointer;
-      @include abs.anim-transition(border-color);
-
-      &:hover {
-        border-color: abs.$primary;
-      }
-
-      .upload-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        color: abs.$primary;
-      }
-
-      p {
-        @include abs.text-style(1rem, abs.$font-family-sans-serif, white);
-      }
-    }
+  .section-title {
+    @include abs.title-style(2rem, abs.$secondary, center);
+    margin-bottom: 2.5rem;
   }
 
-  /* FORM */
-  &__form {
-    width: min(90%, 60rem);
+  .upload-box {
+    background: abs.$card-bg-primary;
+    border: 2px dashed rgba(abs.$secondary, 0.5);
+    border-radius: 0.5rem;
+    padding: 7rem 5rem;
+    max-width: 40rem;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
+    cursor: pointer;
+    @include abs.anim-transition(border-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+
+    &:hover {
+      border-color: abs.$secondary;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .upload-icon {
+      font-size: 4rem;
+      color: abs.$secondary;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    p {
+      @include abs.text-style(1rem, abs.$font-family-sans-serif, white);
+      opacity: 0.6;
+    }
+
+    &.hidden {
+      display: none;
+    }
   }
 }
 
-/* CARDS */
+.upload-preview {
+  display: none;
+  margin-top: 2rem;
+
+  img {
+    width: 100%;
+    max-width: 22rem;
+    height: auto;
+    border-radius: 0.5rem;
+    border: 2px solid rgba(abs.$secondary, 0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  .upload-success {
+    margin-top: 1rem;
+    @include abs.text-style(1rem, abs.$font-family-sans-serif, abs.$success);
+  }
+
+  &.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+// Section: Form
+.create-character-form {
+  width: min(90%, 60rem);
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
 .form-card {
   background: abs.$card-bg-secondary;
   padding: 2rem;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+
+  &:nth-of-type(3) {
+    z-index: 0;
+  }
 
   &.disabled {
     @include abs.state-disabled();
   }
 
   .section-title {
-    @include abs.title-style(1.7rem, abs.$secondary, left);
+    @include abs.title-style(2rem, abs.$secondary, left);
     margin-bottom: 1.5rem;
   }
 
   .sub-title {
-    @include abs.text-style(1.1rem, abs.$font-family-serif, abs.$secondary, left);
+    @include abs.text-style(1.7rem, abs.$font-family-serif, white, left);
     margin: 1.5rem 0 1rem;
+    opacity: 0.95;
   }
 }
 
-/* FIELDS */
 .field {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  margin-bottom: 1rem;
 
   label {
     @include abs.text-style(0.9rem, abs.$font-family-serif, white, left);
+  }
+
+  input:-webkit-autofill {
+    background: abs.$card-bg-primary !important;
+    -webkit-box-shadow: 0 0 0 1000px abs.$card-bg-primary inset !important;
+    -webkit-text-fill-color: white !important;
   }
 
   input,
   select,
   textarea {
     background: abs.$card-bg-primary;
-    border: 1px solid rgba(abs.$primary, 0.5);
+    border: 1px solid rgba(abs.$secondary, 0.5);
     padding: 0.6rem 0.8rem;
     border-radius: 0.25rem;
     color: white;
     @include abs.anim-transition(border-color);
 
     &:focus {
-      border-color: abs.$primary;
+      border-color: abs.$secondary;
       outline: none;
     }
   }
 
   textarea {
-    min-height: 6rem;
-    resize: vertical;
+    min-height: 12rem;
+    max-height: 12rem;
+    resize: none;
   }
 }
 
-/* GRID */
+.custom-select-secondary {
+  position: relative;
+
+  .custom-select-trigger {
+    background: abs.$card-bg-primary;
+    border: 1px solid rgba(abs.$secondary, 0.5);
+    color: white;
+    padding: 0.45rem 2.5rem 0.45rem 0.8rem;
+    border-radius: 0.25rem;
+    height: 2.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    position: relative;
+    cursor: pointer;
+    @include abs.anim-transition(border-color);
+
+    .arrow {
+      position: absolute;
+      right: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: transform 0.2s ease;
+    }
+  }
+
+  &.open {
+    .custom-select-trigger {
+      border-color: abs.$secondary;
+    }
+
+    .arrow {
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .custom-options {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      margin-top: 0.5rem; 
+    }
+  }
+
+  .custom-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 100%;
+    display: none;
+    flex-direction: column;
+    z-index: 2;
+
+    background: abs.$dark;
+    border: 1px solid abs.$secondary;
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  .custom-option {
+    padding: 0.6rem 0.8rem;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: lighten(abs.$secondary, 5%);
+    }
+  }
+}
+
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+}
 
-  @media (max-width: 700px) {
+.equip-status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+
+  .sub-title {
+    margin: 0;
+  }
+}
+
+.equip-info {
+  padding: 1rem;
+  border-radius: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  p {
+    @include abs.text-style(0.95rem, abs.$font-family-sans-serif, white, left);
+    margin: 0;
+    flex: 1;
+  }
+}
+
+.equip-info-secondary {
+  background: rgba(abs.$secondary, 0.15);
+  border-left: 3px solid abs.$secondary;
+}
+
+.equip-info-warning {
+  background: rgba(abs.$warning, 0.15);
+  border-left: 3px solid abs.$warning;
+}
+
+.equip-info-success {
+  background: rgba(abs.$success, 0.15);
+  border-left: 3px solid abs.$success;
+}
+
+.equip-info-danger {
+  background: rgba(abs.$danger, 0.15);
+  border-left: 3px solid abs.$danger;
+}
+
+.form-card.accessoires.disabled .custom-select-secondary {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.rarity-legend {
+  display: flex;
+  gap: 4rem;
+  margin-bottom: 2rem;
+
+  .rarity-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    @include abs.text-style(0.9rem, abs.$font-family-sans-serif, white);
+  }
+}
+
+.dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-standard { background: #999999; }
+.dot-legendary { background: #5B38F8; }
+.dot-rare { background: #FFD700; }
+
+.custom-select .custom-option .dot,
+.custom-select .trigger-text .dot {
+  margin-right: 0.4rem;
+}
+
+
+// Section: Bottom buttons
+.create-character-actions {
+  margin-bottom: 4rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .actions-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 60rem;
+    margin: 0 auto;
+
+    .btn {
+      font-size: 1rem;
+    }
+  }
+}
+
+
+// Responsive
+@media (max-width: 700px) {
+
+  // Section: Form
+  .grid-3 {
     grid-template-columns: 1fr;
   }
 }
 
-/* BUTTONS */
-.form-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 1rem;
+@media (max-width: 426px) {
+
+  // Section: Top buttons
+  .btn {
+    width: 12rem;
+  }
+}
+
+@media (max-width: 386px) {
+
+  // Section: Hero
+  .hero {
+    .hero-title {
+      @include abs.title-style(2.4rem, white, center, abs.$font-family-serif, normal);
+    }
+  }
 }

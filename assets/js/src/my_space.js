@@ -49,7 +49,7 @@ export function toggleFavoriteForTest(fav, name) {
 }
 
 
-// Lance le js de la page Home quand elle est chargée
+// Lance le js de la page My-space quand elle est chargée
 if (typeof window !== "undefined") {
 initReveal();
 initHearts();

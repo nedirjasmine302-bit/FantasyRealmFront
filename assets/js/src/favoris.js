@@ -150,7 +150,7 @@ function initHearts() {
 }
 
 
-// Lance le js de la page Home quand elle est chargée
+// Lance le js de la page Favoris quand elle est chargée
 if (typeof window !== "undefined") {
   initReveal();
   initCustomSelects();

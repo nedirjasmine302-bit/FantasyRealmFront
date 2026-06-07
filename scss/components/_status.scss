@@ -12,6 +12,11 @@
   color: #121008;
 }
 
+.status-to-validate {
+  background: abs.$secondary;
+  color: white;
+}
+
 .status-pending {
   background: abs.$warning;
 }

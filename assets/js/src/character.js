@@ -163,7 +163,7 @@ export function filterPseudosForTest(list, query) {
 }
 
 
-// Lance le js de la page Home quand elle est chargée
+// Lance le js de la page Character quand elle est chargée
 if (typeof window !== "undefined") {
   initReveal();
   initCustomSelects();

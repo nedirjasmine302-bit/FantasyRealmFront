@@ -3,11 +3,11 @@ name: CI Front
 on:
   push:
       branches:
-        - develop
+        - développement
         - main
   pull_request:
     branches:
-      - develop
+      - développement
       - main
 
 jobs:

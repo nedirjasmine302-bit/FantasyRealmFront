@@ -20,9 +20,11 @@
 @use "components/filters";
 @use "components/scrollbar";
 @use "components/hero";
+@use "components/inputs";
 @use "components/status";
 
 // Pages
+@use "pages/contact";
 @use "pages/create_character";
 @use "pages/home";
 @use "pages/my_space";

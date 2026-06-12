@@ -8,12 +8,6 @@
   margin-bottom: 2rem;
   width: calc(100% - 6rem);
 
-  input:-webkit-autofill {
-    background: abs.$card-bg-primary !important;
-    -webkit-box-shadow: 0 0 0 1000px abs.$card-bg-primary inset !important;
-    -webkit-text-fill-color: white !important;
-  }
-
   .filters-form {
     display: flex;
     gap: 1rem;
@@ -59,9 +53,12 @@
       flex-direction: column;
       gap: 0.3rem;
       flex-shrink: 0;
+      margin-bottom: 0;
 
       label {
         @include abs.text-style(0.9rem, abs.$font-family-serif, white, left);
+        margin: 0;
+        font-weight: normal;
       }
 
       input,
@@ -73,6 +70,7 @@
         color: white;
         height: 2.6rem;
         @include abs.anim-transition(border-color);
+        margin: 0;
 
         &:focus {
           border-color: abs.$primary;
@@ -93,7 +91,7 @@
   .search-icon {
     position: absolute;
     right: 0.8rem;
-    top: 38%;
+    top: 50%;
     transform: translateY(-50%);
     color: white;
     font-size: 1rem;

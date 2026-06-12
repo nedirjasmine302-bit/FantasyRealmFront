@@ -32,7 +32,12 @@
   background-color: abs.$secondary;
 
   &:hover {
-    background-color: darken(abs.$secondary, 3%);
+    background-color: darken(abs.$secondary, 3%) !important;
+  }
+
+  &:active,
+  &:focus {
+    background-color: abs.$secondary !important;
   }
 }
 
@@ -44,4 +49,8 @@
     background-color: rgba(abs.$secondary, 0.30);
     border: 1px solid abs.$secondary;
   }
+}
+
+.btn-disabled {
+  @include abs.state-disabled();
 }

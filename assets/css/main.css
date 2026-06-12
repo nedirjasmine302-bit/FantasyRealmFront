@@ -11974,6 +11974,10 @@ a {
   color: inherit;
 }
 
+body {
+  background: #0B0F1F;
+}
+
 .main {
   background-color: #0B0F1F;
 }
@@ -12239,7 +12243,10 @@ footer {
   background-color: #B07CFF;
 }
 .btn-secondary:hover {
-  background-color: rgb(166.7732824427, 108.7, 255);
+  background-color: rgb(166.7732824427, 108.7, 255) !important;
+}
+.btn-secondary:active, .btn-secondary:focus {
+  background-color: #B07CFF !important;
 }
 
 .btn-ghost-secondary {
@@ -12249,6 +12256,12 @@ footer {
 .btn-ghost-secondary:hover {
   background-color: rgba(176, 124, 255, 0.3);
   border: 1px solid #B07CFF;
+}
+
+.btn-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(40%);
 }
 
 .characters {
@@ -12397,11 +12410,6 @@ footer {
   margin-bottom: 2rem;
   width: calc(100% - 6rem);
 }
-.filters input:-webkit-autofill {
-  background: #222B4A !important;
-  -webkit-box-shadow: 0 0 0 1000px #222B4A inset !important;
-  -webkit-text-fill-color: white !important;
-}
 .filters .filters-form {
   display: flex;
   gap: 1rem;
@@ -12442,12 +12450,15 @@ footer {
   flex-direction: column;
   gap: 0.3rem;
   flex-shrink: 0;
+  margin-bottom: 0;
 }
 .filters .filters-form .field label {
   font-family: "Cinzel", serif;
   font-size: 0.9rem;
   color: white;
   text-align: left;
+  margin: 0;
+  font-weight: normal;
 }
 .filters .filters-form .field input,
 .filters .filters-form .field select {
@@ -12458,6 +12469,7 @@ footer {
   color: white;
   height: 2.6rem;
   transition: border-color 0.3s ease;
+  margin: 0;
 }
 .filters .filters-form .field input:focus,
 .filters .filters-form .field select:focus {
@@ -12473,7 +12485,7 @@ footer {
 .filters .search-icon {
   position: absolute;
   right: 0.8rem;
-  top: 38%;
+  top: 50%;
   transform: translateY(-50%);
   color: white;
   font-size: 1rem;
@@ -12684,6 +12696,43 @@ footer {
     padding: 0 1rem;
   }
 }
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 2.5rem;
+}
+.field label {
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #B07CFF;
+  text-align: left;
+  margin: 0 1.8rem;
+}
+.field input,
+.field select,
+.field textarea {
+  background: #222B4A;
+  border: 1px solid rgba(176, 124, 255, 0.5);
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.25rem;
+  color: white;
+  transition: border-color 0.3s ease;
+  margin: 0 1.8rem;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: #B07CFF;
+  outline: none;
+}
+.field textarea {
+  min-height: 12rem;
+  max-height: 12rem;
+  resize: none;
+}
+
 .status {
   display: inline-block;
   padding: 0.3rem 0.8rem;
@@ -12710,6 +12759,80 @@ footer {
 
 .status-valid {
   background: #3ED598;
+}
+
+.contact-page {
+  width: 90%;
+  max-width: 50rem;
+  margin: 4rem auto 5rem auto;
+  display: flex;
+  flex-direction: column;
+}
+.contact-page .section-title {
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #B07CFF;
+  text-align: center;
+  margin: 1rem 0 1.5rem 0;
+}
+.contact-page .contact-infos-card {
+  background: #13172A;
+  padding: 3rem 7rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 50rem;
+  margin: 0 auto 5.5rem auto;
+}
+.contact-page .contact-infos-card .info-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+.contact-page .contact-infos-card .info-line .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+.contact-page .contact-infos-card .info-line .icon i {
+  font-size: 1.3rem;
+  color: white;
+}
+.contact-page .contact-infos-card .info-line p {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: white;
+  text-align: left;
+  opacity: 0.9;
+  margin: 0;
+}
+.contact-page .contact-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  margin: 1rem auto 0 auto;
+}
+.contact-page .btn {
+  display: flex;
+  margin: 2.5rem auto 0 auto;
+}
+.contact-page .success-message {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: #3ED598;
+  text-align: center;
+  margin-top: 2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .create-character {
@@ -12828,43 +12951,21 @@ footer {
   opacity: 0.95;
 }
 
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+.create-page .field {
   margin-bottom: 1rem;
 }
-.field label {
+.create-page .field label {
   font-family: "Cinzel", serif;
   font-size: 0.9rem;
   color: white;
   text-align: left;
+  margin: 0;
+  font-weight: normal;
 }
-.field input:-webkit-autofill {
-  background: #222B4A !important;
-  -webkit-box-shadow: 0 0 0 1000px #222B4A inset !important;
-  -webkit-text-fill-color: white !important;
-}
-.field input,
-.field select,
-.field textarea {
-  background: #222B4A;
-  border: 1px solid rgba(176, 124, 255, 0.5);
-  padding: 0.6rem 0.8rem;
-  border-radius: 0.25rem;
-  color: white;
-  transition: border-color 0.3s ease;
-}
-.field input:focus,
-.field select:focus,
-.field textarea:focus {
-  border-color: #B07CFF;
-  outline: none;
-}
-.field textarea {
-  min-height: 12rem;
-  max-height: 12rem;
-  resize: none;
+.create-page .field input,
+.create-page .field select,
+.create-page .field textarea {
+  margin: 0;
 }
 
 .custom-select-secondary {

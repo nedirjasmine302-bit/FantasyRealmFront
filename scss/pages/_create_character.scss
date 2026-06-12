@@ -115,44 +115,21 @@
   }
 }
 
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  margin-bottom: 1rem;
+  .create-page .field {
+    margin-bottom: 1rem;
 
-  label {
-    @include abs.text-style(0.9rem, abs.$font-family-serif, white, left);
-  }
+    label {
+      @include abs.text-style(0.9rem, abs.$font-family-serif, white, left);
+      margin: 0;
+      font-weight: normal;
+    }
 
-  input:-webkit-autofill {
-    background: abs.$card-bg-primary !important;
-    -webkit-box-shadow: 0 0 0 1000px abs.$card-bg-primary inset !important;
-    -webkit-text-fill-color: white !important;
-  }
-
-  input,
-  select,
-  textarea {
-    background: abs.$card-bg-primary;
-    border: 1px solid rgba(abs.$secondary, 0.5);
-    padding: 0.6rem 0.8rem;
-    border-radius: 0.25rem;
-    color: white;
-    @include abs.anim-transition(border-color);
-
-    &:focus {
-      border-color: abs.$secondary;
-      outline: none;
+    input,
+    select,
+    textarea {
+      margin: 0;
     }
   }
-
-  textarea {
-    min-height: 12rem;
-    max-height: 12rem;
-    resize: none;
-  }
-}
 
 .custom-select-secondary {
   position: relative;
@@ -361,3 +338,6 @@
     }
   }
 }
+
+
+

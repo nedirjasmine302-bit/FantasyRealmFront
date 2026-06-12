@@ -1,6 +1,6 @@
 // La fonction getContactFormState (pour pré-remplir les champs du formulaire de contact)
 import { test, expect } from "vitest";
-import { getContactFormState } from "../src/contactLogic.js";
+import { getContactFormState } from "../src/contact.js";
 
 test("remplit les champs si l'utilisateur est connecté", () => {
   const user = {

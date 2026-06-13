@@ -12301,6 +12301,10 @@ footer {
   filter: invert(1);
 }
 
+.forgot-password-page .btn {
+  width: 20rem;
+}
+
 @media (max-width: 400px) {
   .sign_up-page .field label {
     max-width: 20rem;

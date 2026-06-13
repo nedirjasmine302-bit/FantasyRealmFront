@@ -8,6 +8,7 @@ export const allRoutes = [
   new Route("/create-character", "Créer un personnage", "/pages/create_character.html","/assets/js/src/create_character.js"),
   new Route("/contact", "Contact", "/pages/contact.html","/assets/js/src/contact.js"),
   new Route("/sign-up", "Inscritpion", "/pages/sign_up.html","/assets/js/src/sign_up.js"),
-  new Route("/sign-in", "Connexion", "/pages/sign_in.html","/assets/js/src/sign_in.js")];
+  new Route("/sign-in", "Connexion", "/pages/sign_in.html","/assets/js/src/sign_in.js"),
+  new Route("/forgot-password", "Mot de passe oublié", "/pages/forgot_password.html","/assets/js/src/forgot_password.js")];
 //Le titre s'affiche comme ceci : Route.titre - websitename
 export const websiteName = "FantasyRealm Online";

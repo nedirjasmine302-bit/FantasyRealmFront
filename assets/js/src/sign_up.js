@@ -168,10 +168,12 @@ function initSignUpForm() {
     success.classList.add("message", "success-message");
     form.appendChild(success);
 
+    submitBtn.classList.add("btn-disabled");
+    submitBtn.setAttribute("disabled", "true");
+
     setTimeout(() => {
     success.classList.add("show");
   }, 10);
-
 
     localStorage.setItem("userLogged", "true");
 

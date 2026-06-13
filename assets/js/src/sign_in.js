@@ -11,7 +11,7 @@ function initReveal() {
 }
 
 
-//Pour la sécurité
+// Pour la sécurité
 function sanitize(str) {
   return str.replace(/[<>&"'`]/g, "");
 }
@@ -21,14 +21,15 @@ function isValidEmail(email) {
 }
 
 
-//Gestion du formulaire de connexion (Données fictives // Besoin API)
+// Gestion du formulaire de connexion (Données fictives // Besoin API)
 const fakeUsers = [
-  { email: "test@mail.com", password: "Test123!" },
-  { email: "jasmine@mail.com", password: "Jasmine123!" }
+  { email: "test@mail.com", password: "Test123!", temporary: false },
+  { email: "jasmine@mail.com", password: "Jasmine123!", temporary: false },
+  { email: "temp@mail.com", password: "Temp123!", temporary: true }
 ];
 
 function checkCredentials(email, password) {
-  return fakeUsers.some(
+  return fakeUsers.find(
     u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
   );
 }
@@ -115,7 +116,9 @@ function initSignInForm() {
     const oldMsg = form.querySelector(".message");
     if (oldMsg) oldMsg.remove();
   
-    if (!checkCredentials(email, password)) {
+    const user = checkCredentials(email, password);
+
+    if (!user) {
       const error = document.createElement("p");
       error.textContent = "Identifiants incorrects";
       error.classList.add("message", "error-message");
@@ -124,7 +127,25 @@ function initSignInForm() {
       setTimeout(() => error.classList.add("show"), 10);
       return;
     }
-  
+
+    if (user.temporary) {
+      const tempMsg = document.createElement("p");
+      tempMsg.textContent = "Vous utilisez un mot de passe temporaire. Redirection pour le modifier.";
+      tempMsg.classList.add("message", "success-message");
+      form.appendChild(tempMsg);
+
+      setTimeout(() => tempMsg.classList.add("show"), 10);
+
+      submitBtn.classList.add("btn-disabled");
+      submitBtn.setAttribute("disabled", "true");
+
+      setTimeout(() => {
+        window.location.href = "/reset-password";
+      },2500);
+
+      return;
+    }
+
     localStorage.setItem("userLogged", "true");
   
     const success = document.createElement("p");
@@ -133,6 +154,9 @@ function initSignInForm() {
     form.appendChild(success);
   
     setTimeout(() => success.classList.add("show"), 10);
+
+    submitBtn.classList.add("btn-disabled");
+    submitBtn.setAttribute("disabled", "true");
   
     setTimeout(() => {
       window.location.href = "/my-space";

@@ -1,6 +1,6 @@
 // La fonction toggleFavorite (pour les favoris)
 import { test, expect } from "vitest";
-import { toggleFavoriteForTest } from "../src/my_space.js";
+import { toggleFavoriteForTest } from "../src/my-space.js";
 
 test("toggleFavoriteForTest ajoute un favori", () => {
   let fav = [];

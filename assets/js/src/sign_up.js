@@ -59,7 +59,6 @@ function initSignUpForm() {
   const password2Input = document.querySelector("#password2");
   const submitBtn = document.querySelector(".btn.btn-secondary");
 
-  // Création des messages d’erreur sous chaque input
   function createErrorElement(input) {
     const error = document.createElement("p");
     error.classList.add("input-error");
@@ -166,7 +165,7 @@ function initSignUpForm() {
 
     const success = document.createElement("p");
     success.textContent = "Votre compte a été créé avec succès !";
-    success.classList.add("success-message");
+    success.classList.add("message", "success-message");
     form.appendChild(success);
 
     setTimeout(() => {

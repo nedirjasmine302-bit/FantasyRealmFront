@@ -15,6 +15,7 @@
 @use "layout/footer";
 
 // Components
+@use "components/auth";
 @use "components/buttons";
 @use "components/card-character";
 @use "components/filters";
@@ -28,4 +29,3 @@
 @use "pages/create_character";
 @use "pages/home";
 @use "pages/my_space";
-@use "pages/sign_up";

@@ -133,7 +133,7 @@ function initContactForm() {
 
     const success = document.createElement("p");
     success.textContent = "Message envoyé avec succès !";
-    success.classList.add("success-message");
+    success.classList.add("message", "success-message");
     form.appendChild(success);
 
     setTimeout(() => {

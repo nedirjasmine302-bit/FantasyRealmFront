@@ -12214,6 +12214,98 @@ footer {
     max-width: 7rem;
   }
 }
+.auth-page {
+  width: 90%;
+  max-width: 50rem;
+  margin: 4rem auto 3.5rem auto;
+  display: flex;
+  flex-direction: column;
+}
+.auth-page .auth-infos-card {
+  background: #13172A;
+  padding: 3rem 7rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 50rem;
+  margin: 0 auto 5.5rem auto;
+}
+.auth-page .auth-infos-card p {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: white;
+  text-align: left;
+  opacity: 0.9;
+  margin: 0;
+}
+.auth-page .auth-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  margin: 0 auto;
+}
+.auth-page .btn {
+  display: flex;
+  margin: 0.5rem auto 0 auto;
+}
+.auth-page .auth-link {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  margin-bottom: 0;
+}
+.auth-page .auth-link a {
+  text-decoration: none;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.93rem;
+  color: #6F8CFF;
+  text-align: center;
+}
+.auth-page .auth-link a:hover {
+  color: #B07CFF;
+  text-decoration: underline;
+}
+.auth-page .input-error {
+  font-family: "Nunito", sans-serif;
+  font-size: 0.85rem;
+  color: #E25353;
+  text-align: left;
+  margin: 0 1.8rem;
+  opacity: 0;
+}
+.auth-page .message {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  margin: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.auth-page .message.show {
+  opacity: 1;
+}
+.auth-page .success-message {
+  color: #3ED598;
+}
+.auth-page .error-message {
+  color: #E25353;
+}
+.auth-page input[type=password]::-ms-reveal {
+  filter: invert(1);
+}
+
+@media (max-width: 400px) {
+  .sign_up-page .field label {
+    max-width: 20rem;
+  }
+}
 .btn {
   display: inline-flex;
   align-items: center;
@@ -14070,89 +14162,5 @@ footer {
 @media (max-width: 350px) {
   .layout-container {
     padding: 0 3rem;
-  }
-}
-.auth-page {
-  width: 90%;
-  max-width: 50rem;
-  margin: 4rem auto 3.5rem auto;
-  display: flex;
-  flex-direction: column;
-}
-.auth-page .auth-infos-card {
-  background: #13172A;
-  padding: 3rem 7rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  max-width: 50rem;
-  margin: 0 auto 5.5rem auto;
-}
-.auth-page .auth-infos-card p {
-  font-family: "Nunito", sans-serif;
-  font-size: 1rem;
-  color: white;
-  text-align: left;
-  opacity: 0.9;
-  margin: 0;
-}
-.auth-page .auth-form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-  margin: 0 auto;
-}
-.auth-page .btn {
-  display: flex;
-  margin: 0.5rem auto 0 auto;
-}
-.auth-page .auth-link {
-  font-family: "Nunito", sans-serif;
-  font-size: 1rem;
-  color: white;
-  text-align: center;
-  margin-bottom: 0;
-}
-.auth-page .auth-link a {
-  text-decoration: none;
-  font-family: "Nunito", sans-serif;
-  font-size: 0.93rem;
-  color: #6F8CFF;
-  text-align: center;
-}
-.auth-page .auth-link a:hover {
-  color: #B07CFF;
-  text-decoration: underline;
-}
-.auth-page .input-error {
-  font-family: "Nunito", sans-serif;
-  font-size: 0.85rem;
-  color: #E25353;
-  text-align: left;
-  margin: 0 1.8rem;
-  opacity: 0;
-}
-.auth-page .success-message {
-  font-family: "Nunito", sans-serif;
-  font-size: 1rem;
-  color: #3ED598;
-  text-align: center;
-  margin: 0;
-}
-.auth-page .success-message.show {
-  opacity: 1;
-}
-.auth-page input[type=password]::-ms-reveal {
-  filter: invert(1);
-}
-
-@media (max-width: 400px) {
-  .sign_up-page .field label {
-    max-width: 20rem;
   }
 }/*# sourceMappingURL=main.css.map */

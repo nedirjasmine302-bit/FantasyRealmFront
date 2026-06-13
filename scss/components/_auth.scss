@@ -1,7 +1,6 @@
 @use "../abstracts/all" as abs;
 
 
-// Section: Sign up
 .auth-page {
   width: 90%;
   max-width: 50rem;
@@ -67,15 +66,25 @@
     opacity: 0;
   }
   
-  .success-message {
-    @include abs.text-style(1rem, abs.$font-family-sans-serif, abs.$success);
+  .message {
+    @include abs.text-style(1rem, abs.$font-family-sans-serif, white);
     margin: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
   
-  .success-message.show {
+  .message.show {
     opacity: 1;
   }
   
+  .success-message {
+    color: abs.$success;
+  }
+  
+  .error-message {
+    color: abs.$danger;
+  }
+
   input[type="password"]::-ms-reveal {
     filter: invert(1);
   }
@@ -85,7 +94,6 @@
 // Responsive
 @media (max-width: 400px) {
 
-  // Section: Sign up
   .sign_up-page {
     .field {
       label {

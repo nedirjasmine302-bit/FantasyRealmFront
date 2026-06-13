@@ -1,49 +1,12 @@
-// Animation d'apparition des éléments de la page au scroll
-function initReveal() {
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("show");
-    });
-  });
-
-  const elements = document.querySelectorAll(".fade-up, .scale-in, .blur-in");
-  elements.forEach(el => observer.observe(el));
-}
+import { initReveal } from "../modules/animations.js";
+import { sanitize, isValidEmail, isValidPseudo, isValidPassword, isEmailUnique } from "../modules/security.js";
 
 
-// Pour la sécurité
-function sanitize(str) {
-  return str.replace(/[<>&"'`]/g, "");
-}
-
-function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function isValidPseudo(pseudo) {
-  return /^[a-zA-Z0-9_-]{3,20}$/.test(pseudo);
-}
-
-function isValidPassword(password) {
-  return (
-    password.length >= 8 &&
-    /[A-Z]/.test(password) &&
-    /[a-z]/.test(password) &&
-    /\d/.test(password) &&
-    /[^A-Za-z0-9]/.test(password)
-  );
-}
-
-
-//Gestion du formulaire d'inscription (Données fictives // Besoin API)
+// Gestion du formulaire d'inscription (Données fictives // Besoin API)
 const existingUsers = [
   { email: "test@mail.com", pseudo: "PlayerOne" },
   { email: "jasmine@mail.com", pseudo: "Jasmine" }
 ];
-
-function isEmailUnique(email) {
-  return !existingUsers.some(u => u.email.toLowerCase() === email.toLowerCase());
-}
 
 function isPseudoUnique(pseudo) {
   return !existingUsers.some(u => u.pseudo.toLowerCase() === pseudo.toLowerCase());
@@ -65,7 +28,6 @@ function initSignUpForm() {
     input.insertAdjacentElement("afterend", error);
     return error;
   }
-
 
   const emailError = createErrorElement(emailInput);
   const pseudoError = createErrorElement(pseudoInput);
@@ -101,39 +63,53 @@ function initSignUpForm() {
       if (!isValidEmail(email)) {
         showError(emailError, "Email invalide");
         valid = false;
-      } else if (!isEmailUnique(email)) {
+
+      } else if (!isEmailUnique(email, existingUsers)) {
         showError(emailError, "Cet email est déjà utilisé");
         valid = false;
-      } else hideError(emailError);
+
+      } else {
+        hideError(emailError);
+      }
     }
 
     if (touched.pseudo) {
       if (!isValidPseudo(pseudo)) {
         showError(pseudoError, "3 à 20 caractères (lettres, chiffres, _ -)");
         valid = false;
+
       } else if (!isPseudoUnique(pseudo)) {
         showError(pseudoError, "Ce pseudo est déjà utilisé");
         valid = false;
-      } else hideError(pseudoError);
+
+      } else {
+        hideError(pseudoError);
+      }
     }
 
     if (touched.password) {
       if (!isValidPassword(password)) {
         showError(passwordError, "Mot de passe non conforme (8 caractères dont une majuscule, une minuscule, un chiffre et un spécial)");
         valid = false;
-      } else hideError(passwordError);
+
+      } else {
+        hideError(passwordError);
+      }
     }
 
     if (touched.password2) {
       if (password !== password2) {
         showError(password2Error, "La confirmation n'est pas identique au mot de passe");
         valid = false;
-      } else hideError(password2Error);
+
+      } else {
+        hideError(password2Error);
+      }
     }
 
     if (
       isValidEmail(email) &&
-      isEmailUnique(email) &&
+      isEmailUnique(email, existingUsers) &&
       isValidPseudo(pseudo) &&
       isPseudoUnique(pseudo) &&
       isValidPassword(password) &&
@@ -171,9 +147,7 @@ function initSignUpForm() {
     submitBtn.classList.add("btn-disabled");
     submitBtn.setAttribute("disabled", "true");
 
-    setTimeout(() => {
-    success.classList.add("show");
-  }, 10);
+    setTimeout(() => success.classList.add("show"), 10);
 
     localStorage.setItem("userLogged", "true");
 
@@ -182,7 +156,6 @@ function initSignUpForm() {
     }, 1000);
   });
 }
-
 
 // Lance le js de la page Sign-up quand elle est chargée
 if (typeof window !== "undefined") {

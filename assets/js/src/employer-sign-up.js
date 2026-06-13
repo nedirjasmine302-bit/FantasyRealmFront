@@ -1,34 +1,5 @@
-// Animation d'apparition des éléments de la page au scroll
-function initReveal() {
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("show");
-    });
-  });
-
-  const elements = document.querySelectorAll(".fade-up, .scale-in, .blur-in");
-  elements.forEach(el => observer.observe(el));
-}
-
-
-// Pour la sécurité
-function sanitize(str) {
-  return str.replace(/[<>&"'`]/g, "");
-}
-
-function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function isValidPassword(password) {
-  return (
-    password.length >= 8 &&
-    /[A-Z]/.test(password) &&
-    /[a-z]/.test(password) &&
-    /\d/.test(password) &&
-    /[^A-Za-z0-9]/.test(password)
-  );
-}
+import { initReveal } from "../modules/animations.js";
+import { sanitize, isValidEmail, isValidPassword, isEmailUnique } from "../modules/security.js";
 
 
 // Gestion du formulaire de création d'un compte employeur (Données fictives // Besoin API)
@@ -37,9 +8,6 @@ const existingEmployers = [
   { email: "contact@studio.com" }
 ];
 
-function isEmailUnique(email) {
-  return !existingEmployers.some(u => u.email.toLowerCase() === email.toLowerCase());
-}
 
 function initEmployerSignUpForm() {
   const form = document.querySelector(".auth-form-container");
@@ -84,33 +52,45 @@ function initEmployerSignUpForm() {
 
     let valid = true;
 
+    // EMAIL
     if (touched.email) {
       if (!isValidEmail(email)) {
         showError(emailError, "Email invalide");
         valid = false;
-      } else if (!isEmailUnique(email)) {
+
+      } else if (!isEmailUnique(email, existingEmployers)) {
         showError(emailError, "Cet email est déjà utilisé");
         valid = false;
-      } else hideError(emailError);
+
+      } else {
+        hideError(emailError);
+      }
     }
 
+    // PASSWORD
     if (touched.password) {
       if (!isValidPassword(password)) {
         showError(passwordError, "Mot de passe non conforme (8 caractères, maj, min, chiffre, spécial)");
         valid = false;
-      } else hideError(passwordError);
+      } else {
+        hideError(passwordError);
+      }
     }
 
+    // CONFIRMATION
     if (touched.password2) {
       if (password !== password2) {
         showError(password2Error, "La confirmation n'est pas identique");
         valid = false;
-      } else hideError(password2Error);
+      } else {
+        hideError(password2Error);
+      }
     }
 
+    // Activation du bouton
     if (
       isValidEmail(email) &&
-      isEmailUnique(email) &&
+      isEmailUnique(email, existingEmployers) &&
       isValidPassword(password) &&
       password === password2
     ) {
@@ -145,9 +125,7 @@ function initEmployerSignUpForm() {
     submitBtn.classList.add("btn-disabled");
     submitBtn.setAttribute("disabled", "true");
 
-    setTimeout(() => {
-      success.classList.add("show");
-    }, 10);
+    setTimeout(() => success.classList.add("show"), 10);
 
     localStorage.setItem("employerLogged", "true");
 
@@ -156,7 +134,6 @@ function initEmployerSignUpForm() {
     }, 1000);
   });
 }
-
 
 // Lance le js de la page Employer-sign-up quand elle est chargée
 if (typeof window !== "undefined") {

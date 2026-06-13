@@ -1,17 +1,4 @@
-// Animation d'apparition des éléments de la page au scroll
-function initReveal() {
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-      }
-    });
-  });
-
-  const elements = document.querySelectorAll(".fade-up, .scale-in, .blur-in");
-
-  elements.forEach(el => observer.observe(el));
-}
+import { initReveal } from "../modules/animations.js";
 
 
 // Animation de l'image (Section: About)

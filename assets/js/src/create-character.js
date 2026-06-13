@@ -1,14 +1,5 @@
-// Animation d'apparition des éléments de la page au scroll
-function initReveal() {
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("show");
-    });
-  });
-
-  const elements = document.querySelectorAll(".fade-up, .scale-in, .blur-in");
-  elements.forEach(el => observer.observe(el));
-}
+import { initReveal } from "../modules/animations.js";
+import { initCustomSelects } from "../modules/forms.js";
 
 
 // Gestion de l'upload de l'image 
@@ -42,39 +33,6 @@ function initImageUpload() {
     };
 
     reader.readAsDataURL(file);
-  });
-}
-
-
-// Les selects personnalisés du formulaire
-function initCustomSelects() {
-  document.querySelectorAll(".custom-select").forEach(select => {
-    const trigger = select.querySelector(".custom-select-trigger");
-
-    trigger.addEventListener("click", () => {
-      document.querySelectorAll(".custom-select.open").forEach(other => {
-        if (other !== select) other.classList.remove("open");
-      });
-
-      select.classList.toggle("open");
-    });
-
-    select.querySelectorAll(".custom-option").forEach(option => {
-      option.addEventListener("click", () => {
-        select.querySelector(".trigger-text").innerHTML = option.innerHTML;
-        select.querySelector(".trigger-text").dataset.value = option.dataset.value;
-
-        select.classList.remove("open");
-      });
-    });
-  });
-
-  document.addEventListener("click", (e) => {
-    document.querySelectorAll(".custom-select.open").forEach(select => {
-      if (!select.contains(e.target)) {
-        select.classList.remove("open");
-      }
-    });
   });
 }
 

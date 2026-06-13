@@ -1,29 +1,5 @@
-// Animation d'apparition des éléments de la page au scroll
-function initReveal() {
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("show");
-    });
-  });
-
-  const elements = document.querySelectorAll(".fade-up, .scale-in, .blur-in");
-  elements.forEach(el => observer.observe(el));
-}
-
-
-//Pour la sécurité
-function sanitize(str) {
-  return str.replace(/[<>&"'`]/g, "");
-}
-
-function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function isValidPseudo(pseudo) {
-  if (pseudo.trim() === "") return true;
-  return /^[a-zA-Z0-9_-]{3,20}$/.test(pseudo);
-}
+import { initReveal } from "../modules/animations.js";
+import { sanitize, isValidEmail, isValidPseudo } from "../modules/security.js";
 
 
 // Gestion utilisateur + sécurité front (Données fictives // Besoin API)

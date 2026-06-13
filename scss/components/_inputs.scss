@@ -37,10 +37,10 @@
 }
 
 
-// Responsive spécifique pour la page Reset-passsword
+// Responsive spécifique pour la page Reset-passsword et Reset-employer-password
 @media (max-width: 500px) {
 
-  .reset-password-page {
+  .reset-password {
     .field label {
       max-width: 30rem;
     }

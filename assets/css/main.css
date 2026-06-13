@@ -12825,7 +12825,7 @@ footer {
 }
 
 @media (max-width: 500px) {
-  .reset-password-page .field label {
+  .reset-password .field label {
     max-width: 30rem;
   }
 }

@@ -37,19 +37,20 @@
 }
 
 
-// Responsive spécifique pour la page reset-passsword
-.reset-password-page {
-  @media (max-width: 500px) {
+// Responsive spécifique pour la page Reset-passsword
+@media (max-width: 500px) {
+
+  .reset-password-page {
     .field label {
       max-width: 30rem;
     }
   }
 }
 
+// Responsive spécifique pour la page Sign-up et Employer-sign-up
+@media (max-width: 400px) {
 
-// Responsive spécifique pour la page sign-up
-.sign-up-page {
-  @media (max-width: 400px) {
+  .sign-up {
     .field label {
       max-width: 20rem;
     }

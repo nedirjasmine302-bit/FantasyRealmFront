@@ -20,10 +20,6 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function isValidPseudo(pseudo) {
-  return /^[a-zA-Z0-9_-]{3,20}$/.test(pseudo);
-}
-
 function isValidPassword(password) {
   return (
     password.length >= 8 &&
@@ -35,26 +31,21 @@ function isValidPassword(password) {
 }
 
 
-//Gestion du formulaire d'inscription (Données fictives // Besoin API)
-const existingUsers = [
-  { email: "test@mail.com", pseudo: "PlayerOne" },
-  { email: "jasmine@mail.com", pseudo: "Jasmine" }
+// Gestion du formulaire de création d'un compte employeur (Données fictives // Besoin API)
+const existingEmployers = [
+  { email: "entreprise@mail.com" },
+  { email: "contact@studio.com" }
 ];
 
 function isEmailUnique(email) {
-  return !existingUsers.some(u => u.email.toLowerCase() === email.toLowerCase());
+  return !existingEmployers.some(u => u.email.toLowerCase() === email.toLowerCase());
 }
 
-function isPseudoUnique(pseudo) {
-  return !existingUsers.some(u => u.pseudo.toLowerCase() === pseudo.toLowerCase());
-}
-
-function initSignUpForm() {
+function initEmployerSignUpForm() {
   const form = document.querySelector(".auth-form-container");
   if (!form) return;
 
   const emailInput = document.querySelector("#email");
-  const pseudoInput = document.querySelector("#pseudo");
   const passwordInput = document.querySelector("#password");
   const password2Input = document.querySelector("#password2");
   const submitBtn = document.querySelector(".btn.btn-secondary");
@@ -66,15 +57,12 @@ function initSignUpForm() {
     return error;
   }
 
-
   const emailError = createErrorElement(emailInput);
-  const pseudoError = createErrorElement(pseudoInput);
   const passwordError = createErrorElement(passwordInput);
   const password2Error = createErrorElement(password2Input);
 
   let touched = {
     email: false,
-    pseudo: false,
     password: false,
     password2: false
   };
@@ -91,7 +79,6 @@ function initSignUpForm() {
 
   function validateForm() {
     const email = sanitize(emailInput.value);
-    const pseudo = sanitize(pseudoInput.value);
     const password = sanitize(passwordInput.value);
     const password2 = sanitize(password2Input.value);
 
@@ -107,26 +94,16 @@ function initSignUpForm() {
       } else hideError(emailError);
     }
 
-    if (touched.pseudo) {
-      if (!isValidPseudo(pseudo)) {
-        showError(pseudoError, "3 à 20 caractères (lettres, chiffres, _ -)");
-        valid = false;
-      } else if (!isPseudoUnique(pseudo)) {
-        showError(pseudoError, "Ce pseudo est déjà utilisé");
-        valid = false;
-      } else hideError(pseudoError);
-    }
-
     if (touched.password) {
       if (!isValidPassword(password)) {
-        showError(passwordError, "Mot de passe non conforme (8 caractères dont une majuscule, une minuscule, un chiffre et un spécial)");
+        showError(passwordError, "Mot de passe non conforme (8 caractères, maj, min, chiffre, spécial)");
         valid = false;
       } else hideError(passwordError);
     }
 
     if (touched.password2) {
       if (password !== password2) {
-        showError(password2Error, "La confirmation n'est pas identique au mot de passe");
+        showError(password2Error, "La confirmation n'est pas identique");
         valid = false;
       } else hideError(password2Error);
     }
@@ -134,8 +111,6 @@ function initSignUpForm() {
     if (
       isValidEmail(email) &&
       isEmailUnique(email) &&
-      isValidPseudo(pseudo) &&
-      isPseudoUnique(pseudo) &&
       isValidPassword(password) &&
       password === password2
     ) {
@@ -153,7 +128,6 @@ function initSignUpForm() {
   }
 
   emailInput.addEventListener("input", () => markTouched("email"));
-  pseudoInput.addEventListener("input", () => markTouched("pseudo"));
   passwordInput.addEventListener("input", () => markTouched("password"));
   password2Input.addEventListener("input", () => markTouched("password2"));
 
@@ -164,7 +138,7 @@ function initSignUpForm() {
     if (!validateForm()) return;
 
     const success = document.createElement("p");
-    success.textContent = "Votre compte a été créé avec succès !";
+    success.textContent = "Compte employeur créé avec succès !";
     success.classList.add("message", "success-message");
     form.appendChild(success);
 
@@ -172,10 +146,10 @@ function initSignUpForm() {
     submitBtn.setAttribute("disabled", "true");
 
     setTimeout(() => {
-    success.classList.add("show");
-  }, 10);
+      success.classList.add("show");
+    }, 10);
 
-    localStorage.setItem("userLogged", "true");
+    localStorage.setItem("employerLogged", "true");
 
     setTimeout(() => {
       window.location.href = "/";
@@ -184,8 +158,8 @@ function initSignUpForm() {
 }
 
 
-// Lance le js de la page Sign-up quand elle est chargée
+// Lance le js de la page Employer-sign-up quand elle est chargée
 if (typeof window !== "undefined") {
   initReveal();
-  initSignUpForm();
+  initEmployerSignUpForm();
 }

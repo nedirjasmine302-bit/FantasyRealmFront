@@ -165,7 +165,7 @@ function initSignInForm() {
 }
 
 
-// Lance le js de la page sign_in quand elle est chargée
+// Lance le js de la page Sign-in quand elle est chargée
 if (typeof window !== "undefined") {
   initReveal();
   initSignInForm();

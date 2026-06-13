@@ -29,7 +29,7 @@ function toggleMenu() {
 }
 
 
-// Lance le js de la page quand elle est chargée
+// Lance le js du Header quand elle est chargée
 if (typeof window !== "undefined") {
   initBurger();
 }

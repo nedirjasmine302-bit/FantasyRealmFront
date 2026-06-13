@@ -147,7 +147,7 @@ function initForgotPasswordForm() {
 }
 
 
-// Lance le js de la page forgot_passsword quand elle est chargée
+// Lance le js de la page Forgot-passsword quand elle est chargée
 if (typeof window !== "undefined") {
   initReveal();
   initForgotPasswordForm();

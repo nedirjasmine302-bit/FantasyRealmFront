@@ -12305,11 +12305,6 @@ footer {
   width: 20rem;
 }
 
-@media (max-width: 400px) {
-  .sign_up-page .field label {
-    max-width: 20rem;
-  }
-}
 .btn {
   display: inline-flex;
   align-items: center;
@@ -12827,6 +12822,18 @@ footer {
   min-height: 12rem;
   max-height: 12rem;
   resize: none;
+}
+
+@media (max-width: 500px) {
+  .reset-password-page .field label {
+    max-width: 30rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .sign-up-page .field label {
+    max-width: 20rem;
+  }
 }
 
 .status {

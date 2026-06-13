@@ -39,13 +39,8 @@ function checkIdentity(email, pseudo) {
   );
 }
 
-// Gestion du formulaire pour un mot de passe oublié (Données fictives // Besoin API)
-const fakeUserLogged = {
-  isLoggedIn: false,
-  email: "jasmine@mail.com",
-  pseudo: "Jasmine"
-};
 
+// Gestion du formulaire pour un mot de passe oublié (Données fictives // Besoin API)
 function initForgotPasswordForm() {
   const form = document.querySelector(".auth-form-container");
   if (!form) return;
@@ -53,12 +48,6 @@ function initForgotPasswordForm() {
   const emailInput = document.querySelector("#email");
   const pseudoInput = document.querySelector("#pseudo");
   const submitBtn = document.querySelector(".btn.btn-secondary");
-
-  if (fakeUserLogged.isLoggedIn) {
-    emailInput.value = fakeUserLogged.email;
-    pseudoInput.value = fakeUserLogged.pseudo;
-    pseudoInput.setAttribute("disabled", "true");
-  }
 
   function createError(input) {
     const el = document.createElement("p");
@@ -95,14 +84,14 @@ function initForgotPasswordForm() {
       } else hideError(emailError);
     }
 
-    if (!fakeUserLogged.isLoggedIn && touched.pseudo) {
+    if (touched.pseudo) {
       if (!isValidPseudo(pseudo)) {
         showError(pseudoError, "3 à 20 caractères (lettres, chiffres, _ -)");
         valid = false;
       } else hideError(pseudoError);
     }
 
-    if (valid && isValidEmail(email) && (fakeUserLogged.isLoggedIn || isValidPseudo(pseudo))) {
+    if (valid && isValidEmail(email) && isValidPseudo(pseudo)) {
       submitBtn.classList.remove("btn-disabled");
     } else {
       submitBtn.classList.add("btn-disabled");
@@ -117,9 +106,7 @@ function initForgotPasswordForm() {
   }
 
   emailInput.addEventListener("input", () => markTouched("email"));
-  if (!fakeUserLogged.isLoggedIn) {
-    pseudoInput.addEventListener("input", () => markTouched("pseudo"));
-  }
+  pseudoInput.addEventListener("input", () => markTouched("pseudo"));
 
   validateForm();
 

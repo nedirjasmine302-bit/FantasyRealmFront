@@ -35,3 +35,23 @@
     resize: none;
   }
 }
+
+
+// Responsive spécifique pour la page reset-passsword
+.reset-password-page {
+  @media (max-width: 500px) {
+    .field label {
+      max-width: 30rem;
+    }
+  }
+}
+
+
+// Responsive spécifique pour la page sign-up
+.sign-up-page {
+  @media (max-width: 400px) {
+    .field label {
+      max-width: 20rem;
+    }
+  }
+}

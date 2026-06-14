@@ -1,5 +1,6 @@
 import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail, isValidPseudo, isValidPassword, isEmailUnique } from "../modules/security.js";
+import { initBackReload } from "../modules/back-reload.js";
 
 
 // Gestion du formulaire d'inscription (Données fictives // Besoin API)
@@ -157,8 +158,10 @@ function initSignUpForm() {
   });
 }
 
+
 // Lance le js de la page Sign-up quand elle est chargée
 if (typeof window !== "undefined") {
   initReveal();
   initSignUpForm();
+  initBackReload();
 }

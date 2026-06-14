@@ -1,5 +1,6 @@
 import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail, isValidPseudo } from "../modules/security.js";
+import { initBackReload } from "../modules/back-reload.js";
 
 
 const fakeUsers = [
@@ -128,4 +129,5 @@ function initForgotPasswordForm() {
 if (typeof window !== "undefined") {
   initReveal();
   initForgotPasswordForm();
+  initBackReload();
 }

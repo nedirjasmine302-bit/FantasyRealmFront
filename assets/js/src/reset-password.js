@@ -1,5 +1,6 @@
 import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail, isValidPassword } from "../modules/security.js";
+import { initBackReload } from "../modules/back-reload.js";
 
 
 // Gestion du formulaire pour changé de mot de passe (Données fictives // Besoin API)
@@ -159,4 +160,5 @@ function initResetPasswordForm() {
 if (typeof window !== "undefined") {
   initReveal();
   initResetPasswordForm();
+  initBackReload();
 }

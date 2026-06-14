@@ -1,5 +1,6 @@
 import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail, isValidPassword, isEmailUnique } from "../modules/security.js";
+import { initBackReload } from "../modules/back-reload.js";
 
 
 // Gestion du formulaire de création d'un compte employeur (Données fictives // Besoin API)
@@ -139,4 +140,5 @@ function initEmployerSignUpForm() {
 if (typeof window !== "undefined") {
   initReveal();
   initEmployerSignUpForm();
+  initBackReload();
 }

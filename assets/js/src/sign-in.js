@@ -1,5 +1,6 @@
 import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail } from "../modules/security.js";
+import { initBackReload } from "../modules/back-reload.js";
 
 
 // Gestion du formulaire de connexion (Données fictives // Besoin API)
@@ -141,7 +142,7 @@ function initSignInForm() {
   
     setTimeout(() => {
       window.location.href = "/my-space";
-    }, 800);
+    }, 1000);
   });
 }
 
@@ -150,4 +151,5 @@ function initSignInForm() {
 if (typeof window !== "undefined") {
   initReveal();
   initSignInForm();
+  initBackReload();
 }

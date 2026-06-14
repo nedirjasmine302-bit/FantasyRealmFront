@@ -128,7 +128,7 @@ function initContactForm() {
 
     setTimeout(() => {
       window.location.reload();
-    }, 1500);
+    }, 1000);
   });
 }
 

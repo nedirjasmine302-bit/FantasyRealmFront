@@ -334,6 +334,7 @@ function initFavoriteToggle() {
 // Test
 export function validateCommentForTest(message, rating) {
   const sanitized = sanitize(message);
+  if (sanitized !== message) return false;
   if (sanitized.trim() === "") return false;
   if (rating === 0) return false;
   return true;

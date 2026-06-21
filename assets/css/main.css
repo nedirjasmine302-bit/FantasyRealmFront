@@ -13349,6 +13349,9 @@ input[type=password]::-ms-reveal {
 .create-page .field textarea {
   margin: 0;
 }
+.create-page .field .input-error-character {
+  margin: 0rem;
+}
 
 .grid-3 {
   display: grid;
@@ -13452,6 +13455,8 @@ input[type=password]::-ms-reveal {
   width: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 .create-character-actions .actions-wrapper {
   display: flex;
@@ -13462,6 +13467,13 @@ input[type=password]::-ms-reveal {
 }
 .create-character-actions .actions-wrapper .btn {
   font-size: 1rem;
+}
+
+.feedback-zone {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 }
 
 @media (max-width: 700px) {

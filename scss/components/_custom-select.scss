@@ -1,0 +1,97 @@
+@use "../abstracts/all" as abs;
+
+
+.custom-select {
+  position: relative;
+
+  .custom-select-trigger {
+    background: abs.$card-bg-primary;
+    border: 1px solid transparent;
+    color: white;
+    padding: 0.45rem 2.5rem 0.45rem 0.8rem;
+    border-radius: 0.25rem;
+    height: 2.6rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    @include abs.anim-transition(border-color);
+
+    .arrow {
+      position: absolute;
+      right: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: transform 0.2s ease;
+    }
+  }
+
+  &.open .arrow {
+    transform: translateY(-50%) rotate(180deg);
+  }
+
+  .custom-options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 100%;
+    flex-direction: column;
+    background: abs.$dark;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    z-index: 2;
+  }
+
+  &.open .custom-options {
+    display: flex;
+    margin-top: 0.5rem;
+  }
+
+  .custom-option {
+    padding: 0.6rem 0.8rem;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(255,255,255,0.1);
+    }
+  }
+}
+
+.custom-select-secondary {
+  .custom-select-trigger {
+    border-color: rgba(abs.$secondary, 0.5);
+  }
+
+  &.open .custom-select-trigger {
+    border-color: abs.$secondary;
+  }
+
+  .custom-options {
+    border-color: abs.$secondary;
+  }
+
+  .custom-option:hover {
+    background: lighten(abs.$secondary, 5%);
+  }
+}
+
+.custom-select-primary {
+  .custom-select-trigger {
+    border-color: rgba(abs.$primary, 0.5);
+  }
+
+  &.open .custom-select-trigger {
+    border-color: abs.$primary;
+  }
+
+  .custom-options {
+    border-color: abs.$primary;
+  }
+
+  .custom-option:hover {
+    background: lighten(abs.$primary, 5%);
+  }
+}
+

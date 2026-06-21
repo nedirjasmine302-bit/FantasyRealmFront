@@ -12,7 +12,7 @@ export function initCustomSelects() {
 
     select.querySelectorAll(".custom-option").forEach(option => {
       option.addEventListener("click", () => {
-        select.querySelector(".trigger-text").textContent = option.textContent;
+        select.querySelector(".trigger-text").innerHTML = option.innerHTML;
         select.querySelector(".trigger-text").dataset.value = option.dataset.value;
         select.classList.remove("open");
       });

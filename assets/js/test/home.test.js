@@ -1,4 +1,4 @@
-// La fonction toggleCard sans le DOM (pour les cards)
+// La fonction toggleCard (pour les cards)
 import { test, expect } from "vitest";
 import { toggleCardForTest } from "../src/home.js";
 

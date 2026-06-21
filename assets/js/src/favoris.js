@@ -47,7 +47,7 @@ function initCharacters() {
 
         <div class="info-box">
           <h3>${char.name.toUpperCase()}</h3>
-          <a href="#" class="details">Détails</a>
+          <a href="character-details" class="details">Détails</a>
         </div>
 
       </article>

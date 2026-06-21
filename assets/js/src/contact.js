@@ -133,7 +133,7 @@ function initContactForm() {
 }
 
 
-// Test pour la fonction d'autocomplétion
+// Test
 export function getContactFormState(user) {
   if (user.isLoggedIn) {
     return {

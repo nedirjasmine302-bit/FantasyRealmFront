@@ -12,6 +12,7 @@ export const allRoutes = [
   new Route("/forgot-password", "Mot de passe oublié", "/pages/forgot-password.html","/assets/js/src/forgot-password.js"),
   new Route("/reset-password", "Changer de mot de passe", "/pages/reset-password.html","/assets/js/src/reset-password.js"),
   new Route("/employer-sign-up", "Créer un compte employeur", "/pages/employer-sign-up.html","/assets/js/src/employer-sign-up.js"),
-  new Route("/reset-employer-password", "Réinitialisation mot de passe employé", "/pages/reset-employer-password.html","/assets/js/src/reset-employer-password.js")];
+  new Route("/reset-employer-password", "Réinitialisation mot de passe employé", "/pages/reset-employer-password.html","/assets/js/src/reset-employer-password.js"),
+  new Route("/character-details", "Détails d'un personnage", "/pages/character-details.html","/assets/js/src/character-details.js")];
 //Le titre s'affiche comme ceci : Route.titre - websitename
 export const websiteName = "FantasyRealm Online";

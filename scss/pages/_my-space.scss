@@ -137,12 +137,9 @@
         justify-content: center;
         flex-wrap: nowrap;
         text-decoration: none;
+        cursor: pointer;
 
-        @include abs.text-style(
-          0.9rem,
-          abs.$font-family-sans-serif,
-          abs.$primary
-        );
+        @include abs.text-style(0.9rem, abs.$font-family-sans-serif, abs.$primary);
       }
 
       span {

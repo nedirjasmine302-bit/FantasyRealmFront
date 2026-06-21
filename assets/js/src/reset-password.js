@@ -151,7 +151,7 @@ function initResetPasswordForm() {
 
     setTimeout(() => {
       window.location.href = "/sign-in";
-    }, 1500);
+    }, 1000);
   });
 }
 

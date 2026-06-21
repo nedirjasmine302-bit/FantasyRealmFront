@@ -40,7 +40,7 @@ function initImageUpload() {
 // Statut du personnage et accès aux accessoires (Données fictives // Besoin API)
 function initEquipStatus() {
   const container = document.querySelector(".equip-content");
-  const accessoiresCard = document.querySelector(".form-card.accessoires");
+  const accessoiresCard = document.querySelector(".form-section.accessoires");
 
   if (!container || !accessoiresCard) return;
 

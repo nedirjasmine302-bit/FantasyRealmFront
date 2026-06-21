@@ -12271,35 +12271,6 @@ footer {
   color: #B07CFF;
   text-decoration: underline;
 }
-.auth-page .input-error {
-  font-family: "Nunito", sans-serif;
-  font-size: 0.85rem;
-  color: #E25353;
-  text-align: left;
-  margin: 0 1.8rem;
-  opacity: 0;
-}
-.auth-page .message {
-  font-family: "Nunito", sans-serif;
-  font-size: 1rem;
-  color: white;
-  text-align: center;
-  margin: 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.auth-page .message.show {
-  opacity: 1;
-}
-.auth-page .success-message {
-  color: #3ED598;
-}
-.auth-page .error-message {
-  color: #E25353;
-}
-.auth-page input[type=password]::-ms-reveal {
-  filter: invert(1);
-}
 
 .forgot-password-page .btn {
   width: 20rem;
@@ -12494,6 +12465,83 @@ footer {
     padding-right: 7rem;
   }
 }
+.custom-select {
+  position: relative;
+}
+.custom-select .custom-select-trigger {
+  background: #222B4A;
+  border: 1px solid transparent;
+  color: white;
+  padding: 0.45rem 2.5rem 0.45rem 0.8rem;
+  border-radius: 0.25rem;
+  height: 2.6rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+.custom-select .custom-select-trigger .arrow {
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.2s ease;
+}
+.custom-select.open .arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+.custom-select .custom-options {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 100%;
+  flex-direction: column;
+  background: #1A213D;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+.custom-select.open .custom-options {
+  display: flex;
+  margin-top: 0.5rem;
+}
+.custom-select .custom-option {
+  padding: 0.6rem 0.8rem;
+  color: white;
+  cursor: pointer;
+}
+.custom-select .custom-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.custom-select-secondary .custom-select-trigger {
+  border-color: rgba(176, 124, 255, 0.5);
+}
+.custom-select-secondary.open .custom-select-trigger {
+  border-color: #B07CFF;
+}
+.custom-select-secondary .custom-options {
+  border-color: #B07CFF;
+}
+.custom-select-secondary .custom-option:hover {
+  background: rgb(191.3778625954, 149.5, 255);
+}
+
+.custom-select-primary .custom-select-trigger {
+  border-color: rgba(111, 140, 255, 0.5);
+}
+.custom-select-primary.open .custom-select-trigger {
+  border-color: #6F8CFF;
+}
+.custom-select-primary .custom-options {
+  border-color: #6F8CFF;
+}
+.custom-select-primary .custom-option:hover {
+  background: rgb(136.5, 160.3645833333, 255);
+}
+
 .filters {
   position: relative;
   z-index: 2;
@@ -12706,6 +12754,93 @@ footer {
     justify-content: center;
   }
 }
+.form-structure {
+  width: min(90%, 60rem);
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.form-section {
+  background: #13172A;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+.form-section:nth-of-type(3) {
+  z-index: 0;
+}
+.form-section.disabled {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(40%);
+}
+.form-section .section-title {
+  margin-bottom: 1.5rem;
+}
+.form-section .sub-title {
+  font-family: "Cinzel", serif;
+  font-size: 1.7rem;
+  color: white;
+  text-align: left;
+  margin: 1.5rem 0 1rem;
+  opacity: 0.95;
+}
+
+.form-section-secondary .section-title {
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #B07CFF;
+  text-align: left;
+}
+
+.form-section-primary .section-title {
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #6F8CFF;
+  text-align: left;
+}
+
+.input-error {
+  font-family: "Nunito", sans-serif;
+  font-size: 0.85rem;
+  color: #E25353;
+  text-align: left;
+  margin: 0 1.8rem;
+  opacity: 0;
+}
+
+.message {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  margin: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.message.show {
+  opacity: 1;
+}
+
+.success-message {
+  color: #3ED598;
+}
+
+.error-message {
+  color: #E25353;
+}
+
+input[type=password]::-ms-reveal {
+  filter: invert(1);
+}
+
 ::-webkit-scrollbar {
   width: 11px;
 }
@@ -12862,6 +12997,252 @@ footer {
   background: #3ED598;
 }
 
+.upload {
+  text-align: center;
+  margin: 4.5rem 3rem;
+}
+.upload .section-title {
+  margin-bottom: 2.5rem;
+}
+.upload .upload-box {
+  background: #222B4A;
+  border: 2px dashed transparent;
+  border-radius: 0.5rem;
+  padding: 7rem 5rem;
+  max-width: 40rem;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+.upload .upload-box:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+}
+.upload .upload-box .upload-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+.upload .upload-box p {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  opacity: 0.6;
+}
+.upload .upload-box.hidden {
+  display: none;
+}
+.upload .upload-preview {
+  display: none;
+  margin-top: 2rem;
+}
+.upload .upload-preview img {
+  width: 100%;
+  max-width: 22rem;
+  height: auto;
+  border-radius: 0.5rem;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+.upload .upload-preview .upload-success {
+  margin-top: 1rem;
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: #3ED598;
+  text-align: center;
+}
+.upload .upload-preview.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-secondary .section-title {
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #B07CFF;
+  text-align: center;
+}
+.upload-secondary .upload-box {
+  border-color: rgba(176, 124, 255, 0.5);
+}
+.upload-secondary .upload-box:hover {
+  border-color: #B07CFF;
+}
+.upload-secondary .upload-box .upload-icon {
+  color: #B07CFF;
+}
+.upload-secondary .upload-preview img {
+  border-color: rgba(176, 124, 255, 0.5);
+}
+
+.upload-primary .section-title {
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #6F8CFF;
+  text-align: center;
+}
+.upload-primary .upload-box {
+  border-color: rgba(111, 140, 255, 0.5);
+}
+.upload-primary .upload-box:hover {
+  border-color: #6F8CFF;
+}
+.upload-primary .upload-box .upload-icon {
+  color: #6F8CFF;
+}
+.upload-primary .upload-preview img {
+  border-color: rgba(111, 140, 255, 0.5);
+}
+
+.character-details .field input,
+.character-details .field textarea {
+  border: 1px solid rgba(111, 140, 255, 0.5);
+}
+.character-details .field input:focus,
+.character-details .field textarea:focus {
+  border-color: #6F8CFF;
+}
+.character-details .custom-select-secondary .custom-select-trigger {
+  border: 0.0625rem solid rgba(111, 140, 255, 0.5);
+}
+.character-details .add-comment-card textarea {
+  border: 1px solid rgba(176, 124, 255, 0.5);
+}
+.character-details .add-comment-card textarea:focus {
+  border-color: #B07CFF;
+}
+.character-details .comment-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.character-details .comment-bottom .comment-info {
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  color: white;
+  text-align: left;
+  opacity: 0.7;
+  margin: 0;
+}
+.character-details .comment-bottom .btn {
+  margin-left: 1rem;
+  background-color: #B07CFF;
+}
+.character-details .comment-bottom .btn:hover {
+  background-color: rgb(160.6221374046, 98.5, 255);
+}
+.character-details .rating-stars {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 1.8rem;
+  margin-top: 1rem;
+}
+.character-details .rating-stars i {
+  cursor: pointer;
+  color: #ffd86b;
+  transition: transform 0.2s ease;
+}
+.character-details .rating-stars i:hover {
+  transform: scale(1.15);
+}
+.character-details .success-message-character {
+  margin-top: 2rem;
+  margin-bottom: 0;
+}
+.character-details .input-error-character {
+  margin: 0rem;
+}
+.character-details .character-comments {
+  margin-top: 1rem;
+}
+.character-details .character-comments .section-title {
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #6F8CFF;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.character-details .character-comments .comments-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+.character-details .character-comments .carousel-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s ease;
+}
+.character-details .character-comments .carousel-btn:hover {
+  color: #6F8CFF;
+  transform: scale(1.1);
+}
+.character-details .character-comments .comment-card {
+  background: #13172A;
+  border: 2px solid rgba(111, 140, 255, 0.5);
+  padding: 2rem;
+  border-radius: 0.75rem;
+  width: 100%;
+  max-width: 45rem;
+  text-align: center;
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+}
+.character-details .character-comments .comment-author {
+  font-family: "Cinzel", serif;
+  font-size: 1.1rem;
+  color: #6F8CFF;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.character-details .character-comments .comment-date {
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  color: white;
+  text-align: center;
+  opacity: 0.7;
+  margin-bottom: 1.5rem;
+}
+.character-details .character-comments .comment-text {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+.character-details .character-comments .comment-stars {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  font-size: 1.4rem;
+}
+.character-details .character-comments .comment-stars i {
+  color: #ffd86b;
+}
+
+.custom-select.disabled .arrow {
+  opacity: 0.5;
+}
+
+.state-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(40%);
+}
+
 .contact-page {
   width: 90%;
   max-width: 50rem;
@@ -12952,118 +13333,6 @@ footer {
   padding-bottom: 4rem;
 }
 
-.create-character-upload {
-  text-align: center;
-  margin: 4.5rem auto;
-  margin-left: 3rem;
-  margin-right: 3rem;
-}
-.create-character-upload .section-title {
-  font-family: "Cinzel", serif;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #B07CFF;
-  text-align: center;
-  margin-bottom: 2.5rem;
-}
-.create-character-upload .upload-box {
-  background: #222B4A;
-  border: 2px dashed rgba(176, 124, 255, 0.5);
-  border-radius: 0.5rem;
-  padding: 7rem 5rem;
-  max-width: 40rem;
-  margin: 0 auto;
-  cursor: pointer;
-  transition: border-color 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
-.create-character-upload .upload-box:hover {
-  border-color: #B07CFF;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-}
-.create-character-upload .upload-box .upload-icon {
-  font-size: 4rem;
-  color: #B07CFF;
-  margin-bottom: 1rem;
-  display: block;
-}
-.create-character-upload .upload-box p {
-  font-family: "Nunito", sans-serif;
-  font-size: 1rem;
-  color: white;
-  text-align: center;
-  opacity: 0.6;
-}
-.create-character-upload .upload-box.hidden {
-  display: none;
-}
-
-.upload-preview {
-  display: none;
-  margin-top: 2rem;
-}
-.upload-preview img {
-  width: 100%;
-  max-width: 22rem;
-  height: auto;
-  border-radius: 0.5rem;
-  border: 2px solid rgba(176, 124, 255, 0.5);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
-.upload-preview .upload-success {
-  margin-top: 1rem;
-  font-family: "Nunito", sans-serif;
-  font-size: 1rem;
-  color: #3ED598;
-  text-align: center;
-}
-.upload-preview.active {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.create-character-form {
-  width: min(90%, 60rem);
-  margin: 0 auto;
-  padding: 0 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 3.5rem;
-}
-
-.form-card {
-  background: #13172A;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  z-index: 1;
-}
-.form-card:nth-of-type(3) {
-  z-index: 0;
-}
-.form-card.disabled {
-  opacity: 0.35;
-  pointer-events: none;
-  filter: grayscale(40%);
-}
-.form-card .section-title {
-  font-family: "Cinzel", serif;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #B07CFF;
-  text-align: left;
-  margin-bottom: 1.5rem;
-}
-.form-card .sub-title {
-  font-family: "Cinzel", serif;
-  font-size: 1.7rem;
-  color: white;
-  text-align: left;
-  margin: 1.5rem 0 1rem;
-  opacity: 0.95;
-}
-
 .create-page .field {
   margin-bottom: 1rem;
 }
@@ -13079,67 +13348,6 @@ footer {
 .create-page .field select,
 .create-page .field textarea {
   margin: 0;
-}
-
-.custom-select-secondary {
-  position: relative;
-}
-.custom-select-secondary .custom-select-trigger {
-  background: #222B4A;
-  border: 1px solid rgba(176, 124, 255, 0.5);
-  color: white;
-  padding: 0.45rem 2.5rem 0.45rem 0.8rem;
-  border-radius: 0.25rem;
-  height: 2.6rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  white-space: nowrap;
-  position: relative;
-  cursor: pointer;
-  transition: border-color 0.3s ease;
-}
-.custom-select-secondary .custom-select-trigger .arrow {
-  position: absolute;
-  right: 0.8rem;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: transform 0.2s ease;
-}
-.custom-select-secondary.open .custom-select-trigger {
-  border-color: #B07CFF;
-}
-.custom-select-secondary.open .arrow {
-  transform: translateY(-50%) rotate(180deg);
-}
-.custom-select-secondary.open .custom-options {
-  display: flex;
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-  margin-top: 0.5rem;
-}
-.custom-select-secondary .custom-options {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 100%;
-  display: none;
-  flex-direction: column;
-  z-index: 2;
-  background: #1A213D;
-  border: 1px solid #B07CFF;
-  border-radius: 0.25rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
-.custom-select-secondary .custom-option {
-  padding: 0.6rem 0.8rem;
-  color: white;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-.custom-select-secondary .custom-option:hover {
-  background: rgb(191.3778625954, 149.5, 255);
 }
 
 .grid-3 {
@@ -14032,6 +14240,7 @@ footer {
   justify-content: center;
   flex-wrap: nowrap;
   text-decoration: none;
+  cursor: pointer;
   font-family: "Nunito", sans-serif;
   font-size: 0.9rem;
   color: #6F8CFF;

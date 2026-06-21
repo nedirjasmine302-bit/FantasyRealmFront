@@ -53,7 +53,6 @@ function initEmployerSignUpForm() {
 
     let valid = true;
 
-    // EMAIL
     if (touched.email) {
       if (!isValidEmail(email)) {
         showError(emailError, "Email invalide");
@@ -68,7 +67,6 @@ function initEmployerSignUpForm() {
       }
     }
 
-    // PASSWORD
     if (touched.password) {
       if (!isValidPassword(password)) {
         showError(passwordError, "Mot de passe non conforme (8 caractères, maj, min, chiffre, spécial)");

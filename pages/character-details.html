@@ -1,0 +1,340 @@
+<!--Section: Hero -->
+<section class="hero">
+  <div class="hero-container text-center">
+    <h1 class="hero-title fade-up">Détail du personnage</h1>
+    <p class="hero-subtitle fade-up delay-1">
+      Découvrez les caractéristiques et l’équipement de ce personnage.
+    </p>
+  </div>
+</section>
+
+<div class="create-page">
+  <div class="character-details">
+
+    <!--Section: Upload image -->
+    <section class="upload upload-primary fade-up delay-2">
+      <h2 class="section-title">Personnage sélectionné</h2>
+
+      <div class="upload-preview" id="uploadPreview">
+        <img id="previewImage" alt="Aperçu du héros">
+      </div>
+    </section>
+
+    <!--Section: Form -->
+    <section class="form-structure fade-up delay-3">
+
+      <!-- Identité -->
+      <div class="form-section form-section-primary fade-up">
+        <h2 class="section-title">Identité</h2>
+
+        <div class="field">
+          <label for="name">Nom du personnage</label>
+          <input type="text" id="name" placeholder="Entrez un nom" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label for="gender">Genre</label>
+
+          <div class="custom-select custom-select-primary" id="gender">
+            <div class="custom-select-trigger">
+              <span class="trigger-text" data-value="">Sélectionnez</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+
+            <div class="custom-options">
+              <div class="custom-option" data-value="warrior">Guerrier</div>
+              <span class="custom-option" data-value="archer">Archer</span>
+              <div class="custom-option" data-value="mage">Mage</div>
+              <div class="custom-option" data-value="paladin">Paladin</div>
+              <div class="custom-option" data-value="wizard">Enchanteur</div>
+              <div class="custom-option" data-value="druid">Druide</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="description">Description</label>
+          <textarea id="description" maxlength="300" placeholder="Décrivez votre personnage" autocomplete="off"></textarea>
+        </div>
+      </div>
+
+      <!-- Apparence -->
+      <div class="form-section form-section-primary fade-up delay-1">
+        <h2 class="section-title">Apparence</h2>
+
+        <h3 class="sub-title">Couleur</h3>
+
+        <div class="grid-3">
+          <div class="field">
+            <label for="hairColor">Cheveux</label>
+            <div class="custom-select custom-select-primary" id="hairColor">
+              <div class="custom-select-trigger">
+                <span class="trigger-text" data-value="">Sélectionnez</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+
+              <div class="custom-options">
+                <div class="custom-option" data-value="blond">Blond</div>
+                <div class="custom-option" data-value="brun">Brun</div>
+                <div class="custom-option" data-value="noir">Noir</div>
+                <div class="custom-option" data-value="roux">Roux</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="eyeColor">Yeux</label>
+            <div class="custom-select custom-select-primary" id="eyeColor">
+              <div class="custom-select-trigger">
+                <span class="trigger-text" data-value="">Sélectionnez</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+
+              <div class="custom-options">
+                <div class="custom-option" data-value="bleu">Bleu</div>
+                <div class="custom-option" data-value="vert">Vert</div>
+                <div class="custom-option" data-value="marron">Marron</div>
+                <div class="custom-option" data-value="noisette">Noisette</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="skinColor">Peau</label>
+            <div class="custom-select custom-select-primary" id="skinColor">
+              <div class="custom-select-trigger">
+                <span class="trigger-text" data-value="">Sélectionnez</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+
+              <div class="custom-options">
+                <div class="custom-option" data-value="clair">Clair</div>
+                <div class="custom-option" data-value="medium">Medium</div>
+                <div class="custom-option" data-value="fonce">Foncé</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="sub-title">Forme</h3>
+
+        <div class="grid-3">
+          <div class="field">
+            <label for="mouthShape">Bouche</label>
+            <div class="custom-select custom-select-primary" id="mouthShape">
+              <div class="custom-select-trigger">
+                <span class="trigger-text" data-value="">Sélectionnez</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+
+              <div class="custom-options">
+                <div class="custom-option" data-value="fine">Fine</div>
+                <div class="custom-option" data-value="normale">Normale</div>
+                <div class="custom-option" data-value="pulpeuse">Pulpeuse</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="eyeShape">Yeux</label>
+            <div class="custom-select custom-select-primary" id="eyeShape">
+              <div class="custom-select-trigger">
+                <span class="trigger-text" data-value="">Sélectionnez</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+
+              <div class="custom-options">
+                <div class="custom-option" data-value="ronds">Ronds</div>
+                <div class="custom-option" data-value="amande">En amande</div>
+                <div class="custom-option" data-value="fermes">Fermés</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="noseShape">Nez</label>
+            <div class="custom-select custom-select-primary" id="noseShape">
+              <div class="custom-select-trigger">
+                <span class="trigger-text" data-value="">Sélectionnez</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+
+              <div class="custom-options">
+                <div class="custom-option" data-value="fin">Fin</div>
+                <div class="custom-option" data-value="large">Large</div>
+                <div class="custom-option" data-value="pointu">Pointu</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accessoires -->
+      <div class="form-section form-section-primary accessoires fade-up delay-3">
+        <h2 class="section-title">Accessoires</h2>
+
+        <div class="rarity-legend">
+          <div class="rarity-item">
+            <span class="dot dot-standard"></span>
+            <span>Standard</span>
+          </div>
+
+          <div class="rarity-item">
+            <span class="dot dot-legendary"></span>
+            <span>Légendaire</span>
+          </div>
+
+          <div class="rarity-item">
+            <span class="dot dot-rare"></span>
+            <span>Rare</span>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="field">
+            <label for="armor">Armure</label>
+
+            <div class="custom-select custom-select-primary" data-type="armure" id="armor">
+              <div class="custom-select-trigger">
+                <span class="trigger-text" data-value="standard">Standard</span>
+                <i class="arrow bi bi-chevron-down"></i>
+              </div>
+
+              <div class="custom-options">
+                <span class="custom-option" data-value="hunter-breastplate" data-rarity="rare">
+                  <span class="dot dot-rare"></span> Plastron du chasseur
+                </span>
+
+                <span class="custom-option" data-value="traveler-tunic" data-rarity="standard">
+                  <span class="dot dot-standard"></span> Tunique de voyageur
+                </span>
+
+                <span class="custom-option" data-value="shadow-hide" data-rarity="legendary">
+                  <span class="dot dot-legendary"></span> Peau d'Ombre
+                </span>
+
+                <span class="custom-option" data-value="runic-armor" data-rarity="rare">
+                  <span class="dot dot-rare"></span> Armure runique
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="weapon">Arme</label>
+
+            <div class="custom-select custom-select-primary" data-type="arme" id="weapon">
+              <div class="custom-select-trigger">
+                <span class="trigger-text" data-value="standard">Standard</span>
+                <i class="arrow bi bi-chevron-down"></i>
+              </div>
+
+              <div class="custom-options">
+                <span class="custom-option" data-value="runic-armor" data-rarity="rare">
+                  <span class="dot dot-standard"></span> Bâton de novice
+                </span>
+
+                <span class="custom-option" data-value="moon-bow" data-rarity="rare">
+                  <span class="dot dot-rare"></span> Arc lunaire
+                </span>
+
+                <span class="custom-option" data-value="blade-of-fate" data-rarity="legendary">
+                  <span class="dot dot-legendary"></span> Lame du destin
+                </span>
+
+                <span class="custom-option" data-value="short-sword" data-rarity="standard">
+                  <span class="dot dot-standard"></span> Épée courte
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="relique">Relique</label>
+
+            <div class="custom-select custom-select-primary" data-type="relique" id="relique">
+              <div class="custom-select-trigger">
+                <span class="trigger-text" data-value="standard">Standard</span>
+                <i class="arrow bi bi-chevron-down"></i>
+              </div>
+
+              <div class="custom-options">
+                <span class="custom-option" data-value="time-relic" data-rarity="legendary">
+                  <span class="dot dot-legendary"></span> Relique du Temps
+                </span>
+
+                <span class="custom-option" data-value="copper-ring" data-rarity="standard">
+                  <span class="dot dot-standard"></span> Anneau de cuivre
+                </span>
+
+                <span class="custom-option" data-value="wind-talisman" data-rarity="rare">
+                  <span class="dot dot-rare"></span> Talisman des vents
+                </span>
+
+                <span class="custom-option" data-value="titan-amulet" data-rarity="legendary">
+                  <span class="dot dot-legendary"></span> Amulette du Titan
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Section: Write a Review-->
+      <section class="form-section form-section-secondary fade-up delay-5">
+        <h2 class="section-title">Donner votre avis</h2>
+
+        <div class="add-comment-card">
+          <div class="field">
+            <label for="description">Commentaire</label>
+            <textarea id="userComment" maxlength="300" placeholder="Écrivez votre avis ici..."></textarea>
+          </div>
+
+          <div class="rating-stars" id="ratingStars">
+            <i class="bi bi-star" data-value="1"></i>
+            <i class="bi bi-star" data-value="2"></i>
+            <i class="bi bi-star" data-value="3"></i>
+            <i class="bi bi-star" data-value="4"></i>
+            <i class="bi bi-star" data-value="5"></i>
+          </div>
+
+          <div class="comment-bottom">
+            <p class="comment-info">Votre avis sera visible seulement après validation.</p>
+            <button class="btn btn-secondary" id="publishComment">Publier</button>
+          </div>
+        </div>
+      </section>
+
+      <!--Section: Player Reviews-->
+      <section class="character-comments fade-up delay-4">
+        <h2 class="section-title">Avis des joueurs</h2>
+
+        <div class="comments-carousel">
+          <button class="carousel-btn prev">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+
+          <div class="comment-card">
+            <p class="comment-author"></p>
+            <p class="comment-date"></p>
+            <p class="comment-text"></p>
+            <div class="comment-stars"></div>
+          </div>
+
+          <button class="carousel-btn next">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+      </section>
+
+      <!--Section: Bottom buttons -->
+      <section class="create-character-actions fade-up delay-3">
+        <div class="actions-wrapper">
+          <a href="/my-space" class="btn btn-secondary" id="favBtn">Ajouter au favoris</a>
+          <a href="/my-space" class="btn btn-ghost-secondary">Annuler</a>
+        </div>
+      </section>
+
+    </section>
+  </div>
+</div>

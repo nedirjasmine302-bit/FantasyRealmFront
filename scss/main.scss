@@ -18,13 +18,18 @@
 @use "components/auth";
 @use "components/buttons";
 @use "components/card-character";
+@use "components/custom-select";
 @use "components/filters";
+@use "components/form-section";
+@use "components/feedback";
 @use "components/scrollbar";
 @use "components/hero";
 @use "components/inputs";
 @use "components/status";
+@use "components/upload";
 
 // Pages
+@use "pages/character-details";
 @use "pages/contact";
 @use "pages/create-character";
 @use "pages/home";

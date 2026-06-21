@@ -36,7 +36,7 @@ function initCharacters() {
 
         <div class="info-box">
           <h3>${char.name.toUpperCase()}</h3>
-          <a href="#" class="details">Détails</a>
+          <a href="character-details" class="details">Détails</a>
         </div>
 
       </article>
@@ -76,7 +76,7 @@ function initHearts() {
 }
 
 
-// Test pour la fonction de filtrage des pseudos (pour l'autocomplete)
+// Test
 export function filterPseudosForTest(list, query) {
   return list.filter(p =>
     p.toLowerCase().startsWith(query.toLowerCase())

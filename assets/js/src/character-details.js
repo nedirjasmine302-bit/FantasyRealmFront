@@ -207,8 +207,6 @@ function updateFavoriteButton(isLoggedIn) {
 
 const isLoggedIn = true;
 
-updateFavoriteButton(isLoggedIn);
-
 
 // Sécurise et valide uniquement le commentaire
 function initCommentSecurity() {

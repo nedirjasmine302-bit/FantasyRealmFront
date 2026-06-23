@@ -12969,6 +12969,30 @@ input[type=password]::-ms-reveal {
     max-width: 20rem;
   }
 }
+.dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-standard {
+  background: #999999;
+}
+
+.dot-legendary {
+  background: #5B38F8;
+}
+
+.dot-rare {
+  background: #FFD700;
+}
+
+.custom-select .custom-option .dot,
+.custom-select .trigger-text .dot {
+  margin-right: 0.4rem;
+}
+
 .status {
   display: inline-block;
   padding: 0.3rem 0.8rem;
@@ -13334,7 +13358,7 @@ input[type=password]::-ms-reveal {
 }
 
 .create-page .field {
-  margin-bottom: 1rem;
+  margin-bottom: 1.3rem;
 }
 .create-page .field label {
   font-family: "Cinzel", serif;
@@ -13349,7 +13373,8 @@ input[type=password]::-ms-reveal {
 .create-page .field textarea {
   margin: 0;
 }
-.create-page .field .input-error-character {
+
+.input-error-character {
   margin: 0rem;
 }
 
@@ -13424,30 +13449,6 @@ input[type=password]::-ms-reveal {
   font-size: 0.9rem;
   color: white;
   text-align: center;
-}
-
-.dot {
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.dot-standard {
-  background: #999999;
-}
-
-.dot-legendary {
-  background: #5B38F8;
-}
-
-.dot-rare {
-  background: #FFD700;
-}
-
-.custom-select .custom-option .dot,
-.custom-select .trigger-text .dot {
-  margin-right: 0.4rem;
 }
 
 .create-character-actions {

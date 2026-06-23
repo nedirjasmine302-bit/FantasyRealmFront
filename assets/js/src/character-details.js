@@ -234,26 +234,31 @@ function initCommentSecurity() {
   function validate() {
     const message = sanitize(textarea.value);
     const rating = document.getSelectedRating();
-
+  
     let valid = true;
-
+  
     if (touched) {
       if (message.trim() === "") {
         showError("Veuillez écrire un commentaire");
         valid = false;
-      } else {
+      } 
+      else if (message.trim().length < 30) {
+        showError("Le commentaire doit contenir au moins 30 caractères");
+        valid = false;
+      }
+      else {
         hideError();
       }
     }
-
+  
     if (rating === 0) valid = false;
-
+  
     if (valid) {
       publishBtn.classList.remove("state-disabled");
     } else {
       publishBtn.classList.add("state-disabled");
     }
-
+  
     return valid;
   }
 
@@ -341,7 +346,7 @@ export function validateCommentForTest(message, rating) {
 }
 
 
-// Lance le JS de la page Création de personnage quand elle est chargée
+// Lance le JS de la page Character-details quand elle est chargée
 if (typeof window !== "undefined") {
   initReveal();
   initCustomSelects();

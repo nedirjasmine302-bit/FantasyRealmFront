@@ -1,4 +1,4 @@
-// Abstracts (design system)
+// Abstracts
 @use "abstracts/all";
 
 // Vendors
@@ -25,6 +25,7 @@
 @use "components/scrollbar";
 @use "components/hero";
 @use "components/inputs";
+@use "components/rarity-dot";
 @use "components/status";
 @use "components/upload";
 

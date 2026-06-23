@@ -8,7 +8,7 @@
 
 // Section: Form
 .create-page .field {
-  margin-bottom: 1rem;
+  margin-bottom: 1.3rem;
 
   label {
     @include abs.text-style(0.9rem, abs.$font-family-serif, white, left);
@@ -21,10 +21,10 @@
   textarea {
     margin: 0;
   }
+}
 
-  .input-error-character {
-    margin: 0rem;
-  }
+.input-error-character {
+  margin: 0rem;
 }
 
 .grid-3 {
@@ -98,22 +98,6 @@
   }
 }
 
-.dot {
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.dot-standard { background: #999999; }
-.dot-legendary { background: #5B38F8; }
-.dot-rare { background: #FFD700; }
-
-.custom-select .custom-option .dot,
-.custom-select .trigger-text .dot {
-  margin-right: 0.4rem;
-}
-
 
 // Section: Bottom buttons
 .create-character-actions {
@@ -143,6 +127,7 @@
   justify-content: center;
   margin-top: 2rem;
 }
+
 
 // Responsive
 @media (max-width: 700px) {

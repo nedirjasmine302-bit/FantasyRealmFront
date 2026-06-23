@@ -2,7 +2,7 @@ import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail, isValidPseudo } from "../modules/security.js";
 
 
-// Gestion utilisateur + sécurité front (Données fictives // Besoin API)
+// Gestion utilisateur + sécurité (Données fictives // Besoin API)
 const user = {
   isLoggedIn: true,
   email: "jasmine@mail.com",
@@ -73,16 +73,25 @@ function initContactForm() {
     }
 
     if (touched.message) {
-      if (message.trim() === "") {
+      const length = message.trim().length;
+    
+      if (length === 0) {
         showError(messageError, "Veuillez entrer un message");
         valid = false;
-      } else hideError(messageError);
+      } 
+      else if (length < 30) {
+        showError(messageError, "Le message doit contenir au moins 30 caractères");
+        valid = false;
+      }
+      else {
+        hideError(messageError);
+      }
     }
 
     if (
       (user.isLoggedIn || isValidEmail(email)) &&
       isValidPseudo(pseudo) &&
-      message.trim() !== ""
+      message.trim().length >= 30
     ) {
       submitBtn.classList.remove("btn-disabled");
     } else {

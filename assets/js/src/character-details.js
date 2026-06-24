@@ -7,18 +7,18 @@ import { sanitize } from "../modules/security.js";
 function initCharacterData() {
   const fakeData = {
     image: "/assets/images/page_character/Aelyra.webp",
-    name: "Aldren Stormblade",
-    gender: "warrior",
-    description: "Un guerrier légendaire connu pour sa force et son courage.",
-    hairColor: "brun",
-    eyeColor: "vert",
-    skinColor: "medium",
-    mouthShape: "normale",
+    name: "Aelyra",
+    gender: "wizard",
+    description: "Enchanteresse elfique aux longs cheveux bleus, mystérieuse et élégante.",
+    hairColor: "noir",
+    eyeColor: "bleu",
+    skinColor: "clair",
+    mouthShape: "fine",
     eyeShape: "amande",
     noseShape: "fin",
     armor: "shadow-hide",
-    weapon: "blade-of-fate",
-    relique: "time-relic"
+    weapon: "runic-armor",
+    relique: "wind-talisman"
   };
 
   const previewImage = document.getElementById("previewImage");

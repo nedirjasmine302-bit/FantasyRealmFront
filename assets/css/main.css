@@ -12276,6 +12276,25 @@ footer {
   width: 20rem;
 }
 
+.bottom-actions {
+  margin-bottom: 4rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bottom-actions .actions-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+.bottom-actions .actions-wrapper.center {
+  justify-content: center;
+  width: auto;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -12874,7 +12893,7 @@ input[type=password]::-ms-reveal {
   position: absolute;
   z-index: 1;
   inset: 0;
-  background: url("../images/page_home/fond-hero.webp") center/cover no-repeat;
+  background: url("../images/home/fond-hero.webp") center/cover no-repeat;
   opacity: 0.4;
 }
 .hero .hero-container {
@@ -12957,6 +12976,30 @@ input[type=password]::-ms-reveal {
   min-height: 12rem;
   max-height: 12rem;
   resize: none;
+}
+
+.field-primary input,
+.field-primary textarea {
+  border-color: rgba(111, 140, 255, 0.5);
+}
+.field-primary input:focus,
+.field-primary textarea:focus {
+  border-color: #6F8CFF;
+}
+.field-primary label {
+  color: #6F8CFF;
+}
+
+.field-secondary input,
+.field-secondary textarea {
+  border-color: rgba(176, 124, 255, 0.5);
+}
+.field-secondary input:focus,
+.field-secondary textarea:focus {
+  border-color: #B07CFF;
+}
+.field-secondary label {
+  color: #B07CFF;
 }
 
 @media (max-width: 500px) {
@@ -13332,25 +13375,7 @@ input[type=password]::-ms-reveal {
   margin: 2.5rem auto 0 auto;
 }
 .contact-page .success-message {
-  font-family: "Nunito", sans-serif;
-  font-size: 1rem;
-  color: #3ED598;
-  text-align: center;
   margin-top: 2rem;
-  margin-bottom: 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.contact-page .input-error {
-  font-family: "Nunito", sans-serif;
-  font-size: 0.85rem;
-  color: #E25353;
-  text-align: left;
-  margin: 0 1.8rem;
-  opacity: 0;
-}
-.contact-page .success-message.show {
-  opacity: 1;
 }
 
 .create-character {
@@ -13449,25 +13474,6 @@ input[type=password]::-ms-reveal {
   font-size: 0.9rem;
   color: white;
   text-align: center;
-}
-
-.create-character-actions {
-  margin-bottom: 4rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-.create-character-actions .actions-wrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 60rem;
-  margin: 0 auto;
-}
-.create-character-actions .actions-wrapper .btn {
-  font-size: 1rem;
 }
 
 .feedback-zone {
@@ -13635,7 +13641,7 @@ input[type=password]::-ms-reveal {
   height: calc(100% - 2rem);
   transform: translateX(-50%);
   border-radius: 0.3rem;
-  background: url("../images/page_home/fond-presentation.webp") center/cover no-repeat;
+  background: url("../images/home/fond-presentation.webp") center/cover no-repeat;
   opacity: 0.7;
   transition: transform 0.45s ease, opacity 0.45s ease;
 }

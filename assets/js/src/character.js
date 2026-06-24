@@ -6,14 +6,14 @@ import { initAutocomplete } from "../modules/autocomplete.js";
 // Affichage des personnages (Données fictives // Besoin API)
 function initCharacters() {
   const characters = [
-    { name: "Aelyra", creator: "Little_moon", image: "../assets/images/page_character/Aelyra.webp" },
-    { name: "Kaedor", creator: "Little_moon", image: "../assets/images/page_character/Kaedor.webp" },
-    { name: "Thorn", creator: "jeff.ra", image: "../assets/images/page_character/Thorn.webp" },
-    { name: "Nyxira", creator: "8_Le", image: "../assets/images/page_character/Nyxira.webp" },
-    { name: "Aelyra", creator: "Little_moon", image: "../assets/images/page_character/Aelyra.webp" },
-    { name: "Kaedor", creator: "Little_moon", image: "../assets/images/page_character/Kaedor.webp" },
-    { name: "Thorn", creator: "jeff.ra", image: "../assets/images/page_character/Thorn.webp" },
-    { name: "Nyxira", creator: "8_Le", image: "../assets/images/page_character/Nyxira.webp" }
+    { name: "Aelyra", creator: "Little_moon", image: "../assets/images/character/Aelyra.webp" },
+    { name: "Kaedor", creator: "Little_moon", image: "../assets/images/character/Kaedor.webp" },
+    { name: "Thorn", creator: "jeff.ra", image: "../assets/images/character/Thorn.webp" },
+    { name: "Nyxira", creator: "8_Le", image: "../assets/images/character/Nyxira.webp" },
+    { name: "Aelyra", creator: "Little_moon", image: "../assets/images/character/Aelyra.webp" },
+    { name: "Kaedor", creator: "Little_moon", image: "../assets/images/character/Kaedor.webp" },
+    { name: "Thorn", creator: "jeff.ra", image: "../assets/images/character/Thorn.webp" },
+    { name: "Nyxira", creator: "8_Le", image: "../assets/images/character/Nyxira.webp" }
   ];
 
   const container = document.querySelector(".characters");

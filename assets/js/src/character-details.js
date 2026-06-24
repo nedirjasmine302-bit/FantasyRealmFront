@@ -6,7 +6,7 @@ import { sanitize } from "../modules/security.js";
 // Infomation sur le personnage (Données fictives // Besoin API)
 function initCharacterData() {
   const fakeData = {
-    image: "/assets/images/page_character/Aelyra.webp",
+    image: "/assets/images/character/Aelyra.webp",
     name: "Aelyra",
     gender: "wizard",
     description: "Enchanteresse elfique aux longs cheveux bleus, mystérieuse et élégante.",

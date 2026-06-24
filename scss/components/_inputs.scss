@@ -36,6 +36,38 @@
   }
 }
 
+.field-primary {
+
+  input,
+  textarea {
+    border-color: rgba(abs.$primary, 0.5);
+
+    &:focus {
+      border-color: abs.$primary;
+    }
+  }
+
+  label {
+    color: abs.$primary;
+  }
+}
+
+.field-secondary {
+
+  input,
+  textarea {
+    border-color: rgba(abs.$secondary, 0.5);
+
+    &:focus {
+      border-color: abs.$secondary;
+    }
+  }
+
+  label {
+    color: abs.$secondary;
+  }
+}
+
 
 // Responsive spécifique pour la page Reset-passsword et Reset-employer-password
 @media (max-width: 500px) {

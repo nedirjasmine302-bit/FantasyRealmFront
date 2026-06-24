@@ -12,7 +12,7 @@
     &::before {
       @include abs.pseudo-base(1);
       inset: 0;
-      background: url('../images/page_home/fond-hero.webp') center/cover no-repeat;
+      background: url('../images/home/fond-hero.webp') center/cover no-repeat;
       opacity: 0.4;
     }
   

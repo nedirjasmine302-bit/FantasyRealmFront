@@ -51,13 +51,7 @@
       }
 
       p {
-        @include abs.text-style(
-          1rem,
-          abs.$font-family-sans-serif,
-          white,
-          left
-        );
-
+        @include abs.text-style( 1rem, abs.$font-family-sans-serif, white, left);
         opacity: 0.9;
         margin: 0;
       }
@@ -79,20 +73,6 @@
   }
 
   .success-message {
-    @include abs.text-style(1rem, abs.$font-family-sans-serif, abs.$success);
     margin-top: 2rem;
-    margin-bottom: 0;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .input-error {
-    @include abs.text-style(0.85rem, abs.$font-family-sans-serif, abs.$danger,left);
-    margin: 0 1.8rem;
-    opacity: 0;
-  }
-  
-  .success-message.show {
-    opacity: 1;
   }
 }

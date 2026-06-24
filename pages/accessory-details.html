@@ -1,28 +1,21 @@
 <!--Section: Hero -->
 <section class="hero">
   <div class="hero-container text-center">
-    <h1 class="hero-title fade-up">Créer un accessoire</h1>
+    <h1 class="hero-title fade-up">Détails de accessoire</h1>
     <p class="hero-subtitle fade-up delay-1">
-      Créez et ajoutez un nouvel élément de personnalisation à la bibliothèque.
+      Consultez les informations complètes de l'accessoire sélectionné.
     </p>
   </div>
 </section>
 
-<div class="create-page">
+<div class="create-page accessory-page">
 
   <!--Section: Upload image -->
-  <section class="upload upload-secondary fade-up delay-2">
-    <h2 class="section-title">Ajoutez l'image de l'accessoire</h2>
-
-    <div class="upload-box" id="uploadBox">
-      <i class="bi bi-file-earmark-arrow-up upload-icon"></i>
-      <p>Glissez votre image ici ou cliquez pour importer</p>
-      <input type="file" id="accessoryImage" accept="image/*" hidden>
-    </div>
+  <section class="upload upload-primary fade-up delay-2">
+    <h2 class="section-title">Accessoire sélectionné</h2>
 
     <div class="upload-preview" id="uploadPreview">
       <img id="previewImage" alt="Aperçu de l'accessoire">
-      <p class="upload-success">Image importée avec succès !</p>
     </div>
   </section>
 
@@ -30,10 +23,10 @@
   <section class="form-structure fade-up delay-3">
 
     <!-- Features -->
-    <div class="form-section form-section-secondary fade-up">
+    <div class="form-section form-section-primary fade-up">
       <h2 class="section-title">Caractéristiques</h2>
 
-      <div class="field">
+      <div class="field field-primary">
         <label for="name">Nom de l'accessoire</label>
         <input type="text" id="name" placeholder="Entrez un nom" autocomplete="off">
       </div>
@@ -41,7 +34,7 @@
       <div class="field">
         <label for="Type">Type</label>
       
-        <div class="custom-select custom-select-secondary" id="Type">
+        <div class="custom-select custom-select-primary" id="Type">
           <div class="custom-select-trigger">
             <span class="trigger-text" data-value="">Sélectionnez</span>
             <i class="bi bi-chevron-down arrow"></i>
@@ -58,7 +51,7 @@
       <div class="field">
         <label for="rarity">Rareté</label>
 
-        <div class="custom-select custom-select-secondary" id="rarity">
+        <div class="custom-select custom-select-primary" id="rarity">
           <div class="custom-select-trigger">
             <span class="trigger-text" data-value="">Sélectionnez</span>
             <i class="bi bi-chevron-down arrow"></i>
@@ -80,7 +73,7 @@
         </div>
       </div>
 
-      <div class="field">
+      <div class="field field-primary">
         <label for="description">Description</label>
         <textarea id="description" maxlength="300" placeholder="Décrivez votre personnage" autocomplete="off"></textarea>
       </div>
@@ -88,11 +81,8 @@
 
     <!--Section: Bottom buttons -->
     <section class="bottom-actions fade-up delay-3">
-      <div class="actions-wrapper">
-        <button type="button" class="btn btn-secondary">
-          Créer l'accessoire
-        </button>
-        <a href="my-space" class="btn btn-ghost-secondary">Annuler</a>
+      <div class="actions-wrapper center">
+        <a href="my-space" class="btn btn-ghost-secondary">Retour</a>
       </div>
 
       <div class="feedback-zone"></div>

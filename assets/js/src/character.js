@@ -21,9 +21,9 @@ function initCharacters() {
 
   characters.forEach(char => {
     container.innerHTML += `
-      <article class="character-card">
+      <article class="card-vertical">
 
-        <div class="creator-tag">
+        <div class="creator-tag creator-tag-vertical">
           <i class="bi bi-person-fill"></i>
           <span>${char.creator}</span>
         </div>
@@ -36,7 +36,7 @@ function initCharacters() {
 
         <div class="info-box">
           <h3>${char.name.toUpperCase()}</h3>
-          <a href="character-details" class="details">Détails</a>
+          <a href="character-details" class="action-details">Détails</a>
         </div>
 
       </article>
@@ -58,7 +58,7 @@ function initHearts() {
   document.addEventListener("click", (e) => {
     if (!e.target.classList.contains("heart")) return;
 
-    const card = e.target.closest(".character-card");
+    const card = e.target.closest(".card-vertical");
     const characterName = card.querySelector("h3").textContent;
 
     e.target.classList.toggle("active");

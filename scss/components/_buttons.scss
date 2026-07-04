@@ -51,6 +51,22 @@
   }
 }
 
+.btn-success {
+  background-color: abs.$success;
+
+  &:hover {
+    background-color: darken(abs.$success, 3%);
+  }
+}
+
+.btn-danger {
+  background-color: abs.$danger;
+
+  &:hover {
+    background-color: darken(abs.$danger, 3%);
+  }
+}
+
 .btn-disabled {
   @include abs.state-disabled();
 }

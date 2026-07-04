@@ -5,8 +5,8 @@ import { initCustomSelects } from "../modules/forms.js";
 // Infomation sur l'accessoire (Données fictives // Besoin API)
 function initAccessoryData() {
   const fakeData = {
-    image: "/assets/images/accessory-details/Arc-lunaire.webp",
-    name: "Arc lunaire",
+    image: "/assets/images/accessory-details/Azurine.webp",
+    name: "Azurine",
     type: "weapon",
     rarity: "rare",
     description: "Arc forgé dans un métal sombre, illuminé par une lueur cyan. Sa forme évoque un croissant de lune chargé d'énergie éthérée."

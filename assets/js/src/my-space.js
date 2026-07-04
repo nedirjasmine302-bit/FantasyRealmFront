@@ -10,7 +10,7 @@ function initHearts() {
   document.addEventListener("click", (e) => {
     if (!e.target.classList.contains("heart")) return;
 
-    const card = e.target.closest(".character-card");
+    const card = e.target.closest(".card-horizontal");
     const characterName = card.querySelector("h3").textContent;
 
     e.target.classList.toggle("active");

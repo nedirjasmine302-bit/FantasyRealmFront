@@ -1,0 +1,869 @@
+<!-- Section: Hero -->
+<section class="hero">
+  <div class="hero-container text-center">
+    <h1 class="hero-title fade-up delay-2">Gestion de la plateforme</h1>
+    <p class="hero-subtitle fade-up delay-3">
+      Modérez les contenus, gérez les personnages, les accessoires et les comptes utilisateurs.
+    </p>
+  </div>
+</section>
+
+<!-- Section: Dashboard-->
+<div class="admin-management fade-up delay-4">
+
+  <!-- Section: Navigation -->
+  <nav class="admin-tabs fade-up delay-2">
+    <div class="tab-card active" data-tab="characters">
+      <i class="bi bi-people-fill"></i>
+      <span>Personnages</span>
+    </div>
+    <div class="tab-card" data-tab="accessories">
+      <i class="bi bi-shield-fill"></i>
+      <span>Accessoires</span>
+    </div>
+    <div class="tab-card" data-tab="comments">
+      <i class="bi bi-chat-left-text-fill"></i>
+      <span>Commentaires</span>
+    </div>
+    <div class="tab-card" data-tab="players">
+      <i class="bi bi-person-fill"></i>
+      <span>Joueurs</span>
+    </div>
+    <div class="tab-card" data-tab="employees">
+      <i class="bi bi-person-badge-fill"></i>
+      <span>Employés</span>
+    </div>
+    <div class="tab-card" data-tab="logs">
+      <i class="bi bi-bar-chart-fill"></i>
+      <span>Logs</span>
+    </div>
+  </nav>
+
+  <!-- Section: Character -->
+  <section id="characters" class="admin-characters-section tab-section active fade-up delay-3">
+
+    <h2 class="section-title fade-up delay-3">Les personnages</h2>
+
+    <!-- Section: Filters -->
+    <section class="filters fade-up delay-5">
+      <form class="filters-form">
+
+        <div class="field pseudo-field">
+          <label for="pseudo">Pseudo</label>
+          <div class="input-wrapper">
+            <input type="text" id="pseudo-input-characters" placeholder="Rechercher un pseudo..." autocomplete="off">
+            <i class="bi bi-search search-icon"></i>
+          </div>
+          <div id="suggestions-characters" class="pseudo-suggestions"></div>
+        </div>
+
+        <div class="field">
+          <label for="status-filter">Statut</label>
+          <div class="custom-select" id="status-filter-characters">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="validated">Valider</span>
+              <span class="custom-option" data-value="pending">Attente de validation</span>
+              <span class="custom-option" data-value="refused">Refusé</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="date-filter">Date</label>
+          <div class="custom-select" id="date-filter-characters">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="today">Aujourd'hui</span>
+              <span class="custom-option" data-value="yesterday">Hier</span>
+              <span class="custom-option" data-value="7days">7 derniers jours</span>
+              <span class="custom-option" data-value="30days">30 derniers jours</span>
+              <span class="custom-option" data-value="year">Cette année</span>
+              <span class="custom-option" data-value="old">Années précédentes</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary">Filtrer</button>
+      </form>
+    </section>
+
+    <!-- Section: Character Cards -->
+    <section class="fade-up delay-7">
+      <div class="card-container">
+
+        <!-- Card 1 -->
+        <article class="card-horizontal fade-up delay-1">
+          <div class="creator-tag creator-tag-horizontal">
+            <i class="bi bi-person-fill"></i>
+            <span>8_Lc</span>
+          </div>
+          <div class="card-img-wrapper">
+            <img src="../assets/images/my-space/Lysandria.webp" alt="Lysandria" class="card-img">
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">Lysandria</h3>
+            <span class="status status-pending">En attente de validation</span>
+            <div class="card-buttons">
+              <button class="btn btn-success">Valider</button>
+              <button class="btn btn-danger">Refuser</button>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="action-delete">Supprimer</a>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card-horizontal fade-up delay-2">
+          <div class="creator-tag creator-tag-horizontal">
+            <i class="bi bi-person-fill"></i>
+            <span>8_Lc</span>
+          </div>
+          <div class="card-img-wrapper">
+            <img src="../assets/images/my-space/MoiHaha.webp" alt="Moi Haha" class="card-img">
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">Moi Haha</h3>
+            <span class="status status-refused">Refusé</span>
+            <div class="card-buttons">
+              <button class="btn btn-success">Valider</button>
+              <button class="btn btn-danger">Refuser</button>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="action-delete">Supprimer</a>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card-horizontal fade-up delay-3">
+          <div class="creator-tag creator-tag-horizontal">
+            <i class="bi bi-person-fill"></i>
+            <span>8_Lc</span>
+          </div>
+          <div class="card-img-wrapper">
+            <img src="../assets/images/my-space/Valerius.webp" alt="Valerius" class="card-img">
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">Valerius</h3>
+            <span class="status status-valid">Validé</span>
+            <div class="card-buttons">
+              <button class="btn btn-success">Valider</button>
+              <button class="btn btn-danger">Refuser</button>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="action-delete">Supprimer</a>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="card-horizontal fade-up delay-4">
+          <div class="creator-tag creator-tag-horizontal">
+            <i class="bi bi-person-fill"></i>
+            <span>8_Lc</span>
+          </div>
+          <div class="card-img-wrapper">
+            <img src="../assets/images/character/Nyxira.webp" alt="Nyxira" class="card-img">
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">Nyxira</h3>
+            <span class="status status-valid">Validé</span>
+            <div class="card-buttons">
+              <button class="btn btn-success">Valider</button>
+              <button class="btn btn-danger">Refuser</button>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="action-delete">Supprimer</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </section>
+
+  <!-- Section: Accessory -->
+  <section id="accessories" class="admin-accessories-section tab-section fade-up delay-3">
+    <div class="section-wrapper">
+  
+      <div class="section-header fade-up delay-5">
+        <h2 class="section-title">Les accessoires</h2>
+        <a href="create-accessory" class="btn btn-secondary">Créer un accessoire</a>
+      </div>
+  
+      <!-- Section: Filters -->
+      <section class="filters fade-up delay-5">
+        <form class="filters-form">
+  
+          <div class="field">
+            <label for="rarity-filter">Rareté</label>
+            <div class="custom-select rarity-select" id="rarity-filter-accessories">
+              <div class="custom-select-trigger">
+                <span class="trigger-text">Tous</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+              <div class="custom-options">
+                <span class="custom-option" data-value="">Tous</span>
+                <span class="custom-option" data-value="standard" data-rarity="standard"><span class="dot dot-standard"></span> Standard</span>
+                <span class="custom-option" data-value="rare" data-rarity="rare"><span class="dot dot-rare"></span> Rare</span>
+                <span class="custom-option" data-value="legendary" data-rarity="legendary"><span class="dot dot-legendary"></span> Légendaire</span>
+              </div>
+            </div>
+          </div>
+  
+          <div class="field">
+            <label for="status-filter">Statut</label>
+            <div class="custom-select status-filter" id="status-filter-accessories">
+              <div class="custom-select-trigger">
+                <span class="trigger-text">Tous</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+              <div class="custom-options">
+                <span class="custom-option" data-value="">Tous</span>
+                <span class="custom-option" data-value="validated">Valider</span>
+                <span class="custom-option" data-value="pending">Attente de validation</span>
+                <span class="custom-option" data-value="refused">Refusé</span>
+              </div>
+            </div>
+          </div>
+  
+          <div class="field">
+            <label for="date-filter">Date</label>
+            <div class="custom-select date-select" id="date-filter-accessories">
+              <div class="custom-select-trigger">
+                <span class="trigger-text">Tous</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+              <div class="custom-options">
+                <span class="custom-option" data-value="">Tous</span>
+                <span class="custom-option" data-value="today">Aujourd'hui</span>
+                <span class="custom-option" data-value="yesterday">Hier</span>
+                <span class="custom-option" data-value="7days">7 derniers jours</span>
+                <span class="custom-option" data-value="30days">30 derniers jours</span>
+                <span class="custom-option" data-value="year">Cette année</span>
+                <span class="custom-option" data-value="old">Années précédentes</span>
+              </div>
+            </div>
+          </div>
+  
+          <button type="button" class="btn btn-primary">Filtrer</button>
+        </form>
+      </section>
+    </div>
+  
+    <!-- Section: Accessory cards -->
+    <section class="fade-up delay-7">
+      <div class="card-container">
+  
+        <!-- Card 1 -->
+        <article class="card-horizontal fade-up delay-1">
+          <div class="card-img-wrapper">
+            <img src="../assets/images/accessory-details/Azurine.webp" alt="Azurine" class="card-img">
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">Azurine</h3>
+            <div class="status-item">
+              <span class="label">Type :</span>
+              <div class="status-value">
+                <span class="status status-type-accessory">Arme</span>
+              </div>
+            </div>
+            <div class="rarity-item">
+              <span class="label">Rareté :</span>
+              <div class="rarity-value">
+                <span class="dot dot-rare"></span>
+                <span class="value">Rare</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a href="accessory-details" class="action-modifier">Description</a>
+            <span>|</span>
+            <a class="action-duplicate">Désactiver</a>
+            <span>|</span>
+            <a class="action-delete">Supprimer</a>
+          </div>
+        </article>
+  
+        <!-- Card 2 -->
+        <article class="card-horizontal fade-up delay-2">
+          <div class="card-img-wrapper">
+            <img src="../assets/images/accessory-details/Azurine.webp" alt="Azurine" class="card-img">
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">Azurine</h3>
+            <div class="status-item">
+              <span class="label">Type :</span>
+              <div class="status-value">
+                <span class="status status-type-accessory">Arme</span>
+              </div>
+            </div>
+            <div class="rarity-item">
+              <span class="label">Rareté :</span>
+              <div class="rarity-value">
+                <span class="dot dot-rare"></span>
+                <span class="value">Rare</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a href="accessory-details" class="action-modifier">Description</a>
+            <span>|</span>
+            <a class="action-duplicate">Désactiver</a>
+            <span>|</span>
+            <a class="action-delete">Supprimer</a>
+          </div>
+        </article>
+  
+      </div>
+    </section>
+  </section>
+  
+  <!-- Section: Comment -->
+  <section id="comments" class="tab-section admin-comment-section fade-up delay-3">
+    <h2 class="section-title fade-up delay-3">Les commentaires</h2>
+  
+    <!-- Section: Filters -->
+    <section class="filters fade-up delay-5">
+      <form class="filters-form">
+  
+        <div class="field pseudo-field">
+          <label for="pseudo">Pseudo</label>
+          <div class="input-wrapper">
+            <input type="text" id="pseudo-input-comment" placeholder="Rechercher un pseudo..." autocomplete="off">
+            <i class="bi bi-search search-icon"></i>
+          </div>
+          <div id="suggestions-comment" class="pseudo-suggestions"></div>
+        </div>
+  
+        <div class="field">
+          <label for="status-filter">Statut</label>
+          <div class="custom-select" id="status-filter-comment">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="validated">Valider</span>
+              <span class="custom-option" data-value="pending">Attente de validation</span>
+              <span class="custom-option" data-value="refused">Refusé</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="field">
+          <label for="date-filter">Date</label>
+          <div class="custom-select" id="date-filter-comment">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="today">Aujourd'hui</span>
+              <span class="custom-option" data-value="yesterday">Hier</span>
+              <span class="custom-option" data-value="7days">7 derniers jours</span>
+              <span class="custom-option" data-value="30days">30 derniers jours</span>
+              <span class="custom-option" data-value="year">Cette année</span>
+              <span class="custom-option" data-value="old">Années précédentes</span>
+            </div>
+          </div>
+        </div>
+  
+        <button type="button" class="btn btn-primary">Filtrer</button>
+      </form>
+    </section>
+  
+    <!-- Section: Comments Cards -->
+    <section class="fade-up delay-7">
+      <div class="card-container">
+  
+        <!-- Card 1 -->
+        <article class="card-horizontal fade-up delay-1">
+          <div class="creator-tag creator-tag-horizontal">
+            <i class="bi bi-person-fill"></i>
+            <span>8_Lc</span>
+          </div>
+          <div class="card-img-wrapper">
+            <img src="../assets/images/my-space/Lysandria.webp" alt="Lysandria" class="card-img">
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">Lysandria</h3>
+            <span class="status status-pending">En attente de validation</span>
+            <div class="card-buttons">
+              <button class="btn btn-secondary" data-id="1">Voir le commentaire</button>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="action-delete">Supprimer</a>
+          </div>
+        </article>
+  
+        <!-- Card 2 -->
+        <article class="card-horizontal fade-up delay-2">
+          <div class="creator-tag creator-tag-horizontal">
+            <i class="bi bi-person-fill"></i>
+            <span>8_Lc</span>
+          </div>
+          <div class="card-img-wrapper">
+            <img src="../assets/images/my-space/MoiHaha.webp" alt="Moi Haha" class="card-img">
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">Moi Haha</h3>
+            <span class="status status-refused">Refusé</span>
+            <div class="card-buttons">
+              <button class="btn btn-secondary" data-id="2">Voir le commentaire</button>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="action-delete">Supprimer</a>
+          </div>
+        </article>
+  
+        <!-- Card 3 -->
+        <article class="card-horizontal fade-up delay-3">
+          <div class="creator-tag creator-tag-horizontal">
+            <i class="bi bi-person-fill"></i>
+            <span>8_Lc</span>
+          </div>
+          <div class="card-img-wrapper">
+            <img src="../assets/images/my-space/Valerius.webp" alt="Valerius" class="card-img">
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">Valerius</h3>
+            <span class="status status-valid">Validé</span>
+            <div class="card-buttons">
+              <button class="btn btn-secondary" data-id="3">Voir le commentaire</button>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="action-delete">Supprimer</a>
+          </div>
+        </article>
+  
+      </div>
+  
+      <!-- Section: Pop up comment -->
+      <div id="comment-popup" class="popup-overlay">
+        <div class="popup-content">
+          <button class="popup-close"><i class="bi bi-x-lg"></i></button>
+          <h3 class="popup-title">Commentaire de :</h3>
+          <div class="creator-tag">
+            <i class="bi bi-person-fill"></i>
+            <span id="popup-pseudo"></span>
+          </div>
+          <textarea id="popup-text" class="popup-text" readonly></textarea>
+          <div class="popup-stars comment-stars" id="popup-stars">
+            <i class="bi bi-star" data-value="1"></i>
+            <i class="bi bi-star" data-value="2"></i>
+            <i class="bi bi-star" data-value="3"></i>
+            <i class="bi bi-star" data-value="4"></i>
+            <i class="bi bi-star" data-value="5"></i>
+          </div>
+          <div class="popup-buttons">
+            <button class="btn btn-success">Valider</button>
+            <button class="btn btn-danger">Refuser</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!--Section: Players -->
+  <section id="players" class="tab-section admin-players-section">
+    <h2 class="section-title fade-up delay-3">Les joueurs</h2>
+  
+    <!-- Section: Filters -->
+    <section class="filters fade-up delay-5">
+      <form class="filters-form">
+  
+        <div class="field pseudo-field">
+          <label for="pseudo">Pseudo</label>
+          <div class="input-wrapper">
+            <input type="text" id="pseudo-input-user" placeholder="Rechercher un pseudo..." autocomplete="off">
+            <i class="bi bi-search search-icon"></i>
+          </div>
+          <div id="suggestions-user" class="pseudo-suggestions"></div>
+        </div>
+  
+        <div class="field">
+          <label for="account-state-filter">État du compte</label>
+          <div class="custom-select" id="account-state-filter-user">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="active">Actif</span>
+              <span class="custom-option" data-value="suspended">Suspendu</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="field">
+          <label for="date-filter">Date</label>
+          <div class="custom-select" id="date-filter-user">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="today">Aujourd'hui</span>
+              <span class="custom-option" data-value="yesterday">Hier</span>
+              <span class="custom-option" data-value="7days">7 derniers jours</span>
+              <span class="custom-option" data-value="30days">30 derniers jours</span>
+              <span class="custom-option" data-value="year">Cette année</span>
+              <span class="custom-option" data-value="old">Années précédentes</span>
+            </div>
+          </div>
+        </div>
+  
+        <button type="button" class="btn btn-primary">Filtrer</button>
+      </form>
+    </section>
+  
+    <!-- Section: Players cards -->
+    <section class="characters fade-up delay-7">
+  
+      <article class="card-vertical">
+        <div class="img-wrapper">
+          <i class="bi bi-person-fill user-avatar-icon"></i>
+        </div>
+        <div class="info-box">
+          <h3>Little_mo0n</h3>
+          <div class="actions">
+            <button class="btn btn-secondary action-suspend">Suspendre</button>
+            <a class="action-delete">Supprimer</a>
+          </div>
+        </div>
+      </article>
+  
+      <article class="card-vertical">
+        <div class="img-wrapper">
+          <i class="bi bi-person-fill user-avatar-icon"></i>
+        </div>
+        <div class="info-box">
+          <h3>Little_mo0n</h3>
+          <div class="actions">
+            <button class="btn btn-secondary action-suspend">Suspendre</button>
+            <a class="action-delete">Supprimer</a>
+          </div>
+        </div>
+      </article>
+  
+      <article class="card-vertical">
+        <div class="img-wrapper">
+          <i class="bi bi-person-fill user-avatar-icon"></i>
+        </div>
+        <div class="info-box">
+          <h3>Little_mo0n</h3>
+          <div class="actions">
+            <button class="btn btn-secondary action-suspend">Suspendre</button>
+            <a class="action-delete">Supprimer</a>
+          </div>
+        </div>
+      </article>
+  
+    </section>
+  </section>
+  
+  <!-- Section: Employees -->
+  <section id="employees" class="tab-section admin-employees-section">
+    <div class="section-wrapper">
+  
+      <div class="section-header fade-up delay-5">
+        <h2 class="section-title">Les employés</h2>
+        <a href="employer-sign-up" class="btn btn-secondary">Créer un employé</a>
+      </div>
+  
+      <!-- Section: Filters -->
+      <section class="filters fade-up delay-5">
+        <form class="filters-form">
+  
+          <div class="field pseudo-field">
+            <label for="pseudo">Pseudo</label>
+            <div class="input-wrapper">
+              <input type="text" id="pseudo-input-employees" placeholder="Rechercher un pseudo..." autocomplete="off">
+              <i class="bi bi-search search-icon"></i>
+            </div>
+            <div id="suggestions-employees" class="pseudo-suggestions"></div>
+          </div>
+  
+          <div class="field">
+            <label for="account-state-filter">État du compte</label>
+            <div class="custom-select" id="account-state-filter-employees">
+              <div class="custom-select-trigger">
+                <span class="trigger-text">Tous</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+              <div class="custom-options">
+                <span class="custom-option" data-value="">Tous</span>
+                <span class="custom-option" data-value="active">Actif</span>
+                <span class="custom-option" data-value="suspended">Suspendu</span>
+              </div>
+            </div>
+          </div>
+  
+          <div class="field">
+            <label for="date-filter">Date</label>
+            <div class="custom-select" id="date-filter-employees">
+              <div class="custom-select-trigger">
+                <span class="trigger-text">Tous</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+              <div class="custom-options">
+                <span class="custom-option" data-value="">Tous</span>
+                <span class="custom-option" data-value="today">Aujourd'hui</span>
+                <span class="custom-option" data-value="yesterday">Hier</span>
+                <span class="custom-option" data-value="7days">7 derniers jours</span>
+                <span class="custom-option" data-value="30days">30 derniers jours</span>
+                <span class="custom-option" data-value="year">Cette année</span>
+                <span class="custom-option" data-value="old">Années précédentes</span>
+              </div>
+            </div>
+          </div>
+  
+          <button type="button" class="btn btn-primary">Filtrer</button>
+        </form>
+      </section>
+    </div>
+  
+    <!-- Section: Employees cards -->
+    <section class="characters fade-up delay-7">
+  
+      <article class="card-vertical">
+        <div class="img-wrapper">
+          <i class="bi bi-person-fill user-avatar-icon"></i>
+        </div>
+        <div class="info-box">
+          <h3>LucasDev</h3>
+          <div class="actions">
+            <button class="btn btn-secondary action-suspend">Suspendre</button>
+            <div class="card-actions">
+              <a href="reset-employer-password" class="action-edit">Modifier</a>
+              <span>|</span>
+              <a href="reset-employer-password" class="action-delete">Supprimer</a>
+            </div>
+          </div>
+        </div>
+      </article>
+  
+      <article class="card-vertical">
+        <div class="img-wrapper">
+          <i class="bi bi-person-fill user-avatar-icon"></i>
+        </div>
+        <div class="info-box">
+          <h3>JasDev</h3>
+          <div class="actions">
+            <button class="btn btn-secondary action-suspend">Suspendre</button>
+            <div class="card-actions">
+              <a href="reset-employer-password" class="action-edit">Modifier</a>
+              <span>|</span>
+              <a href="reset-employer-password" class="action-delete">Supprimer</a>
+            </div>
+          </div>
+        </div>
+      </article>
+  
+      <article class="card-vertical">
+        <div class="img-wrapper">
+          <i class="bi bi-person-fill user-avatar-icon"></i>
+        </div>
+        <div class="info-box">
+          <h3>MarieDev</h3>
+          <div class="actions">
+            <button class="btn btn-secondary action-suspend">Suspendre</button>
+            <div class="card-actions">
+              <a href="reset-employer-password" class="action-edit">Modifier</a>
+              <span>|</span>
+              <a href="reset-employer-password" class="action-delete">Supprimer</a>
+            </div>
+          </div>
+        </div>
+      </article>
+  
+    </section>
+  </section>
+
+  <!-- Section: Logs -->
+  <section id="logs" class="tab-section admin-logs-section">
+    <h2 class="section-title fade-up delay-3">Journal d'activité</h2>
+  
+    <!-- Section: Filters -->
+    <section class="filters fade-up delay-5">
+      <form class="filters-form">
+  
+        <div class="field">
+          <label for="type-filter">Type d'utilisateur</label>
+          <div class="custom-select type-select" id="type-filter-logs">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="validated">Joueur</span>
+              <span class="custom-option" data-value="pending">Employé</span>
+              <span class="custom-option" data-value="refused">Administrateur</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="field">
+          <label for="action-filter">Action</label>
+          <div class="custom-select status-filter" id="status-filter-logs">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="validated">Création</span>
+              <span class="custom-option" data-value="pending">Modification</span>
+              <span class="custom-option" data-value="refused">Suppression</span>
+              <span class="custom-option" data-value="">Publication</span>
+              <span class="custom-option" data-value="validated">Dépublication</span>
+              <span class="custom-option" data-value="pending">Validation / Refus</span>
+              <span class="custom-option" data-value="refused">Suspension / Réactivation</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="field">
+          <label for="date-filter">Date</label>
+          <div class="custom-select date-select" id="date-filter-logs">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="today">Aujourd'hui</span>
+              <span class="custom-option" data-value="yesterday">Hier</span>
+              <span class="custom-option" data-value="7days">7 derniers jours</span>
+              <span class="custom-option" data-value="30days">30 derniers jours</span>
+              <span class="custom-option" data-value="year">Cette année</span>
+              <span class="custom-option" data-value="old">Années précédentes</span>
+            </div>
+          </div>
+        </div>
+  
+        <button type="button" class="btn btn-primary">Filtrer</button>
+      </form>
+    </section>
+  
+    <!-- Section: Logs cards -->
+    <section class="fade-up delay-7">
+      <div class="card-container logs-container">
+  
+        <!-- Card 1 -->
+        <article class="card-horizontal card-log fade-up delay-1">
+          <div class="creator-tag creator-tag-horizontal">
+            <i class="bi bi-person-fill"></i>
+            <span>8_Lc</span>
+          </div>
+  
+          <div class="card-content">
+            <h3 class="card-name">Joueur</h3>
+  
+            <div class="log-type">
+              <span class="label">Type d'utilisateur :</span>
+              <div class="log-value">
+                <span class="status status-type-accessory log-action">Création d'un personnage</span>
+              </div>
+            </div>
+  
+            <div class="log-message">
+              <div class="log-value">
+                <span class="log-text">Le joueur ShadowBlade42 a créé le personnage Kael Stormblade.</span>
+              </div>
+            </div>
+  
+            <div class="log-date">
+              <div class="log-date-value">
+                <span class="log-text">04/07/2026 - 11:12</span>
+              </div>
+            </div>
+          </div>
+        </article>
+  
+        <!-- Card 2 -->
+        <article class="card-horizontal card-log fade-up delay-1">
+          <div class="creator-tag creator-tag-horizontal">
+            <i class="bi bi-person-fill"></i>
+            <span>LucasDev</span>
+          </div>
+  
+          <div class="card-content">
+            <h3 class="card-name">Employé</h3>
+  
+            <div class="log-type">
+              <span class="label">Type d'utilisateur :</span>
+              <div class="log-value">
+                <span class="status status-type-accessory log-action">Validation d'un commentaire</span>
+              </div>
+            </div>
+  
+            <div class="log-message">
+              <div class="log-value">
+                <span class="log-text">L'employé LucasDev a validé le commentaire du joueur FireWolf sur le personnage Astra Nova.</span>
+              </div>
+            </div>
+  
+            <div class="log-date">
+              <div class="log-date-value">
+                <span class="log-text">04/07/2026 - 11:18</span>
+              </div>
+            </div>
+          </div>
+        </article>
+  
+        <!-- Card 3 -->
+        <article class="card-horizontal card-log fade-up delay-1">
+          <div class="creator-tag creator-tag-horizontal">
+            <i class="bi bi-person-fill"></i>
+            <span>Admin1</span>
+          </div>
+  
+          <div class="card-content">
+            <h3 class="card-name">Administrateur</h3>
+  
+            <div class="log-type">
+              <span class="label">Type d'utilisateur :</span>
+              <div class="log-value">
+                <span class="status status-type-accessory log-action">Suspension d'un employé</span>
+              </div>
+            </div>
+  
+            <div class="log-message">
+              <div class="log-value">
+                <span class="log-text">L'administrateur AdminMaster a suspendu l'employé LucasDev.</span>
+              </div>
+            </div>
+  
+            <div class="log-date">
+              <div class="log-date-value">
+                <span class="log-text">04/07/2026 - 11:25</span>
+              </div>
+            </div>
+          </div>
+        </article>
+  
+      </div>
+    </section>
+  </section>
+
+</div>

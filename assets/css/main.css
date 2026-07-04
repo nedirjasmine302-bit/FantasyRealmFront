@@ -12339,6 +12339,20 @@ footer {
   border: 1px solid #B07CFF;
 }
 
+.btn-success {
+  background-color: #3ED598;
+}
+.btn-success:hover {
+  background-color: rgb(49.4344680851, 210.2655319149, 145.2940425532);
+}
+
+.btn-danger {
+  background-color: #E25353;
+}
+.btn-danger:hover {
+  background-color: rgb(223.7925373134, 69.9074626866, 69.9074626866);
+}
+
 .btn-disabled {
   opacity: 0.35;
   pointer-events: none;
@@ -12352,7 +12366,7 @@ footer {
   column-gap: 4rem;
   margin-top: 5rem;
 }
-.characters .character-card {
+.characters .card-vertical {
   background: #1A213D;
   padding: 1.2rem;
   border-radius: 0.6rem;
@@ -12362,11 +12376,11 @@ footer {
   transition: transform 0.3s ease;
   margin-bottom: 4rem;
 }
-.characters .character-card:hover {
+.characters .card-vertical:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
 }
-.characters .character-card .info-box {
+.characters .card-vertical .info-box {
   background: #222B4A;
   padding: 0.8rem 0.8rem;
   border-radius: 0.4rem;
@@ -12376,7 +12390,14 @@ footer {
   z-index: 2;
   position: relative;
 }
-.characters .character-card .info-box .details {
+.characters .card-vertical .info-box .actions {
+  margin-top: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.characters .card-vertical .info-box a {
   display: inline-block;
   font-family: "Nunito", sans-serif;
   font-size: 0.9rem;
@@ -12384,11 +12405,15 @@ footer {
   text-align: center;
   text-decoration: none;
 }
-.characters .character-card .info-box .details:hover {
+.characters .card-vertical .info-box a.action-details:hover {
   color: #B07CFF;
   text-decoration: underline;
 }
-.characters .character-card .heart {
+.characters .card-vertical .info-box a.action-delete:hover {
+  color: #E25353;
+  text-decoration: underline;
+}
+.characters .card-vertical .heart {
   position: absolute;
   top: 0.8rem;
   right: 1rem;
@@ -12397,10 +12422,262 @@ footer {
   cursor: pointer;
   z-index: 3;
 }
-.characters .character-card .creator-tag {
+.characters .card-vertical .img-wrapper {
+  width: 100%;
+  height: 15rem;
+  overflow: hidden;
+  position: relative;
+}
+.characters .card-vertical .img-wrapper .user-avatar-icon {
+  font-size: 15rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
-  top: 1rem;
+  top: 2rem;
   left: 1rem;
+  right: 1rem;
+}
+.characters .card-vertical img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% -10%;
+}
+.characters .card-vertical h3 {
+  font-family: "Cinzel", serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 0.3rem;
+}
+.characters .card-vertical .creator {
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  color: white;
+  text-align: center;
+  margin-top: 0.2rem;
+}
+.characters .card-vertical .card-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.characters .card-vertical .card-actions .heart {
+  font-size: 1.4rem;
+  color: #6F8CFF;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+@media (max-width: 1200px) {
+  .characters {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  .characters .card-vertical .img-wrapper {
+    height: 20rem;
+  }
+  .characters .card-vertical img {
+    object-position: 50% -5%;
+  }
+}
+@media (max-width: 857px) {
+  .characters {
+    grid-template-columns: repeat(auto-fit, 220px);
+  }
+  .characters .card-vertical .img-wrapper {
+    height: 24rem;
+  }
+  .characters .card-vertical img {
+    object-position: 50% -5%;
+  }
+}
+@media (max-width: 600px) {
+  .characters {
+    padding-left: 7rem;
+    padding-right: 7rem;
+  }
+}
+.card-horizontal {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
+  text-align: left;
+  width: 100%;
+  max-width: 60rem;
+  min-height: 15rem;
+  padding: 0.5rem;
+  background: #222B4A;
+  border-radius: 0.4rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  transition: transform 0.3s ease;
+}
+.card-horizontal:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+.card-horizontal .card-img-wrapper {
+  width: 16rem;
+  height: 16rem;
+  background: #1A213D;
+  border-radius: 0.3rem;
+  overflow: hidden;
+  position: relative;
+}
+.card-horizontal .card-img {
+  width: 160%;
+  height: auto;
+  position: absolute;
+  top: 2rem;
+  object-fit: cover;
+  object-position: 50% 20%;
+  transform: scale(1.1);
+}
+.card-horizontal .card-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: flex-start;
+  height: 100%;
+  margin-top: 0.9rem;
+}
+.card-horizontal .card-content .card-name {
+  font-family: "Cinzel", serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+  text-align: left;
+  margin-bottom: 0.3rem;
+}
+.card-horizontal .card-content .card-buttons {
+  display: flex;
+  margin: 0.5rem 0;
+  align-self: flex-start;
+}
+.card-horizontal .card-content .card-buttons .btn {
+  width: auto;
+  padding: 0 1rem;
+  height: 2.3rem;
+  font-size: 0.9rem;
+}
+.card-horizontal .card-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: auto;
+  margin-right: 0.5rem;
+  align-self: flex-end;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.93rem;
+  color: white;
+  text-align: center;
+}
+.card-horizontal .card-actions a {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  color: #6F8CFF;
+  text-align: center;
+}
+.card-horizontal .card-actions a.action-edit:hover {
+  color: #B07CFF;
+  text-decoration: underline;
+}
+.card-horizontal .card-actions a.action-delete:hover {
+  color: #E25353;
+  text-decoration: underline;
+}
+.card-horizontal .card-actions span {
+  color: white;
+}
+.card-horizontal .fav-btn {
+  background: transparent;
+  border: none;
+  position: absolute;
+  top: 0.7rem;
+  right: 1rem;
+}
+.card-horizontal .fav-btn .heart {
+  font-size: 1.8rem;
+  color: #6F8CFF;
+  cursor: pointer;
+  z-index: 3;
+}
+
+@media (max-width: 650px) {
+  .card-horizontal {
+    align-items: flex-start;
+  }
+  .card-horizontal .card-img-wrapper {
+    width: 14rem;
+    height: 14rem;
+    flex-shrink: 0;
+  }
+  .card-horizontal .card-img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: none;
+  }
+}
+@media (max-width: 540px) {
+  .characters-container {
+    width: 100%;
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+  .card-horizontal {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    max-width: 19rem;
+  }
+  .card-horizontal .card-img {
+    top: 1rem;
+  }
+  .card-horizontal .card-img-wrapper {
+    width: 18rem;
+    margin-bottom: 1rem;
+  }
+  .card-horizontal .card-content {
+    width: 100%;
+    margin: 0;
+    align-items: center;
+    text-align: center;
+  }
+  .card-horizontal .card-content .card-title {
+    width: 100%;
+    text-align: center;
+  }
+  .card-horizontal .card-content .card-buttons {
+    align-self: center;
+  }
+  .card-horizontal .status {
+    margin: 0.3rem 0 0.6rem;
+  }
+  .card-horizontal .card-actions {
+    margin-top: 1rem;
+    margin-right: 0;
+    align-self: center;
+    justify-content: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+}
+.creator-tag {
+  position: absolute;
   background: rgba(176, 124, 255, 0.3);
   padding: 0.25rem 0.6rem;
   border-radius: 0.4rem;
@@ -12413,77 +12690,21 @@ footer {
   backdrop-filter: blur(2px);
   z-index: 3;
 }
-.characters .character-card .creator-tag i {
+.creator-tag i {
   font-size: 1rem;
 }
-.characters .character-card .img-wrapper {
-  width: 100%;
-  height: 15rem;
-  overflow: hidden;
-  position: relative;
-}
-.characters .character-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% -10%;
-}
-.characters .character-card h3 {
-  font-family: "Cinzel", serif;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
-  text-align: center;
-  margin-bottom: 0.3rem;
-}
-.characters .character-card .creator {
-  font-family: "Nunito", sans-serif;
-  font-size: 0.9rem;
-  color: white;
-  text-align: center;
-  margin-top: 0.2rem;
-}
-.characters .character-card .card-actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.characters .character-card .card-actions .heart {
-  font-size: 1.4rem;
-  color: #6F8CFF;
-  cursor: pointer;
-  transition: color 0.3s ease;
+
+.creator-tag-horizontal {
+  top: 0.7rem;
+  right: 1rem;
+  margin-top: 0.4rem;
 }
 
-@media (max-width: 1200px) {
-  .characters {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-  .characters .character-card .img-wrapper {
-    height: 20rem;
-  }
-  .characters .character-card img {
-    object-position: 50% -5%;
-  }
+.creator-tag-vertical {
+  top: 1rem;
+  left: 1rem;
 }
-@media (max-width: 857px) {
-  .characters {
-    grid-template-columns: repeat(auto-fit, 220px);
-  }
-  .characters .character-card .img-wrapper {
-    height: 24rem;
-  }
-  .characters .character-card img {
-    object-position: 50% -5%;
-  }
-}
-@media (max-width: 600px) {
-  .characters {
-    padding-left: 7rem;
-    padding-right: 7rem;
-  }
-}
+
 .custom-select {
   position: relative;
 }
@@ -12566,7 +12787,8 @@ footer {
   z-index: 2;
   margin-top: 4rem;
   margin-bottom: 2rem;
-  width: calc(100% - 6rem);
+  width: 100%;
+  padding: 0 3.5rem;
 }
 .filters .filters-form {
   display: flex;
@@ -12734,33 +12956,33 @@ footer {
   display: flex;
 }
 
-@media (max-width: 490px) {
-  .filters .filters-form {
+@media (max-width: 565px) {
+  .filters-form {
     max-width: 100%;
     flex-wrap: wrap;
     justify-content: center;
     row-gap: 0.7rem;
     column-gap: 1rem;
   }
-  .filters .filters-form .field:first-child {
+  .filters-form .field:first-child {
     flex: 1 1 100%;
     min-width: 100%;
   }
-  .filters .filters-form .field {
+  .filters-form .field {
     flex: 1 1 48%;
     min-width: 11rem;
     flex-shrink: 1;
   }
-  .filters .filters-form .custom-select {
+  .filters-form .custom-select {
     width: 100%;
   }
-  .filters .filters-form .custom-select-trigger {
+  .filters-form .custom-select-trigger {
     min-width: 0;
     width: 100%;
     white-space: normal;
     padding-right: 1.8rem;
   }
-  .filters .filters-form .trigger-text {
+  .filters-form .trigger-text {
     flex-shrink: 1;
     min-width: 0;
   }
@@ -12769,6 +12991,29 @@ footer {
     width: 100%;
     margin-top: 1.5rem;
     margin-left: 0;
+    display: flex;
+    justify-content: center;
+  }
+}
+@media (max-width: 400px) {
+  .filters .filters-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .filters .filters-form .field {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+  .filters .filters-form .custom-select {
+    width: 100%;
+  }
+  .filters .filters-form .custom-select-trigger {
+    width: 100%;
+  }
+  .filters .filters-form .btn {
+    width: 100%;
+    margin: 0;
     display: flex;
     justify-content: center;
   }
@@ -13047,7 +13292,8 @@ input[type=password]::-ms-reveal {
   color: #121008;
 }
 
-.status-to-validate {
+.status-to-validate,
+.status-type-accessory {
   background: #B07CFF;
   color: white;
 }
@@ -14134,6 +14380,662 @@ input[type=password]::-ms-reveal {
     width: 17rem;
   }
 }
+.admin-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin: 4rem auto 7rem;
+  max-width: 75rem;
+  padding: 0 3rem;
+}
+.admin-tabs .tab-card {
+  background: #1A213D;
+  padding: 0.8rem 0;
+  border-radius: 0.8rem;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+.admin-tabs .tab-card i {
+  font-size: 1.8rem;
+  color: white;
+}
+.admin-tabs .tab-card span {
+  font-family: "Nunito", sans-serif;
+  font-size: 1.1rem;
+  color: white;
+  text-align: center;
+  font-weight: 600;
+}
+.admin-tabs .tab-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+.admin-tabs .tab-card.active {
+  border: 2px solid #6F8CFF;
+  box-shadow: 0 0 15px rgba(111, 140, 255, 0.4);
+}
+
+.admin-management .filters {
+  margin-top: 2rem;
+  width: 100%;
+}
+.admin-management .filters .filters-form {
+  max-width: 56rem;
+}
+.admin-management .filters .btn {
+  margin-left: auto;
+}
+.admin-management .card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: 60rem;
+  margin: 0 auto;
+  margin-top: 3.5rem;
+}
+.admin-management .section-wrapper {
+  max-width: 62rem;
+  margin: 0 auto;
+  width: 100%;
+}
+.admin-management .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 0 3.6rem;
+}
+.admin-management .section-header .section-title {
+  margin: 0;
+  text-align: left;
+}
+.admin-management .section-header .btn {
+  height: 2.7rem;
+  padding: 0 1.2rem;
+  white-space: nowrap;
+}
+
+.admin-characters-section {
+  margin: 4rem;
+}
+.admin-characters-section .card-horizontal .card-buttons {
+  margin: 0.5rem 0;
+  align-self: flex-start;
+  gap: 1rem;
+}
+.admin-characters-section .card-horizontal .card-buttons .btn {
+  width: auto;
+  padding: 0 1rem;
+  height: 2.3rem;
+  font-size: 0.9rem;
+}
+.admin-characters-section .card-horizontal:has(.status-pending) .card-actions .action-supprimer {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(40%);
+}
+.admin-characters-section .card-horizontal:has(.status-refused) .card-buttons .btn-success,
+.admin-characters-section .card-horizontal:has(.status-refused) .card-buttons .btn-danger, .admin-characters-section .card-horizontal:has(.status-valid) .card-buttons .btn-success,
+.admin-characters-section .card-horizontal:has(.status-valid) .card-buttons .btn-danger {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(40%);
+}
+.admin-characters-section .card-horizontal:has(.status-pending) .card-actions .action-delete {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(40%);
+}
+@media (max-width: 565px) {
+  .admin-characters-section .card-horizontal .filters-form {
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.7rem;
+    column-gap: 1rem;
+  }
+  .admin-characters-section .card-horizontal .filters-form .field:first-child {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+  .admin-characters-section .card-horizontal .filters-form .field {
+    flex: 1 1 48%;
+    min-width: 11rem;
+    flex-shrink: 1;
+  }
+  .admin-characters-section .card-horizontal .filters-form .custom-select {
+    width: 100%;
+  }
+  .admin-characters-section .card-horizontal .filters-form .custom-select-trigger {
+    min-width: 0;
+    width: 100%;
+    white-space: normal;
+    padding-right: 1.8rem;
+  }
+  .admin-characters-section .card-horizontal .filters-form .trigger-text {
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  .admin-characters-section .card-horizontal .filters .filters-form .btn {
+    order: 10;
+    width: 100%;
+    margin-top: 1.5rem;
+    margin-left: 0;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.admin-accessories-section {
+  margin: 4rem;
+}
+.admin-accessories-section .filters .custom-select .custom-select-trigger {
+  min-width: 14rem;
+}
+.admin-accessories-section .type-item,
+.admin-accessories-section .rarity-item,
+.admin-accessories-section .status-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  color: white;
+  text-align: center;
+}
+.admin-accessories-section .type-item .label,
+.admin-accessories-section .rarity-item .label {
+  font-weight: 600;
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+}
+.admin-accessories-section .rarity-item .dot {
+  margin-right: 0.3rem;
+}
+.admin-accessories-section .rarity-value {
+  transform: translateY(1.5px);
+}
+.admin-accessories-section .status-value {
+  display: flex;
+  align-items: center;
+}
+.admin-accessories-section .status-value .status {
+  transform: translateY(-2px);
+}
+.admin-accessories-section .card-actions .action-modifier:hover {
+  color: #B07CFF;
+  text-decoration: underline;
+}
+.admin-accessories-section .card-horizontal .card-img {
+  top: 0.5rem;
+  right: 1rem;
+}
+@media (max-width: 768px) {
+  .admin-accessories-section .filters-form {
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.7rem;
+    column-gap: 1rem;
+  }
+  .admin-accessories-section .filters-form .field:first-child {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+  .admin-accessories-section .filters-form .field {
+    flex: 1 1 48%;
+    min-width: 11rem;
+    flex-shrink: 1;
+  }
+  .admin-accessories-section .filters-form .custom-select {
+    width: 100%;
+  }
+  .admin-accessories-section .filters-form .custom-select-trigger {
+    min-width: 0;
+    width: 100%;
+    white-space: normal;
+    padding-right: 1.8rem;
+  }
+  .admin-accessories-section .filters-form .trigger-text {
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  .admin-accessories-section .filters .filters-form .btn {
+    order: 10;
+    width: 100%;
+    margin-top: 1.5rem;
+    margin-left: 0;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.admin-comment-section {
+  margin: 4rem;
+}
+.admin-comment-section .card-horizontal:has(.status-pending) .card-actions a {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(40%);
+}
+
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.popup-overlay .popup-content {
+  background: #0B0F1F;
+  position: relative;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease;
+  border: 1px solid rgba(111, 140, 255, 0.5);
+  max-width: 50rem;
+  width: 90%;
+  padding: 1.5rem;
+}
+.popup-overlay .popup-content .creator-tag {
+  position: static;
+  margin-bottom: 2rem;
+  margin-top: 0.5rem;
+  background: rgba(176, 124, 255, 0.25);
+  display: inline-flex;
+}
+.popup-overlay .popup-title {
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-align: left;
+  margin-bottom: 0;
+}
+.popup-overlay .popup-text {
+  width: 100%;
+  height: 15rem;
+  resize: none;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  color: white;
+  text-align: left;
+  background: #1A213D;
+  border: 1px solid rgba(111, 140, 255, 0.5);
+  border-radius: 0.4rem;
+  pointer-events: none;
+  padding: 1rem;
+}
+.popup-overlay .popup-stars {
+  margin-bottom: 2rem;
+}
+.popup-overlay .popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.popup-overlay .popup-buttons .btn {
+  width: 5rem;
+}
+.popup-overlay .popup-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.popup-overlay .comment-stars {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+}
+.popup-overlay .comment-stars i {
+  color: #ffd86b;
+  pointer-events: none;
+}
+
+.popup-overlay.popup-valid .popup-buttons .btn {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(40%);
+}
+
+.popup-overlay.popup-refused .popup-buttons .btn {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(40%);
+}
+
+.admin-players-section {
+  margin: 4rem;
+}
+.admin-players-section .filters .custom-select .custom-select-trigger {
+  min-width: 9rem;
+}
+.admin-players-section .btn {
+  width: 8rem;
+}
+.admin-players-section .card-vertical h3 {
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+}
+@media (max-width: 1200px), (max-width: 857px) {
+  .admin-players-section .card-vertical .img-wrapper {
+    height: 15rem;
+  }
+}
+@media (max-width: 663px) {
+  .admin-players-section .filters-form {
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.7rem;
+    column-gap: 1rem;
+  }
+  .admin-players-section .filters-form .field:first-child {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+  .admin-players-section .filters-form .field {
+    flex: 1 1 48%;
+    min-width: 11rem;
+    flex-shrink: 1;
+  }
+  .admin-players-section .filters-form .custom-select {
+    width: 100%;
+  }
+  .admin-players-section .filters-form .custom-select-trigger {
+    min-width: 0;
+    width: 100%;
+    white-space: normal;
+    padding-right: 1.8rem;
+  }
+  .admin-players-section .filters-form .trigger-text {
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  .admin-players-section .filters .filters-form .btn {
+    order: 10;
+    width: 100%;
+    margin-top: 1.5rem;
+    margin-left: 0;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.admin-employees-section {
+  margin: 4rem;
+}
+.admin-employees-section .card-vertical h3 {
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+}
+.admin-employees-section .card-vertical .btn {
+  width: 8rem;
+}
+.admin-employees-section .card-vertical .card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+}
+.admin-employees-section .card-vertical .card-actions a {
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  color: #6F8CFF;
+  text-align: center;
+  cursor: pointer;
+  transform: translateY(1px);
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+}
+.admin-employees-section .card-vertical .card-actions a.action-edit:hover {
+  color: #B07CFF;
+  text-decoration: underline;
+}
+.admin-employees-section .card-vertical .card-actions a.action-delete:hover {
+  color: #E25353;
+  text-decoration: underline;
+}
+.admin-employees-section .card-vertical .card-actions span {
+  color: white;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 1200px), (max-width: 857px) {
+  .admin-employees-section .card-vertical .img-wrapper {
+    height: 15rem;
+  }
+}
+
+.admin-logs-section {
+  margin: 4rem;
+}
+.admin-logs-section .filters .custom-select .custom-select-trigger {
+  min-width: 14rem;
+}
+.admin-logs-section .log-message,
+.admin-logs-section .log-type,
+.admin-logs-section .log-date {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  color: white;
+  text-align: left;
+}
+.admin-logs-section .log-type .label {
+  font-weight: 600;
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+}
+.admin-logs-section .log-date {
+  margin-top: 0rem;
+  opacity: 0.5;
+  margin-bottom: 0rem;
+}
+.admin-logs-section .log-message {
+  margin-bottom: 0rem;
+}
+.admin-logs-section .log-date-value {
+  transform: translateY(1.5px);
+}
+.admin-logs-section .log-value {
+  display: flex;
+  align-items: center;
+}
+.admin-logs-section .log-value .log-action {
+  transform: translateY(-2px);
+}
+.admin-logs-section .card-log {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.3rem 1.5rem;
+}
+.admin-logs-section .card-log .card-content {
+  margin-top: 0;
+  width: 100%;
+}
+.admin-logs-section .card-horizontal {
+  padding-left: 1.5rem;
+  min-height: 13rem;
+}
+@media (max-width: 768px) {
+  .admin-logs-section .filters-form {
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.7rem;
+    column-gap: 1rem;
+  }
+  .admin-logs-section .filters-form .field:first-child {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+  .admin-logs-section .filters-form .field {
+    flex: 1 1 48%;
+    min-width: 11rem;
+    flex-shrink: 1;
+  }
+  .admin-logs-section .filters-form .custom-select {
+    width: 100%;
+  }
+  .admin-logs-section .filters-form .custom-select-trigger {
+    min-width: 0;
+    width: 100%;
+    white-space: normal;
+    padding-right: 1.8rem;
+  }
+  .admin-logs-section .filters-form .trigger-text {
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  .admin-logs-section .filters .filters-form .btn {
+    order: 10;
+    width: 100%;
+    margin-top: 1.5rem;
+    margin-left: 0;
+    display: flex;
+    justify-content: center;
+  }
+}
+@media (max-width: 450px) {
+  .admin-logs-section .filters .filters-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .admin-logs-section .filters .filters-form .field {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+  .admin-logs-section .filters .filters-form .custom-select {
+    width: 100%;
+  }
+  .admin-logs-section .filters .filters-form .custom-select-trigger {
+    width: 100%;
+  }
+  .admin-logs-section .filters .filters-form .btn {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.tab-section {
+  display: none;
+}
+.tab-section.active {
+  display: block;
+}
+
+.section-title {
+  font-family: "Cinzel", serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #6F8CFF;
+  text-align: center;
+}
+
+@media (max-width: 540px) {
+  .admin-management .card-container:not(.logs-container) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    gap: 2rem;
+  }
+  .admin-management .section-header {
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 0;
+  }
+  .admin-management .section-header .section-title {
+    text-align: center;
+  }
+  .admin-management .section-header .btn {
+    height: 2.3rem;
+    padding: 0 1rem;
+    font-size: 0.9rem;
+    width: 15rem;
+  }
+  .admin-characters-section .card-horizontal .card-buttons {
+    align-self: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .admin-accessories-section .card-horizontal .card-img {
+    top: -1.6rem;
+  }
+  .admin-accessories-section .status-value .status {
+    transform: translateY(1px);
+  }
+  .admin-accessories-section .rarity-value {
+    transform: translateY(0.5px);
+  }
+  .admin-logs-section .card-log {
+    max-width: 100%;
+    text-align: left;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+  .admin-logs-section .card-log .card-content {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+@media (max-width: 525px) {
+  .admin-management .section-header {
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 0;
+  }
+  .admin-management .section-header .section-title {
+    text-align: center;
+  }
+  .admin-management .section-header .btn {
+    height: 2.3rem;
+    padding: 0 1rem;
+    font-size: 0.9rem;
+    width: 15rem;
+  }
+}
+@media (max-width: 470px) {
+  .admin-management .card-container:not(.logs-container) {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 360px) {
+  .admin-logs-section .card-log .card-name {
+    font-size: 2.1rem;
+  }
+}
 .characters-layout {
   width: 100%;
   display: flex;
@@ -14177,210 +15079,43 @@ input[type=password]::-ms-reveal {
   max-width: 60rem;
   margin: 0 auto;
 }
-.characters-section .character-card {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 1rem;
-  text-align: left;
-  width: 100%;
-  max-width: 60rem;
-  min-height: 15rem;
-  padding: 0.5rem;
-  background: #222B4A;
-  border-radius: 0.4rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  transition: transform 0.3s ease;
-}
-.characters-section .character-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-}
-.characters-section .character-card .character-img-wrapper {
-  width: 16rem;
-  height: 16rem;
-  background: #1A213D;
-  border-radius: 0.3rem;
-  overflow: hidden;
-  position: relative;
-}
-.characters-section .character-card .character-img {
-  width: 160%;
-  height: auto;
-  position: absolute;
-  top: 2rem;
-  object-fit: cover;
-  object-position: 50% 20%;
-  transform: scale(1.1);
-}
-.characters-section .character-card .character-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: flex-start;
-  height: 100%;
-  margin-top: 0.9rem;
-}
-.characters-section .character-card .character-content .character-name {
-  font-family: "Cinzel", serif;
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: white;
-  text-align: left;
-  margin-bottom: 0.3rem;
-}
-.characters-section .character-card .character-content .card-buttons {
-  margin: 0.5rem 0;
-  align-self: flex-start;
-}
-.characters-section .character-card .character-content .card-buttons .btn {
-  width: auto;
-  padding: 0 1rem;
-  height: 2.3rem;
-  font-size: 0.9rem;
-}
-.characters-section .character-card .card-actions {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.6rem;
-  margin-top: auto;
-  margin-right: 0.5rem;
-  align-self: flex-end;
-  font-family: "Nunito", sans-serif;
-  font-size: 0.93rem;
-  color: white;
-  text-align: center;
-}
-.characters-section .character-card .card-actions a {
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap;
-  text-decoration: none;
-  cursor: pointer;
-  font-family: "Nunito", sans-serif;
-  font-size: 0.9rem;
-  color: #6F8CFF;
-  text-align: center;
-}
-.characters-section .character-card .card-actions span {
-  color: white;
-}
-.characters-section .character-card .card-actions a:nth-of-type(1):hover {
-  color: #B07CFF;
-  text-decoration: underline;
-}
-.characters-section .character-card .card-actions a:nth-of-type(3):hover {
-  color: #E25353;
-  text-decoration: underline;
-}
-.characters-section .character-card .fav-btn {
-  background: transparent;
-  border: none;
-  position: absolute;
-  top: 0.7rem;
-  right: 1rem;
-}
-.characters-section .character-card .fav-btn .heart {
-  font-size: 1.8rem;
-  color: #6F8CFF;
-  cursor: pointer;
-  z-index: 3;
-}
-.characters-section .character-card:not(:has(.status-valid)) .heart {
+.characters-section .card-horizontal:not(:has(.status-valid)) .heart {
   opacity: 0.35;
   pointer-events: none;
   cursor: default;
 }
-.characters-section .character-card:has(.status-valid) .heart {
+.characters-section .card-horizontal:has(.status-valid) .heart {
   opacity: 1;
   pointer-events: auto;
   cursor: pointer;
 }
-.characters-section .character-card:has(.status-pending) .card-buttons .btn-secondary, .characters-section .character-card:has(.status-refused) .card-buttons .btn-secondary {
+.characters-section .card-horizontal:has(.status-pending) .card-buttons .btn-secondary, .characters-section .card-horizontal:has(.status-refused) .card-buttons .btn-secondary {
   opacity: 0.35;
   pointer-events: none;
   filter: grayscale(40%);
 }
-.characters-section .character-card:has(.card-buttons:first-of-type .btn-secondary) .card-buttons:nth-of-type(2) .btn-secondary {
+.characters-section .card-horizontal:has(.card-buttons:first-of-type .btn-secondary) .card-buttons:nth-of-type(2) .btn-secondary {
   opacity: 0.35;
   pointer-events: none;
   filter: grayscale(40%);
 }
-.characters-section .character-card:has(.status-pending) .action-modifier,
-.characters-section .character-card:has(.status-pending) .action-dupliquer {
+.characters-section .card-horizontal:has(.status-pending) .card-actions a {
   opacity: 0.35;
   pointer-events: none;
   filter: grayscale(40%);
 }
-.characters-section .character-card:has(.status-refused) .action-dupliquer {
+.characters-section .card-horizontal:has(.status-refused) .card-actions a.action-duplicate {
   opacity: 0.35;
   pointer-events: none;
   filter: grayscale(40%);
 }
 
-@media (max-width: 650px) {
-  .characters-section .character-card {
-    align-items: flex-start;
-  }
-  .characters-section .character-img-wrapper {
-    width: 14rem;
-    height: 14rem;
-    flex-shrink: 0;
-  }
-  .characters-section .character-img {
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-    transform: none;
-  }
-}
 @media (max-width: 540px) {
   .characters-section .characters-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    width: 100%;
-    max-width: 60rem;
-    margin: 0 auto;
     justify-items: center;
-  }
-  .characters-section .character-card {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1rem;
-    max-width: 19rem;
-  }
-  .characters-section .character-card .character-img-wrapper {
-    width: 18rem;
-    margin-bottom: 1rem;
-  }
-  .characters-section .character-card .character-content {
-    width: 100%;
-    margin: 0;
-    align-items: center;
-    text-align: center;
-  }
-  .characters-section .character-card .character-content .character-name {
-    width: 100%;
-    text-align: center;
-  }
-  .characters-section .character-card .character-content .card-buttons {
-    align-self: center;
-  }
-  .characters-section .character-card .status {
-    margin: 0.3rem 0 0.6rem;
-  }
-  .characters-section .character-card .card-actions {
-    margin-top: 1rem;
-    margin-right: 0;
-    align-self: center;
-    justify-content: center;
-    gap: 0.8rem;
-    flex-wrap: wrap;
+    gap: 2rem;
   }
 }
 @media (max-width: 470px) {

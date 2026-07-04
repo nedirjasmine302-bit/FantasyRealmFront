@@ -18,7 +18,9 @@
 @use "components/auth";
 @use "components/bottom-actions";
 @use "components/buttons";
-@use "components/card-character";
+@use "components/card-character-vertical";
+@use "components/card-horizontal";
+@use "components/creator-tag";
 @use "components/custom-select";
 @use "components/filters";
 @use "components/form-section";
@@ -35,4 +37,5 @@
 @use "pages/contact";
 @use "pages/create-character";
 @use "pages/home";
+@use "pages/management";
 @use "pages/my-space";

@@ -1,18 +1,33 @@
 import { initReveal } from "../modules/animations.js";
-import { sanitize, isValidEmail, isValidPseudo, isValidPassword, isEmailUnique } from "../modules/security.js";
+import { sanitize, isValidEmail, isValidPseudo, isValidPassword} from "../modules/security.js";
 import { initBackReload } from "../modules/back-reload.js";
 
 
-// Gestion du formulaire d'inscription (Données fictives // Besoin API)
-const existingUsers = [
-  { email: "test@mail.com", pseudo: "PlayerOne" },
-  { email: "jasmine@mail.com", pseudo: "Jasmine" }
-];
-
-function isPseudoUnique(pseudo) {
-  return !existingUsers.some(u => u.pseudo.toLowerCase() === pseudo.toLowerCase());
+// Appel API
+async function checkEmailUnique(email) {
+  try {
+    const res = await fetch("http://localhost:8080/api/check-email?email=" + encodeURIComponent(email));
+    const data = await res.json();
+    return data.unique; 
+  } catch (e) {
+    console.error("Erreur API check-email:", e);
+    return false;
+  }
 }
 
+async function checkPseudoUnique(pseudo) {
+  try {
+    const res = await fetch("http://localhost:8080/api/check-pseudo?pseudo=" + encodeURIComponent(pseudo));
+    const data = await res.json();
+    return data.unique;
+  } catch (e) {
+    console.error("Erreur API check-pseudo:", e);
+    return false;
+  }
+}
+
+
+// Gestion du formulaire d'inscription
 function initSignUpForm() {
   const form = document.querySelector(".auth-form-container");
   if (!form) return;
@@ -52,7 +67,7 @@ function initSignUpForm() {
     errorEl.style.opacity = "0";
   }
 
-  function validateForm() {
+  async function validateForm() {
     const email = sanitize(emailInput.value);
     const pseudo = sanitize(pseudoInput.value);
     const password = sanitize(passwordInput.value);
@@ -64,13 +79,14 @@ function initSignUpForm() {
       if (!isValidEmail(email)) {
         showError(emailError, "Email invalide");
         valid = false;
-
-      } else if (!isEmailUnique(email, existingUsers)) {
-        showError(emailError, "Cet email est déjà utilisé");
-        valid = false;
-
       } else {
-        hideError(emailError);
+        const unique = await checkEmailUnique(email);
+        if (!unique) {
+          showError(emailError, "Cet email est déjà utilisé");
+          valid = false;
+        } else {
+          hideError(emailError);
+        }
       }
     }
 
@@ -78,13 +94,14 @@ function initSignUpForm() {
       if (!isValidPseudo(pseudo)) {
         showError(pseudoError, "3 à 20 caractères (lettres, chiffres, _ -)");
         valid = false;
-
-      } else if (!isPseudoUnique(pseudo)) {
-        showError(pseudoError, "Ce pseudo est déjà utilisé");
-        valid = false;
-
       } else {
-        hideError(pseudoError);
+        const unique = await checkPseudoUnique(pseudo);
+        if (!unique) {
+          showError(pseudoError, "Ce pseudo est déjà utilisé");
+          valid = false;
+        } else {
+          hideError(pseudoError);
+        }
       }
     }
 
@@ -92,7 +109,6 @@ function initSignUpForm() {
       if (!isValidPassword(password)) {
         showError(passwordError, "Mot de passe non conforme (8 caractères dont une majuscule, une minuscule, un chiffre et un spécial)");
         valid = false;
-
       } else {
         hideError(passwordError);
       }
@@ -102,7 +118,6 @@ function initSignUpForm() {
       if (password !== password2) {
         showError(password2Error, "La confirmation n'est pas identique au mot de passe");
         valid = false;
-
       } else {
         hideError(password2Error);
       }
@@ -110,9 +125,9 @@ function initSignUpForm() {
 
     if (
       isValidEmail(email) &&
-      isEmailUnique(email, existingUsers) &&
+      await checkEmailUnique(email) &&
       isValidPseudo(pseudo) &&
-      isPseudoUnique(pseudo) &&
+      await checkPseudoUnique(pseudo) &&
       isValidPassword(password) &&
       password === password2
     ) {
@@ -136,12 +151,32 @@ function initSignUpForm() {
 
   validateForm();
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    if (!await validateForm()) return;
+
+    const payload = {
+      email: sanitize(emailInput.value),
+      pseudo: sanitize(pseudoInput.value),
+      password: sanitize(passwordInput.value),
+      password2: sanitize(password2Input.value)
+    };
+
+    const res = await fetch("http://localhost:8080/api/sign-up", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      alert(data.message);
+      return;
+    }
 
     const success = document.createElement("p");
-    success.textContent = "Votre compte a été créé avec succès !";
+    success.textContent = data.message;
     success.classList.add("message", "success-message");
     form.appendChild(success);
 
@@ -153,7 +188,7 @@ function initSignUpForm() {
     localStorage.setItem("userLogged", "true");
 
     setTimeout(() => {
-      window.location.href = "/";
+      window.location.href = "/sign-in";
     }, 1000);
   });
 }

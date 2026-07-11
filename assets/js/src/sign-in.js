@@ -3,19 +3,25 @@ import { sanitize, isValidEmail } from "../modules/security.js";
 import { initBackReload } from "../modules/back-reload.js";
 
 
-// Gestion du formulaire de connexion (Données fictives // Besoin API)
-const fakeUsers = [
-  { email: "test@mail.com", password: "Test123!", temporary: false },
-  { email: "jasmine@mail.com", password: "Jasmine123!", temporary: false },
-  { email: "temp@mail.com", password: "Temp123!", temporary: true }
-];
+// Appel API
+async function signInApi(email, password) {
+  try {
+    const res = await fetch("http://localhost:8080/api/auth/sign-in", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
 
-function checkCredentials(email, password) {
-  return fakeUsers.find(
-    u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
-  );
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    console.error("Erreur API sign-in:", e);
+    return { success: false, message: "Erreur serveur" };
+  }
 }
 
+
+// Gestion du formulaire de connexion
 function initSignInForm() {
   const form = document.querySelector(".auth-form-container");
   if (!form) return;
@@ -59,14 +65,18 @@ function initSignInForm() {
       if (!isValidEmail(email)) {
         showError(emailError, "Email invalide");
         valid = false;
-      } else hideError(emailError);
+      } else {
+        hideError(emailError);
+      }
     }
 
     if (touched.password) {
       if (password.length < 1) {
         showError(passwordError, "Veuillez entrer votre mot de passe");
         valid = false;
-      } else hideError(passwordError);
+      } else {
+        hideError(passwordError);
+      }
     }
 
     if (isValidEmail(email) && password.length > 0) {
@@ -88,29 +98,51 @@ function initSignInForm() {
 
   validateForm();
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-  
+
     const email = sanitize(emailInput.value);
     const password = sanitize(passwordInput.value);
-  
+
     const oldMsg = form.querySelector(".message");
     if (oldMsg) oldMsg.remove();
-  
-    const user = checkCredentials(email, password);
 
-    if (!user) {
+    const { data, status } = await signInApi(email, password);
+
+    if (status === 429) {
       const error = document.createElement("p");
-      error.textContent = "Identifiants incorrects";
+      error.textContent = data.message || "Trop de tentatives. Réessayez dans quelques instants.";
       error.classList.add("message", "error-message");
       form.appendChild(error);
-  
+
+      setTimeout(() => error.classList.add("show"), 10);
+    
+      submitBtn.classList.add("btn-disabled");
+      submitBtn.setAttribute("disabled", "true");
+    
+      setTimeout(() => {
+        error.classList.remove("show");
+    
+        setTimeout(() => error.remove(), 300);
+    
+        submitBtn.classList.remove("btn-disabled");
+        submitBtn.removeAttribute("disabled");
+      }, 3000);
+    
+      return;
+    }
+
+    if (!data.success) {
+      const error = document.createElement("p");
+      error.textContent = data.message || "Identifiants incorrects";
+      error.classList.add("message", "error-message");
+      form.appendChild(error);
       setTimeout(() => error.classList.add("show"), 10);
       return;
     }
 
-    if (user.temporary) {
+    if (data.user && data.user.temporaryPassword) {
       const tempMsg = document.createElement("p");
       tempMsg.textContent = "Vous utilisez un mot de passe temporaire. Redirection pour le modifier.";
       tempMsg.classList.add("message", "success-message");
@@ -123,23 +155,24 @@ function initSignInForm() {
 
       setTimeout(() => {
         window.location.href = "/reset-password";
-      },2500);
+      }, 2500);
 
       return;
     }
 
+    localStorage.setItem("token", data.token);
     localStorage.setItem("userLogged", "true");
-  
+
     const success = document.createElement("p");
     success.textContent = "Connexion réussie !";
     success.classList.add("message", "success-message");
     form.appendChild(success);
-  
+
     setTimeout(() => success.classList.add("show"), 10);
 
     submitBtn.classList.add("btn-disabled");
     submitBtn.setAttribute("disabled", "true");
-  
+
     setTimeout(() => {
       window.location.href = "/my-space";
     }, 1000);
@@ -147,7 +180,7 @@ function initSignInForm() {
 }
 
 
-// Lance le js de la page Sign-in quand elle est chargée
+// Lance le JS de la page Sign-in quand elle est chargée
 if (typeof window !== "undefined") {
   initReveal();
   initSignInForm();

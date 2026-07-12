@@ -7,22 +7,24 @@ import { initBackReload } from "../modules/back-reload.js";
 async function checkEmailUnique(email) {
   try {
     const res = await fetch("http://localhost:8080/api/check-email?email=" + encodeURIComponent(email));
+    if (!res.ok) return true; // Erreur serveur : on ne bloque pas (le back revérifie au sign-up)
     const data = await res.json();
-    return data.unique; 
+    return data.unique !== false; // "pris" seulement si le serveur le dit explicitement
   } catch (e) {
     console.error("Erreur API check-email:", e);
-    return false;
+    return true; // Serveur injoignable : on ne prétend pas que l'email est déjà pris
   }
 }
 
 async function checkPseudoUnique(pseudo) {
   try {
     const res = await fetch("http://localhost:8080/api/check-pseudo?pseudo=" + encodeURIComponent(pseudo));
+    if (!res.ok) return true; // Erreur serveur : on ne bloque pas (le back revérifie au sign-up)
     const data = await res.json();
-    return data.unique;
+    return data.unique !== false; // "pris" seulement si le serveur le dit explicitement
   } catch (e) {
     console.error("Erreur API check-pseudo:", e);
-    return false;
+    return true; // Serveur injoignable : on ne prétend pas que le pseudo est déjà pris
   }
 }
 

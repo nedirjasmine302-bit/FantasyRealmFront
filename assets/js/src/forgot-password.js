@@ -3,22 +3,22 @@ import { sanitize, isValidEmail, isValidPseudo } from "../modules/security.js";
 import { initBackReload } from "../modules/back-reload.js";
 
 
-const fakeUsers = [
-  { email: "jasmine@mail.com", pseudo: "Jasmine" },
-  { email: "test@mail.com", pseudo: "TestUser" },
-  { email: "dragon@mail.com", pseudo: "DragonSlayer" }
-];
+// Appel API
+async function apiForgotPassword(email, pseudo) {
+  const res = await fetch(`http://localhost:8080/api/auth/forgot-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, pseudo })
+  });
 
-function checkIdentity(email, pseudo) {
-  return fakeUsers.some(
-    u =>
-      u.email.toLowerCase() === email.toLowerCase() &&
-      u.pseudo.toLowerCase() === pseudo.toLowerCase()
-  );
+  const body = await res.json();
+  const retryAfter = res.headers.get("Retry-After");
+
+  return { data: body, status: res.status, retryAfter };
 }
 
 
-// Gestion du formulaire pour un mot de passe oublié (Données fictives // Besoin API)
+// Gestion du formulaire pour un mot de passe oublié
 function initForgotPasswordForm() {
   const form = document.querySelector(".auth-form-container");
   if (!form) return;
@@ -88,7 +88,7 @@ function initForgotPasswordForm() {
 
   validateForm();
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
 
@@ -98,12 +98,38 @@ function initForgotPasswordForm() {
     const oldMsg = form.querySelector(".message");
     if (oldMsg) oldMsg.remove();
 
-    if (!checkIdentity(email, pseudo)) {
+    const result = await apiForgotPassword(email, pseudo);
+
+    if (result.status === 429) {
       const error = document.createElement("p");
-      error.textContent = "Cet email et ce pseudo ne correspondent à aucun compte.";
+      error.textContent = result.data.message || "Trop de tentatives. Réessayez dans quelques instants.";
       error.classList.add("message", "error-message");
       form.appendChild(error);
 
+      setTimeout(() => error.classList.add("show"), 10);
+
+      submitBtn.classList.add("btn-disabled");
+      submitBtn.setAttribute("disabled", "true");
+
+      const waitTime = result.retryAfter ? parseInt(result.retryAfter) * 1000 : 60000;
+
+      setTimeout(() => {
+        error.classList.remove("show");
+
+        setTimeout(() => error.remove(), 300);
+
+        submitBtn.classList.remove("btn-disabled");
+        submitBtn.removeAttribute("disabled");
+      }, waitTime);
+
+      return;
+    }
+
+    if (!result.data.success) {
+      const error = document.createElement("p");
+      error.textContent = result.data.message || "Erreur lors de l'envoi du mot de passe temporaire.";
+      error.classList.add("message", "error-message");
+      form.appendChild(error);
       setTimeout(() => error.classList.add("show"), 10);
       return;
     }

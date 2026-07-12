@@ -12,11 +12,13 @@ async function signInApi(email, password) {
       body: JSON.stringify({ email, password })
     });
 
-    const data = await res.json();
-    return data;
+    const body = await res.json();
+    const retryAfter = res.headers.get("Retry-After");
+
+    return { data: body.data, status: res.status, retryAfter };
   } catch (e) {
     console.error("Erreur API sign-in:", e);
-    return { success: false, message: "Erreur serveur" };
+    return { data: { success: false, message: "Erreur serveur" }, status: 500 };
   }
 }
 
@@ -108,19 +110,21 @@ function initSignInForm() {
     const oldMsg = form.querySelector(".message");
     if (oldMsg) oldMsg.remove();
 
-    const { data, status } = await signInApi(email, password);
+    const { data, status, retryAfter } = await signInApi(email, password);
 
     if (status === 429) {
       const error = document.createElement("p");
       error.textContent = data.message || "Trop de tentatives. Réessayez dans quelques instants.";
       error.classList.add("message", "error-message");
       form.appendChild(error);
-
+    
       setTimeout(() => error.classList.add("show"), 10);
     
       submitBtn.classList.add("btn-disabled");
       submitBtn.setAttribute("disabled", "true");
     
+      const waitTime = retryAfter ? parseInt(retryAfter) * 1000 : 60000; 
+
       setTimeout(() => {
         error.classList.remove("show");
     
@@ -128,7 +132,7 @@ function initSignInForm() {
     
         submitBtn.classList.remove("btn-disabled");
         submitBtn.removeAttribute("disabled");
-      }, 3000);
+      }, waitTime);
     
       return;
     }

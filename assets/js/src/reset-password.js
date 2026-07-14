@@ -3,21 +3,7 @@ import { sanitize, isValidEmail, isValidPassword } from "../modules/security.js"
 import { initBackReload } from "../modules/back-reload.js";
 
 
-// Gestion du formulaire pour changé de mot de passe (Données fictives // Besoin API)
-const fakeUsers = [
-  { email: "jasmine@mail.com", tempPassword: "Temp123!" },
-  { email: "test@mail.com", tempPassword: "Reset456!" }
-];
-
-function checkTempPassword(email, tempPassword) {
-  return fakeUsers.some(
-    u =>
-      u.email.toLowerCase() === email.toLowerCase() &&
-      u.tempPassword === tempPassword
-  );
-}
-
-
+// Gestion du formulaire pour changé de mot de passe
 function initResetPasswordForm() {
   const form = document.querySelector(".auth-form-container");
   if (!form) return;
@@ -119,39 +105,63 @@ function initResetPasswordForm() {
 
   validateForm();
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
 
     const email = sanitize(emailInput.value);
-    const tempPassword = sanitize(tempPasswordInput.value);
+    const temporaryPassword = sanitize(tempPasswordInput.value);
+    const newPassword = sanitize(passwordInput.value);
 
     const oldMsg = form.querySelector(".message");
     if (oldMsg) oldMsg.remove();
 
-    if (!checkTempPassword(email, tempPassword)) {
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email,
+          temporaryPassword,
+          newPassword
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        const error = document.createElement("p");
+        error.textContent = data.message || "Une erreur est survenue lors du changement de mot de passe.";
+        error.classList.add("message", "error-message");
+        form.appendChild(error);
+
+        setTimeout(() => error.classList.add("show"), 10);
+        return;
+      }
+
+      const success = document.createElement("p");
+      success.textContent = "Votre mot de passe a été modifié avec succès !";
+      success.classList.add("message", "success-message");
+      form.appendChild(success);
+
+      submitBtn.classList.add("btn-disabled");
+      submitBtn.setAttribute("disabled", "true");
+
+      setTimeout(() => success.classList.add("show"), 10);
+
+      setTimeout(() => {
+        window.location.href = "/sign-in";
+      }, 1000);
+    } catch {
       const error = document.createElement("p");
-      error.textContent = "Mot de passe temporaire incorrect.";
+      error.textContent = "Erreur réseau. Veuillez réessayer.";
       error.classList.add("message", "error-message");
       form.appendChild(error);
 
       setTimeout(() => error.classList.add("show"), 10);
-      return;
     }
-
-    const success = document.createElement("p");
-    success.textContent = "Votre mot de passe a été modifié avec succès !";
-    success.classList.add("message", "success-message");
-    form.appendChild(success);
-
-    submitBtn.classList.add("btn-disabled");
-    submitBtn.setAttribute("disabled", "true");
-
-    setTimeout(() => success.classList.add("show"), 10);
-
-    setTimeout(() => {
-      window.location.href = "/sign-in";
-    }, 1000);
   });
 }
 

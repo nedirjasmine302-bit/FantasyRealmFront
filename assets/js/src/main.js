@@ -29,7 +29,40 @@ function toggleMenu() {
 }
 
 
+// Gestion du lien Connexion / Déconnexion
+function initAuthLink() {
+  const authLink = document.querySelector(".menu .auth-link");
+  if (!authLink) return;
+
+  function render() {
+    const isLogged = localStorage.getItem("userLogged") === "true";
+
+    if (isLogged) {
+      authLink.textContent = "Déconnexion";
+      authLink.setAttribute("href", "#");
+    } else {
+      authLink.textContent = "Inscription";
+      authLink.setAttribute("href", "sign-up");
+    }
+  }
+
+  authLink.addEventListener("click", (e) => {
+    const isLogged = localStorage.getItem("userLogged") === "true";
+    if (!isLogged) return;
+
+    e.preventDefault();
+    localStorage.removeItem("token");
+    localStorage.removeItem("userLogged");
+    render();
+    window.location.href = "/";
+  });
+
+  render();
+}
+
+
 // Lance le js du Header quand elle est chargée
 if (typeof window !== "undefined") {
   initBurger();
+  initAuthLink();
 }

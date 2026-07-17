@@ -1,49 +1,111 @@
 import { initReveal } from "../modules/animations.js";
 import { initCustomSelects } from "../modules/forms.js";
 import { sanitize } from "../modules/security.js";
+import { initBackReload } from "../modules/back-reload.js";
 
 
-// Infomation sur le personnage (Données fictives // Besoin API)
-function initCharacterData() {
-  const fakeData = {
-    image: "/assets/images/character/Aelyra.webp",
-    name: "Aelyra",
-    gender: "wizard",
-    description: "Enchanteresse elfique aux longs cheveux bleus, mystérieuse et élégante.",
-    hairColor: "noir",
-    eyeColor: "bleu",
-    skinColor: "clair",
-    mouthShape: "fine",
-    eyeShape: "amande",
-    noseShape: "fin",
-    armor: "shadow-hide",
-    weapon: "runic-armor",
-    relique: "wind-talisman"
-  };
+// Récupère l'id du personnage dans l'URL 
+function getCharacterId() {
+  return new URLSearchParams(window.location.search).get("id");
+}
 
+
+// Utilisateur connecté 
+function isLoggedIn() {
+  return !!localStorage.getItem("token");
+}
+
+
+// Appels API
+async function apiGetCharacter(id) {
+  try {
+    const res = await fetch("http://localhost:8080/api/characters/" + id);
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.character;
+  } catch (e) {
+    console.error("Erreur API get-character:", e);
+    return null;
+  }
+}
+
+async function apiGetComments(id) {
+  try {
+    const res = await fetch("http://localhost:8080/api/characters/" + id + "/comments");
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.comments || [];
+  } catch (e) {
+    console.error("Erreur API get-comments:", e);
+    return [];
+  }
+}
+
+async function apiPostComment(id, payload, token) {
+  const res = await fetch("http://localhost:8080/api/characters/" + id + "/comments", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify(payload)
+  });
+
+  return res.json();
+}
+
+async function apiIsFavorite(id, token) {
+  try {
+    const res = await fetch("http://localhost:8080/api/favorites", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    if (!res.ok) return false;
+    const data = await res.json();
+    return (data.favorites || []).some((f) => String(f.id) === String(id));
+  } catch (e) {
+    console.error("Erreur API favorites:", e);
+    return false;
+  }
+}
+
+async function apiToggleFavorite(id, token, add) {
+  const res = await fetch("http://localhost:8080/api/characters/" + id + "/favorite", {
+    method: add ? "POST" : "DELETE",
+    headers: { "Authorization": "Bearer " + token }
+  });
+
+  return res.json();
+}
+
+
+// Affiche les informations du personnage (lecture seule)
+function fillCharacter(character) {
   const previewImage = document.getElementById("previewImage");
   const uploadBox = document.getElementById("uploadBox");
   const uploadPreview = document.getElementById("uploadPreview");
 
-  if (previewImage) {
-    previewImage.src = fakeData.image;
+  if (previewImage && character.image) {
+    previewImage.src = character.image;
     uploadBox?.classList.add("hidden");
     uploadPreview?.classList.add("active");
   }
 
-  setValue("#name", fakeData.name);
-  setValue("#description", fakeData.description);
+  setValue("#name", character.name);
+  setValue("#description", character.description);
 
-  setSelect("#gender", fakeData.gender);
-  setSelect("#hairColor", fakeData.hairColor);
-  setSelect("#eyeColor", fakeData.eyeColor);
-  setSelect("#skinColor", fakeData.skinColor);
-  setSelect("#mouthShape", fakeData.mouthShape);
-  setSelect("#eyeShape", fakeData.eyeShape);
-  setSelect("#noseShape", fakeData.noseShape);
-  setSelect("#armor", fakeData.armor);
-  setSelect("#weapon", fakeData.weapon);
-  setSelect("#relique", fakeData.relique);
+  setSelect("#gender", character.type);
+
+  const app = character.appearance || {};
+  setSelect("#hairColor", app.hairColor);
+  setSelect("#eyeColor", app.eyeColor);
+  setSelect("#skinColor", app.skinColor);
+  setSelect("#mouthShape", app.mouthShape);
+  setSelect("#eyeShape", app.eyeShape);
+  setSelect("#noseShape", app.noseShape);
+
+  setSelect("#armor", character.armor);
+  setSelect("#weapon", character.weapon);
+  setSelect("#relique", character.relique);
 
   disableAllFields();
 }
@@ -51,12 +113,12 @@ function initCharacterData() {
 function setValue(selector, value) {
   const el = document.querySelector(selector);
   if (!el) return;
-  el.value = value;
+  el.value = value ?? "";
 }
 
 function setSelect(selector, value) {
   const select = document.querySelector(selector);
-  if (!select) return;
+  if (!select || !value) return;
 
   const trigger = select.querySelector(".trigger-text");
   const option = select.querySelector(`.custom-option[data-value="${value}"]`);
@@ -85,36 +147,8 @@ function disableAllFields() {
 }
 
 
-// Commentaire écrit (Données fictives // Besoin API)
-function initCommentsCarousel() {
-  const comments = [
-    {
-      author: "Little_Moon",
-      date: "05/03/2026",
-      text: "Wow, ton perso est incroyable ! J’adore tous les détails, du look à la personnalité.",
-      stars: 4,
-      validated: true
-    },
-    {
-      author: "ShadowFox",
-      date: "12/03/2026",
-      text: "Très stylé ! L’armure et l’arme vont parfaitement ensemble.",
-      stars: 5,
-      validated: true
-    },
-    {
-      author: "Elyndra",
-      date: "20/03/2026",
-      text: "Belle création ! La description est super immersive.",
-      stars: 4,
-      validated: true
-    }
-  ];
-
-  const validComments = comments.filter(c => c.validated);
-
-  let index = 0;
-
+// Affiche les commentaires validés dans le carrousel
+function initCommentsCarousel(comments) {
   const authorEl = document.querySelector(".comment-author");
   const dateEl = document.querySelector(".comment-date");
   const textEl = document.querySelector(".comment-text");
@@ -125,35 +159,54 @@ function initCommentsCarousel() {
 
   if (!authorEl || !prevBtn || !nextBtn) return;
 
-function renderComment(i) {
-  const c = validComments[i];
+  if (comments.length === 0) {
+    prevBtn.style.display = "none";
+    nextBtn.style.display = "none";
+    starsEl.innerHTML = "";
+    authorEl.textContent = "";
+    dateEl.textContent = "";
+    textEl.textContent = "Aucun avis pour le moment.";
+    return;
+  }
 
-  authorEl.textContent = `Commentaire de : ${c.author}`;
-  dateEl.textContent = `Publié le : ${c.date}`;
-  textEl.textContent = c.text;
+  let index = 0;
 
-  starsEl.innerHTML = "";
+  function renderComment(i) {
+    const c = comments[i];
 
-  for (let s = 1; s <= 5; s++) {
-    if (s <= c.stars) {
-      starsEl.innerHTML += `<i class="bi bi-star-fill"></i>`;
-    } else {
-      starsEl.innerHTML += `<i class="bi bi-star"></i>`;
+    authorEl.textContent = `Commentaire de : ${c.author}`;
+    dateEl.textContent = `Publié le : ${formatDate(c.createdAt)}`;
+    textEl.textContent = c.message;
+
+    starsEl.innerHTML = "";
+
+    for (let s = 1; s <= 5; s++) {
+      if (s <= c.rating) {
+        starsEl.innerHTML += `<i class="bi bi-star-fill"></i>`;
+      } else {
+        starsEl.innerHTML += `<i class="bi bi-star"></i>`;
+      }
     }
   }
-}
 
   prevBtn.addEventListener("click", () => {
-    index = (index - 1 + validComments.length) % validComments.length;
+    index = (index - 1 + comments.length) % comments.length;
     renderComment(index);
   });
 
   nextBtn.addEventListener("click", () => {
-    index = (index + 1) % validComments.length;
+    index = (index + 1) % comments.length;
     renderComment(index);
   });
 
   renderComment(index);
+}
+
+
+// Formate une date ISO en JJ/MM/AAAA
+function formatDate(iso) {
+  if (!iso) return "";
+  return new Date(iso).toLocaleDateString("fr-FR");
 }
 
 
@@ -194,22 +247,20 @@ function initAddCommentSection() {
 
 
 // Active ou désactive le bouton Favoris selon la connexion
-function updateFavoriteButton(isLoggedIn) {
+function updateFavoriteButton(isLogged) {
   const favBtn = document.getElementById("favBtn");
   if (!favBtn) return;
 
-  if (isLoggedIn) {
+  if (isLogged) {
     favBtn.classList.remove("state-disabled");
   } else {
     favBtn.classList.add("state-disabled");
   }
 }
 
-const isLoggedIn = true;
 
-
-// Sécurise et valide uniquement le commentaire
-function initCommentSecurity() {
+// Sécurise, valide et envoie le commentaire
+function initCommentSecurity(characterId) {
   const textarea = document.getElementById("userComment");
   const publishBtn = document.getElementById("publishComment");
 
@@ -234,14 +285,14 @@ function initCommentSecurity() {
   function validate() {
     const message = sanitize(textarea.value);
     const rating = document.getSelectedRating();
-  
+
     let valid = true;
-  
+
     if (touched) {
       if (message.trim() === "") {
         showError("Veuillez écrire un commentaire");
         valid = false;
-      } 
+      }
       else if (message.trim().length < 30) {
         showError("Le commentaire doit contenir au moins 30 caractères");
         valid = false;
@@ -250,15 +301,15 @@ function initCommentSecurity() {
         hideError();
       }
     }
-  
+
     if (rating === 0) valid = false;
-  
+
     if (valid) {
       publishBtn.classList.remove("state-disabled");
     } else {
       publishBtn.classList.add("state-disabled");
     }
-  
+
     return valid;
   }
 
@@ -274,22 +325,34 @@ function initCommentSecurity() {
 
   publishBtn.classList.add("state-disabled");
 
-  publishBtn.addEventListener("click", (e) => {
+  publishBtn.addEventListener("click", async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
     const card = publishBtn.closest(".add-comment-card");
 
-    const oldMsg = card.querySelector(".success-message");
+    const oldMsg = card.querySelector(".message");
     if (oldMsg) oldMsg.remove();
 
-    const success = document.createElement("p");
-    success.textContent = "Commentaire envoyé avec succès !";
-    success.classList.add("message", "success-message", "success-message-character");
+    const token = localStorage.getItem("token");
+    if (!token) {
+      showMessage(card, "Vous devez être connecté pour laisser un commentaire.", "error-message");
+      return;
+    }
 
-    card.appendChild(success);
+    const payload = {
+      message: sanitize(textarea.value),
+      rating: document.getSelectedRating()
+    };
 
-    setTimeout(() => success.classList.add("show"), 10);
+    const data = await apiPostComment(characterId, payload, token);
+
+    if (!data.success) {
+      showMessage(card, data.message || "Une erreur est survenue.", "error-message");
+      return;
+    }
+
+    showMessage(card, "Commentaire envoyé avec succès !", "success-message");
 
     textarea.value = "";
     touched = false;
@@ -298,21 +361,34 @@ function initCommentSecurity() {
     document.dispatchEvent(resetEvent);
 
     validate();
+  });
+
+  function showMessage(card, text, type) {
+    const msg = document.createElement("p");
+    msg.textContent = text;
+    msg.classList.add("message", type, "success-message-character");
+    card.appendChild(msg);
+
+    setTimeout(() => msg.classList.add("show"), 10);
 
     setTimeout(() => {
-      success.classList.remove("show");
-      setTimeout(() => success.remove(), 300);
+      msg.classList.remove("show");
+      setTimeout(() => msg.remove(), 300);
     }, 2000);
-  });
+  }
 }
 
 
-// Pour ajouter ou supprimer des favoris le personnage
-function initFavoriteToggle() {
+// Pour ajouter ou retirer le personnage des favoris
+async function initFavoriteToggle(characterId) {
   const favBtn = document.getElementById("favBtn");
   if (!favBtn) return;
 
-  let isFavorite = false;
+  const token = localStorage.getItem("token");
+
+  if (!token) return;
+
+  let isFavorite = await apiIsFavorite(characterId, token);
 
   function updateBtn() {
     if (isFavorite) {
@@ -326,13 +402,38 @@ function initFavoriteToggle() {
     }
   }
 
-  favBtn.addEventListener("click", (e) => {
+  favBtn.addEventListener("click", async (e) => {
     e.preventDefault();
-    isFavorite = !isFavorite;
-    updateBtn();
+
+    const data = await apiToggleFavorite(characterId, token, !isFavorite);
+
+    if (data && data.success) {
+      isFavorite = data.favorite;
+      updateBtn();
+    }
   });
 
   updateBtn();
+}
+
+
+// Charge le personnage, ses commentaires validés et l'état des favoris
+async function initCharacterDetails() {
+  const id = getCharacterId();
+  if (!id) return;
+
+  const character = await apiGetCharacter(id);
+  if (character) {
+    fillCharacter(character);
+  }
+
+  const comments = await apiGetComments(id);
+  initCommentsCarousel(comments);
+
+  initAddCommentSection();
+  updateFavoriteButton(isLoggedIn());
+  initCommentSecurity(id);
+  initFavoriteToggle(id);
 }
 
 
@@ -350,10 +451,6 @@ export function validateCommentForTest(message, rating) {
 if (typeof window !== "undefined") {
   initReveal();
   initCustomSelects();
-  initCharacterData();
-  initCommentsCarousel();
-  initAddCommentSection();
-  updateFavoriteButton(isLoggedIn);
-  initCommentSecurity();
-  initFavoriteToggle();
+  initBackReload();
+  initCharacterDetails();
 }

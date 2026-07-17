@@ -3,21 +3,26 @@ import { initCustomSelects } from "../modules/forms.js";
 import { initAutocomplete } from "../modules/autocomplete.js";
 
 
-// Affichage des personnages (Données fictives // Besoin API)
-function initCharacters() {
-  const characters = [
-    { name: "Aelyra", creator: "Little_moon", image: "../assets/images/character/Aelyra.webp" },
-    { name: "Kaedor", creator: "Little_moon", image: "../assets/images/character/Kaedor.webp" },
-    { name: "Thorn", creator: "jeff.ra", image: "../assets/images/character/Thorn.webp" },
-    { name: "Nyxira", creator: "8_Le", image: "../assets/images/character/Nyxira.webp" },
-    { name: "Aelyra", creator: "Little_moon", image: "../assets/images/character/Aelyra.webp" },
-    { name: "Kaedor", creator: "Little_moon", image: "../assets/images/character/Kaedor.webp" },
-    { name: "Thorn", creator: "jeff.ra", image: "../assets/images/character/Thorn.webp" },
-    { name: "Nyxira", creator: "8_Le", image: "../assets/images/character/Nyxira.webp" }
-  ];
+// Appel API
+async function apiGetCharacters() {
+  try {
+    const res = await fetch("http://localhost:8080/api/characters");
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.characters || [];
+  } catch (e) {
+    console.error("Erreur API characters:", e);
+    return [];
+  }
+}
 
+
+// Affichage des personnages validés
+async function initCharacters() {
   const container = document.querySelector(".characters");
   if (!container) return;
+
+  const characters = (await apiGetCharacters()).filter(c => c.status === "valid");
 
   characters.forEach(char => {
     container.innerHTML += `
@@ -36,7 +41,7 @@ function initCharacters() {
 
         <div class="info-box">
           <h3>${char.name.toUpperCase()}</h3>
-          <a href="character-details" class="action-details">Détails</a>
+          <a href="character-details?id=${char.id}" class="action-details">Détails</a>
         </div>
 
       </article>
@@ -45,8 +50,8 @@ function initCharacters() {
 }
 
 
-// Utilisateur connecté (Données fictives // Besoin API)
-const isLoggedIn = true;
+// Utilisateur connecté (via le token stocké à la connexion)
+const isLoggedIn = typeof localStorage !== "undefined" && !!localStorage.getItem("token");
 
 
 // Favoris (Données fictives // Besoin API)

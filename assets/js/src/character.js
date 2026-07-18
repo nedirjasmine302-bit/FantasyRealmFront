@@ -3,7 +3,13 @@ import { initCustomSelects } from "../modules/forms.js";
 import { initAutocomplete } from "../modules/autocomplete.js";
 
 
-// Appel API
+// Utilisateur connecté
+function isLoggedIn() {
+  return typeof localStorage !== "undefined" && !!localStorage.getItem("token");
+}
+
+
+// Appels API
 async function apiGetCharacters() {
   try {
     const res = await fetch("http://localhost:8080/api/characters");
@@ -16,68 +22,182 @@ async function apiGetCharacters() {
   }
 }
 
+async function apiGetFavoriteIds(token) {
+  try {
+    const res = await fetch("http://localhost:8080/api/favorites", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return (data.favorites || []).map(f => f.id);
+  } catch (e) {
+    console.error("Erreur API favorites:", e);
+    return [];
+  }
+}
 
-// Affichage des personnages validés
-async function initCharacters() {
-  const container = document.querySelector(".characters");
-  if (!container) return;
+async function apiToggleFavorite(id, token, add) {
+  const res = await fetch("http://localhost:8080/api/characters/" + id + "/favorite", {
+    method: add ? "POST" : "DELETE",
+    headers: { "Authorization": "Bearer " + token }
+  });
 
-  const characters = (await apiGetCharacters()).filter(c => c.status === "valid");
+  return res.json();
+}
 
-  characters.forEach(char => {
-    container.innerHTML += `
-      <article class="card-vertical">
 
-        <div class="creator-tag creator-tag-vertical">
-          <i class="bi bi-person-fill"></i>
-          <span>${char.creator}</span>
-        </div>
+// Lecture de la valeur d'un select personnalisé
+function getSelectValue(id) {
+  return document.querySelector("#" + id + " .trigger-text")?.dataset.value || "";
+}
 
-        <i class="bi bi-heart heart" style="${isLoggedIn ? '' : 'display:none;'}"></i>
 
-        <div class="img-wrapper">
-          <img src="${char.image}" alt="${char.name}">
-        </div>
+// Vérifie si une date correspond au filtre choisi
+function matchDate(createdAt, filter) {
+  if (!filter) return true;
 
-        <div class="info-box">
-          <h3>${char.name.toUpperCase()}</h3>
-          <a href="character-details?id=${char.id}" class="action-details">Détails</a>
-        </div>
+  const date = new Date(createdAt);
+  const now = new Date();
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const day = 24 * 60 * 60 * 1000;
 
-      </article>
-    `;
+  switch (filter) {
+    case "today":
+      return date >= startOfToday;
+    case "yesterday":
+      return date >= new Date(startOfToday - day) && date < startOfToday;
+    case "7days":
+      return date >= new Date(startOfToday - 7 * day);
+    case "30days":
+      return date >= new Date(startOfToday - 30 * day);
+    case "year":
+      return date.getFullYear() === now.getFullYear();
+    case "old":
+      return date.getFullYear() < now.getFullYear();
+    default:
+      return true;
+  }
+}
+
+
+// Filtre les personnages selon le pseudo, le genre et la date
+function filterCharacters(characters) {
+  const pseudo = document.querySelector("#pseudo-input")?.value.trim().toLowerCase() || "";
+  const genre = getSelectValue("genre-filter");
+  const date = getSelectValue("date-filter");
+
+  return characters.filter(char => {
+    const matchPseudo = pseudo === "" || (char.creator || "").toLowerCase().includes(pseudo);
+    const matchGenre = genre === "" || char.type === genre;
+    const matchCreated = matchDate(char.createdAt, date);
+
+    return matchPseudo && matchGenre && matchCreated;
   });
 }
 
 
-// Utilisateur connecté (via le token stocké à la connexion)
-const isLoggedIn = typeof localStorage !== "undefined" && !!localStorage.getItem("token");
+// Construit la carte d'un personnage
+function renderCard(char, favoriteIds) {
+  const isFav = favoriteIds.includes(char.id);
+  const heartClass = isFav ? "bi-heart-fill" : "bi-heart";
+  const activeClass = isFav ? " active" : "";
+
+  return `
+    <article class="card-vertical" data-id="${char.id}">
+
+      <div class="creator-tag creator-tag-vertical">
+        <i class="bi bi-person-fill"></i>
+        <span>${char.creator}</span>
+      </div>
+
+      <i class="bi ${heartClass} heart${activeClass}" style="${isLoggedIn() ? "" : "display:none;"}"></i>
+
+      <div class="img-wrapper">
+        <img src="${char.image}" alt="${char.name}">
+      </div>
+
+      <div class="info-box">
+        <h3>${char.name.toUpperCase()}</h3>
+        <a href="character-details?id=${char.id}" class="action-details">Détails</a>
+      </div>
+
+    </article>
+  `;
+}
 
 
-// Favoris (Données fictives // Besoin API)
-let favoris = [];
+// Affiche une liste de personnages
+function renderCharacters(list, favoriteIds) {
+  const container = document.querySelector(".characters");
+  const results = document.querySelector("#results");
+  if (!container) return;
+
+  container.innerHTML = list.map(char => renderCard(char, favoriteIds)).join("");
+
+  if (results) {
+    results.innerHTML = list.length === 0
+      ? `<p class="message error-message show text-center">Aucun personnage ne correspond à votre recherche.</p>`
+      : "";
+  }
+}
 
 
-// Gestion des cœurs (Données fictives // Besoin API)
-function initHearts() {
-  document.addEventListener("click", (e) => {
+// Gestion des cœurs
+function initHearts(favoriteIds) {
+  document.addEventListener("click", async (e) => {
     if (!e.target.classList.contains("heart")) return;
 
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
     const card = e.target.closest(".card-vertical");
-    const characterName = card.querySelector("h3").textContent;
+    const id = Number(card.dataset.id);
+    const willAdd = !e.target.classList.contains("active");
 
-    e.target.classList.toggle("active");
+    const data = await apiToggleFavorite(id, token, willAdd);
+    if (!data || !data.success) return;
 
-    if (e.target.classList.contains("active")) {
+    if (data.favorite) {
+      e.target.classList.add("active");
       e.target.classList.replace("bi-heart", "bi-heart-fill");
-      favoris.push(characterName);
-      console.log("Favoris ajoutés :", favoris);
+      if (!favoriteIds.includes(id)) favoriteIds.push(id);
     } else {
+      e.target.classList.remove("active");
       e.target.classList.replace("bi-heart-fill", "bi-heart");
-      favoris = favoris.filter(f => f !== characterName);
-      console.log("Favoris retirés :", favoris);
+      const i = favoriteIds.indexOf(id);
+      if (i !== -1) favoriteIds.splice(i, 1);
     }
   });
+}
+
+
+// Initialise la page : chargement, filtres et favoris
+async function initCharacterPage() {
+  const container = document.querySelector(".characters");
+  if (!container) return;
+
+  const allCharacters = (await apiGetCharacters()).filter(c => c.status === "valid");
+
+  const token = localStorage.getItem("token");
+  const favoriteIds = token ? await apiGetFavoriteIds(token) : [];
+
+  // Autocomplétion basée sur les vrais créateurs (sans doublons)
+  const pseudos = [...new Set(allCharacters.map(c => c.creator).filter(Boolean))];
+
+  renderCharacters(allCharacters, favoriteIds);
+
+  // Filtrage au clic sur le bouton Filtrer
+  const filterBtn = document.querySelector(".filters-form .btn");
+  filterBtn?.addEventListener("click", () => {
+    renderCharacters(filterCharacters(allCharacters), favoriteIds);
+  });
+
+  // Autocomplétion + filtrage direct au choix d'un pseudo
+  initAutocomplete(pseudos, () => {
+    renderCharacters(filterCharacters(allCharacters), favoriteIds);
+  });
+
+  initHearts(favoriteIds);
 }
 
 
@@ -93,7 +213,5 @@ export function filterPseudosForTest(list, query) {
 if (typeof window !== "undefined") {
   initReveal();
   initCustomSelects();
-  initAutocomplete();
-  initCharacters();
-  initHearts();
+  initCharacterPage();
 }

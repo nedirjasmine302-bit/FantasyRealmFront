@@ -207,8 +207,8 @@ async function initCharacterForm() {
       if (name.length === 0) {
         showError(nameError, "Veuillez entrer un nom", nameField);
         valid = false;
-      } else if (name.length < 3) {
-        showError(nameError, "Le nom doit contenir au moins 3 caractères", nameField);
+      } else if (name.length < 3 || name.length > 10) {
+        showError(nameError, "Le nom doit contenir entre 3 et 10 caractères", nameField);
         valid = false;
       } else {
         hideError(nameError, nameField);
@@ -237,7 +237,7 @@ async function initCharacterForm() {
       }
     });
 
-    if (name.length >= 3 && description.length >= 30 && isImageUploaded() && allSelectsFilled) {
+    if (name.length >= 3 && name.length <= 10 && description.length >= 30 && isImageUploaded() && allSelectsFilled) {
       createBtn.classList.remove("state-disabled");
     } else {
       createBtn.classList.add("state-disabled");

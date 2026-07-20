@@ -176,23 +176,20 @@ async function initCharacterPage() {
   const container = document.querySelector(".characters");
   if (!container) return;
 
-  const allCharacters = (await apiGetCharacters()).filter(c => c.status === "valid");
+  const allCharacters = (await apiGetCharacters()).filter(c => c.status === "valid" && c.shared);
 
   const token = localStorage.getItem("token");
   const favoriteIds = token ? await apiGetFavoriteIds(token) : [];
 
-  // Autocomplétion basée sur les vrais créateurs (sans doublons)
   const pseudos = [...new Set(allCharacters.map(c => c.creator).filter(Boolean))];
 
   renderCharacters(allCharacters, favoriteIds);
 
-  // Filtrage au clic sur le bouton Filtrer
   const filterBtn = document.querySelector(".filters-form .btn");
   filterBtn?.addEventListener("click", () => {
     renderCharacters(filterCharacters(allCharacters), favoriteIds);
   });
 
-  // Autocomplétion + filtrage direct au choix d'un pseudo
   initAutocomplete(pseudos, () => {
     renderCharacters(filterCharacters(allCharacters), favoriteIds);
   });

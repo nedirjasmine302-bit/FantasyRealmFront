@@ -61,8 +61,19 @@ function initAuthLink() {
 }
 
 
+// Affiche "Mon Espace" uniquement si l'utilisateur est connecté
+function initSpaceLink() {
+  const spaceItem = document.querySelector(".menu .space-item");
+  if (!spaceItem) return;
+
+  const isLogged = localStorage.getItem("userLogged") === "true";
+  spaceItem.classList.toggle("d-none", !isLogged);
+}
+
+
 // Lance le js du Header quand elle est chargée
 if (typeof window !== "undefined") {
   initBurger();
   initAuthLink();
+  initSpaceLink();
 }

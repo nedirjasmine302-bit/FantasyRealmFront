@@ -2,14 +2,35 @@ import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail, isValidPseudo } from "../modules/security.js";
 
 
-// Gestion utilisateur + sécurité (Données fictives // Besoin API)
-const user = {
-  isLoggedIn: true,
-  email: "jasmine@mail.com",
-  pseudo: "Jasmine"
-};
+// Appels API
+async function apiGetMe(token) {
+  try {
+    const res = await fetch("http://localhost:8080/api/me", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    if (!res.ok) return null;
+    return res.json();
+  } catch (e) {
+    console.error("Erreur API me:", e);
+    return null;
+  }
+}
 
-function initContactForm() {
+async function apiSendContact(payload, token) {
+  const headers = { "Content-Type": "application/json" };
+  if (token) headers["Authorization"] = "Bearer " + token;
+
+  const res = await fetch("http://localhost:8080/api/contact", {
+    method: "POST",
+    headers,
+    body: JSON.stringify(payload)
+  });
+
+  return res.json();
+}
+
+
+async function initContactForm() {
   const form = document.querySelector(".contact-form-card");
   if (!form) return;
 
@@ -29,10 +50,20 @@ function initContactForm() {
   const pseudoError = createErrorElement(pseudoInput);
   const messageError = createErrorElement(messageInput);
 
-  if (user.isLoggedIn) {
-    emailInput.value = user.email;
-    pseudoInput.value = user.pseudo;
-    pseudoInput.disabled = true;
+  const token = localStorage.getItem("token");
+  const logged = !!token;
+
+  if (logged) {
+    const me = await apiGetMe(token);
+    if (me) {
+      emailInput.value = me.email || "";
+      pseudoInput.value = me.pseudo || "";
+    }
+
+    emailInput.setAttribute("readonly", true);
+    emailInput.setAttribute("disabled", true);
+    pseudoInput.setAttribute("readonly", true);
+    pseudoInput.setAttribute("disabled", true);
   }
 
   let touched = {
@@ -58,15 +89,16 @@ function initContactForm() {
 
     let valid = true;
 
-    if (touched.email) {
+    if (!logged && touched.email) {
       if (!isValidEmail(email)) {
         showError(emailError, "Email invalide");
         valid = false;
       } else hideError(emailError);
     }
 
-    if (touched.pseudo) {
-      if (!isValidPseudo(pseudo)) {
+
+    if (!logged && touched.pseudo) {
+      if (pseudo !== "" && !isValidPseudo(pseudo)) {
         showError(pseudoError, "3 à 20 caractères (lettres, chiffres, _ -)");
         valid = false;
       } else hideError(pseudoError);
@@ -74,11 +106,11 @@ function initContactForm() {
 
     if (touched.message) {
       const length = message.trim().length;
-    
+
       if (length === 0) {
         showError(messageError, "Veuillez entrer un message");
         valid = false;
-      } 
+      }
       else if (length < 30) {
         showError(messageError, "Le message doit contenir au moins 30 caractères");
         valid = false;
@@ -88,11 +120,10 @@ function initContactForm() {
       }
     }
 
-    if (
-      (user.isLoggedIn || isValidEmail(email)) &&
-      isValidPseudo(pseudo) &&
-      message.trim().length >= 30
-    ) {
+    const emailOk = logged || isValidEmail(email);
+    const pseudoOk = logged || pseudo === "" || isValidPseudo(pseudo);
+
+    if (emailOk && pseudoOk && message.trim().length >= 30) {
       submitBtn.classList.remove("btn-disabled");
     } else {
       submitBtn.classList.add("btn-disabled");
@@ -112,21 +143,38 @@ function initContactForm() {
 
   validateForm();
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    const success = document.createElement("p");
-    success.textContent = "Message envoyé avec succès !";
-    success.classList.add("message", "success-message");
-    form.appendChild(success);
+    const payload = {
+      email: sanitize(emailInput.value),
+      pseudo: sanitize(pseudoInput.value),
+      message: sanitize(messageInput.value)
+    };
 
-    setTimeout(() => {
-      success.classList.add("show");
-    }, 10);
+    const oldMsg = form.querySelector(".message");
+    if (oldMsg) oldMsg.remove();
 
+    const data = await apiSendContact(payload, token);
 
-    if (!user.isLoggedIn) {
+    const feedback = document.createElement("p");
+    feedback.classList.add("message");
+
+    if (!data || !data.success) {
+      feedback.textContent = (data && data.message) || "Une erreur est survenue.";
+      feedback.classList.add("error-message");
+      form.appendChild(feedback);
+      setTimeout(() => feedback.classList.add("show"), 10);
+      return;
+    }
+
+    feedback.textContent = data.message || "Message envoyé avec succès !";
+    feedback.classList.add("success-message");
+    form.appendChild(feedback);
+    setTimeout(() => feedback.classList.add("show"), 10);
+
+    if (!logged) {
       emailInput.value = "";
       pseudoInput.value = "";
     }
@@ -137,7 +185,7 @@ function initContactForm() {
 
     setTimeout(() => {
       window.location.reload();
-    }, 1000);
+    }, 1500);
   });
 }
 
@@ -162,7 +210,7 @@ export function getContactFormState(user) {
 }
 
 
-// Lance le JS de la page Contact de personnage quand elle est chargée
+// Lance le JS de la page Contact quand elle est chargée
 if (typeof window !== "undefined") {
   initReveal();
   initContactForm();

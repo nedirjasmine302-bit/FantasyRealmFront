@@ -24,6 +24,10 @@ tabs.forEach(tab => {
     const target = tab.dataset.tab;
     activateTab(target);
     sessionStorage.setItem("activeTab", target);
+
+    if (window.location.hash) {
+      history.replaceState(null, "", window.location.pathname);
+    }
   });
 });
 
@@ -33,6 +37,10 @@ const initialTab =
 
 if (initialTab) {
   activateTab(initialTab);
+}
+
+if (window.location.hash) {
+  history.replaceState(null, "", window.location.pathname);
 }
 
 
@@ -57,7 +65,7 @@ if (userRole === "employer") {
 document.querySelectorAll('.action-duplicate').forEach(btn => {
   btn.addEventListener('click', () => {
     btn.textContent = btn.textContent === "Désactiver" 
-      ? "Activer" 
+      ? "Activer"
       : "Désactiver";
   });
 });

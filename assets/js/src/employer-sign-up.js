@@ -1,24 +1,41 @@
 import { initReveal } from "../modules/animations.js";
-import { sanitize, isValidEmail,isValidPseudo, isValidPassword, isEmailUnique } from "../modules/security.js";
+import { sanitize, isValidEmail, isValidEmployerPseudo, isValidPassword } from "../modules/security.js";
 import { initBackReload } from "../modules/back-reload.js";
 
 
-// Gestion du formulaire de création d'un compte employeur (Données fictives // Besoin API)
-const existingEmployers = [
-  { email: "entreprise@mail.com", pseudo: "PlayerOne" },
-  { email: "contact@studio.com", pseudo: "Jasmine" }
-];
-
-function isPseudoUnique(pseudo) {
-  return !existingEmployers.some(e => e.pseudo.toLowerCase() === pseudo.toLowerCase());
+// Appel API
+async function checkEmailUnique(email) {
+  try {
+    const res = await fetch("http://localhost:8080/api/check-email?email=" + encodeURIComponent(email));
+    if (!res.ok) return true;
+    const data = await res.json();
+    return data.unique !== false;
+  } catch (e) {
+    console.error("Erreur API check-email:", e);
+    return true;
+  }
 }
 
+async function checkPseudoUnique(pseudo) {
+  try {
+    const res = await fetch("http://localhost:8080/api/check-pseudo?pseudo=" + encodeURIComponent(pseudo));
+    if (!res.ok) return true;
+    const data = await res.json();
+    return data.unique !== false;
+  } catch (e) {
+    console.error("Erreur API check-pseudo:", e);
+    return true;
+  }
+}
+
+
+// Gestion du formulaire de création d'un compte employeur
 function initEmployerSignUpForm() {
   const form = document.querySelector(".auth-form-container");
   if (!form) return;
 
   const emailInput = document.querySelector("#email");
-    const pseudoInput = document.querySelector("#pseudo");
+  const pseudoInput = document.querySelector("#pseudo");
   const passwordInput = document.querySelector("#password");
   const password2Input = document.querySelector("#password2");
   const submitBtn = document.querySelector(".btn.btn-secondary");
@@ -52,7 +69,7 @@ function initEmployerSignUpForm() {
     errorEl.style.opacity = "0";
   }
 
-  function validateForm() {
+  async function validateForm() {
     const email = sanitize(emailInput.value);
     const pseudo = sanitize(pseudoInput.value);
     const password = sanitize(passwordInput.value);
@@ -64,33 +81,35 @@ function initEmployerSignUpForm() {
       if (!isValidEmail(email)) {
         showError(emailError, "Email invalide");
         valid = false;
-
-      } else if (!isEmailUnique(email, existingEmployers)) {
-        showError(emailError, "Cet email est déjà utilisé");
-        valid = false;
-
       } else {
-        hideError(emailError);
+        const unique = await checkEmailUnique(email);
+        if (!unique) {
+          showError(emailError, "Cet email est déjà utilisé");
+          valid = false;
+        } else {
+          hideError(emailError);
+        }
       }
     }
 
     if (touched.pseudo) {
-      if (!isValidPseudo(pseudo)) {
-          showError(pseudoError, "3 à 20 caractères (lettres, chiffres, _ -)");
-          valid = false;
-    
-        } else if (!isPseudoUnique(pseudo)) {
+      if (!isValidEmployerPseudo(pseudo)) {
+        showError(pseudoError, "3 à 9 caractères (lettres, chiffres, _ -)");
+        valid = false;
+      } else {
+        const unique = await checkPseudoUnique(pseudo);
+        if (!unique) {
           showError(pseudoError, "Ce pseudo est déjà utilisé");
           valid = false;
-    
         } else {
           hideError(pseudoError);
         }
       }
+    }
 
     if (touched.password) {
       if (!isValidPassword(password)) {
-        showError(passwordError, "Mot de passe non conforme (8 caractères, maj, min, chiffre, spécial)");
+        showError(passwordError, "Mot de passe non conforme (8 caractères dont une majuscule, une minuscule, un chiffre et un spécial)");
         valid = false;
       } else {
         hideError(passwordError);
@@ -99,7 +118,7 @@ function initEmployerSignUpForm() {
 
     if (touched.password2) {
       if (password !== password2) {
-        showError(password2Error, "La confirmation n'est pas identique");
+        showError(password2Error, "La confirmation n'est pas identique au mot de passe");
         valid = false;
       } else {
         hideError(password2Error);
@@ -108,9 +127,9 @@ function initEmployerSignUpForm() {
 
     if (
       isValidEmail(email) &&
-      isEmailUnique(email, existingEmployers) &&
-      isValidPseudo(pseudo) &&
-      isPseudoUnique(pseudo) &&
+      await checkEmailUnique(email) &&
+      isValidEmployerPseudo(pseudo) &&
+      await checkPseudoUnique(pseudo) &&
       isValidPassword(password) &&
       password === password2
     ) {
@@ -134,12 +153,32 @@ function initEmployerSignUpForm() {
 
   validateForm();
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    if (!await validateForm()) return;
+
+    const payload = {
+      email: sanitize(emailInput.value),
+      pseudo: sanitize(pseudoInput.value),
+      password: sanitize(passwordInput.value),
+      password2: sanitize(password2Input.value)
+    };
+
+    const res = await fetch("http://localhost:8080/api/employer-sign-up", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      alert(data.message);
+      return;
+    }
 
     const success = document.createElement("p");
-    success.textContent = "Compte employeur créé avec succès !";
+    success.textContent = data.message;
     success.classList.add("message", "success-message");
     form.appendChild(success);
 
@@ -148,13 +187,12 @@ function initEmployerSignUpForm() {
 
     setTimeout(() => success.classList.add("show"), 10);
 
-    localStorage.setItem("employerLogged", "true");
-
     setTimeout(() => {
-      window.location.href = "/";
+      window.location.href = "/management#employees";
     }, 1000);
   });
 }
+
 
 // Lance le js de la page Employer-sign-up quand elle est chargée
 if (typeof window !== "undefined") {

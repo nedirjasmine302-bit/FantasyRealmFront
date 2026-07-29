@@ -11,6 +11,10 @@ export function isValidPseudo(pseudo) {
   return /^[a-zA-Z0-9_-]{3,20}$/.test(pseudo);
 }
 
+export function isValidEmployerPseudo(pseudo) {
+  return /^[a-zA-Z0-9_-]{3,9}$/.test(pseudo);
+}
+
 export function isValidPassword(password) {
   return (
     password.length >= 8 &&

@@ -3,24 +3,8 @@ import { sanitize, isValidEmail, isValidPassword } from "../modules/security.js"
 import { initBackReload } from "../modules/back-reload.js";
 
 
-// Gestion du formulaire de réinitialisation du mot de passe employé (Données fictives // Besoin API)
-const fakeEmployees = [
-  { email: "jasmine@mail.com", status: "active" },
-  { email: "test@mail.com", status: "suspended" },
-  { email: "employe@mail.com", status: "active" }
-];
-
-function employeeExists(email) {
-  return fakeEmployees.some(u => u.email.toLowerCase() === email.toLowerCase());
-}
-
-function isEmployeeSuspended(email) {
-  const emp = fakeEmployees.find(u => u.email.toLowerCase() === email.toLowerCase());
-  return emp?.status === "suspended";
-}
-
-
-function initResetPasswordForm() {
+// Gestion du formulaire de réinitialisation du mot de passe employé
+function initResetEmployerPasswordForm() {
   const form = document.querySelector(".auth-form-container");
   if (!form) return;
 
@@ -67,15 +51,7 @@ function initResetPasswordForm() {
       if (!isValidEmail(email)) {
         showError(emailError, "Email invalide");
         valid = false;
-      } else if (!employeeExists(email)) {
-        showError(emailError, "Aucun employé trouvé avec cet email");
-        valid = false;
-      } else if (isEmployeeSuspended(email)) {
-        showError(emailError, "Ce compte employé est suspendu");
-        valid = false;
-      } else {
-        hideError(emailError);
-      }
+      } else hideError(emailError);
     }
 
     if (touched.password) {
@@ -94,8 +70,6 @@ function initResetPasswordForm() {
 
     if (
       isValidEmail(email) &&
-      employeeExists(email) &&
-      !isEmployeeSuspended(email) &&
       isValidPassword(password) &&
       password === password2
     ) {
@@ -118,26 +92,61 @@ function initResetPasswordForm() {
 
   validateForm();
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+
+    const email = sanitize(emailInput.value);
+    const newPassword = sanitize(passwordInput.value);
 
     const oldMsg = form.querySelector(".message");
     if (oldMsg) oldMsg.remove();
 
-    const success = document.createElement("p");
-    success.textContent = "Le mot de passe de l'employé a été réinitialisé avec succès.";
-    success.classList.add("message", "success-message");
-    form.appendChild(success);
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/reset-employer-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email,
+          newPassword
+        })
+      });
 
-    submitBtn.classList.add("btn-disabled");
-    submitBtn.setAttribute("disabled", "true");
+      const data = await response.json();
 
-    setTimeout(() => success.classList.add("show"), 10);
+      if (!response.ok || !data.success) {
+        const error = document.createElement("p");
+        error.textContent = data.message || "Une erreur est survenue lors de la réinitialisation.";
+        error.classList.add("message", "error-message");
+        form.appendChild(error);
 
-    setTimeout(() => {
-      window.location.href = "/gestion";
-    }, 1500);
+        setTimeout(() => error.classList.add("show"), 10);
+        return;
+      }
+
+      const success = document.createElement("p");
+      success.textContent = data.message || "Le mot de passe de l'employé a été réinitialisé avec succès.";
+      success.classList.add("message", "success-message");
+      form.appendChild(success);
+
+      submitBtn.classList.add("btn-disabled");
+      submitBtn.setAttribute("disabled", "true");
+
+      setTimeout(() => success.classList.add("show"), 10);
+
+      setTimeout(() => {
+        window.location.href = "/management#employees";
+      }, 1500);
+    } catch {
+      const error = document.createElement("p");
+      error.textContent = "Erreur réseau. Veuillez réessayer.";
+      error.classList.add("message", "error-message");
+      form.appendChild(error);
+
+      setTimeout(() => error.classList.add("show"), 10);
+    }
   });
 }
 
@@ -145,6 +154,6 @@ function initResetPasswordForm() {
 // Lance le JS de la page Reset-employer-password quand elle est chargée
 if (typeof window !== "undefined") {
   initReveal();
-  initResetPasswordForm();
+  initResetEmployerPasswordForm();
   initBackReload();
 }

@@ -74,6 +74,17 @@ function toggleCard(card) {
 };
 
 
+// Envoie vers Mon Espace si connecté, sinon vers l'inscription
+function initAccountLinks() {
+  const links = document.querySelectorAll(".account-link");
+  const isLogged = localStorage.getItem("userLogged") === "true";
+
+  links.forEach(link => {
+    link.setAttribute("href", isLogged ? "my-space" : "sign-up");
+  });
+}
+
+
 // Test
 export function toggleCardForTest(card) {
   card.active = !card.active;
@@ -86,4 +97,5 @@ if (typeof window !== "undefined") {
   initReveal();
   initAboutTilt();
   initCards();
+  initAccountLinks();
 }

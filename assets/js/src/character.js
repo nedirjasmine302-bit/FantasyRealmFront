@@ -1,6 +1,7 @@
 import { initReveal } from "../modules/animations.js";
 import { initCustomSelects } from "../modules/forms.js";
 import { initAutocomplete } from "../modules/autocomplete.js";
+import { initDetailsOrigin } from "../modules/details-origin.js";
 
 
 // Utilisateur connecté
@@ -210,5 +211,6 @@ export function filterPseudosForTest(list, query) {
 if (typeof window !== "undefined") {
   initReveal();
   initCustomSelects();
+  initDetailsOrigin("character");
   initCharacterPage();
 }

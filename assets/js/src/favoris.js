@@ -1,6 +1,7 @@
 import { initReveal } from "../modules/animations.js";
 import { initCustomSelects } from "../modules/forms.js";
 import { initAutocomplete } from "../modules/autocomplete.js";
+import { initDetailsOrigin } from "../modules/details-origin.js";
 
 
 // Appels API
@@ -219,5 +220,6 @@ async function initFavoris() {
 // Lance le js de la page Favoris quand elle est chargée
 if (typeof window !== "undefined") {
   initReveal();
+  initDetailsOrigin("favoris");
   initFavoris();
 }

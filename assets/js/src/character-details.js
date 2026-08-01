@@ -2,6 +2,7 @@ import { initReveal } from "../modules/animations.js";
 import { initCustomSelects } from "../modules/forms.js";
 import { sanitize } from "../modules/security.js";
 import { initBackReload } from "../modules/back-reload.js";
+import { getDetailsOrigin } from "../modules/details-origin.js";
 
 
 // Récupère l'id du personnage dans l'URL 
@@ -446,6 +447,15 @@ async function initFavoriteToggle(characterId) {
 }
 
 
+// Renvoie le bouton Retour vers la page d'où l'on vient
+function initBackButton() {
+  const backBtn = document.getElementById("backBtn");
+  if (!backBtn) return;
+
+  backBtn.setAttribute("href", getDetailsOrigin());
+}
+
+
 // Charge le personnage, ses commentaires validés et l'état des favoris
 async function initCharacterDetails() {
   const id = getCharacterId();
@@ -482,6 +492,7 @@ async function start() {
   await buildAccessoryOptions();
   initCustomSelects();
   initBackReload();
+  initBackButton();
   initCharacterDetails();
 }
 

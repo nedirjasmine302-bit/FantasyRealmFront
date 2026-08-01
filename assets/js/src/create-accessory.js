@@ -3,6 +3,72 @@ import { initCustomSelects } from "../modules/forms.js";
 import { sanitize } from "../modules/security.js";
 
 
+// Appels API
+async function apiGetMe(token) {
+  try {
+    const res = await fetch("http://localhost:8080/api/me", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    if (!res.ok) return null;
+    return res.json();
+  } catch (e) {
+    console.error("Erreur API me:", e);
+    return null;
+  }
+}
+
+// Vérifie que l'utilisateur connecté est employé ou admin
+async function isEmployerOrAdmin(token) {
+  const me = await apiGetMe(token);
+  const roles = me?.roles || [];
+  return roles.includes("ROLE_EMPLOYER") || roles.includes("ROLE_ADMIN");
+}
+
+async function apiGetAccessoryTypes() {
+  try {
+    const res = await fetch("http://localhost:8080/api/accessory-types");
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.types || [];
+  } catch (e) {
+    console.error("Erreur API accessory-types:", e);
+    return [];
+  }
+}
+
+async function apiCreateAccessory(payload, token) {
+  const res = await fetch("http://localhost:8080/api/accessories", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify(payload)
+  });
+
+  return res.json();
+}
+
+
+// Lecture de la valeur d'un select personnalisé
+function getSelectValue(id) {
+  return document.querySelector("#" + id + " .trigger-text")?.dataset.value || "";
+}
+
+
+// Récupère les types d'accessoires et construit les options du select
+async function buildTypeOptions() {
+  const optionsBox = document.querySelector("#Type .custom-options");
+  if (!optionsBox) return;
+
+  const types = await apiGetAccessoryTypes();
+
+  optionsBox.innerHTML = types
+    .map(t => `<div class="custom-option" data-value="${t.value}">${t.label}</div>`)
+    .join("");
+}
+
+
 // Gestion de l'upload de l'image
 function initImageUpload() {
   const uploadBox = document.getElementById("uploadBox");
@@ -94,8 +160,8 @@ function initCreateAccessoryValidation() {
       return false;
     }
 
-    if (length < 3) {
-      showError(nameError, "Le nom doit contenir au moins 3 caractères", nameField);
+    if (length < 3 || length > 20) {
+      showError(nameError, "Le nom doit contenir entre 3 et 20 caractères", nameField);
       return false;
     }
 
@@ -158,26 +224,67 @@ function initCreateAccessoryValidation() {
 
   createBtn.classList.add("state-disabled");
 
-  createBtn.addEventListener("click", (e) => {
+  createBtn.addEventListener("click", async (e) => {
     e.preventDefault();
     if (!validateAll()) return;
 
     const container = document.querySelector(".feedback-zone");
 
-    const success = document.createElement("p");
-    success.textContent = "Votre accessoire a été créé avec succès !";
-    success.classList.add("message", "success-message");
-    container.appendChild(success);
+    function showMessage(text, type) {
+      const oldMsg = container.querySelector(".message");
+      if (oldMsg) oldMsg.remove();
+
+      const msg = document.createElement("p");
+      msg.textContent = text;
+      msg.classList.add("message", type);
+      container.appendChild(msg);
+
+      setTimeout(() => msg.classList.add("show"), 10);
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      showMessage("Vous devez être connecté.", "error-message");
+      return;
+    }
+
+    if (!(await isEmployerOrAdmin(token))) {
+      showMessage("Accès interdit : cette page est réservée aux employés.", "error-message");
+      return;
+    }
+
+    const payload = {
+      name: sanitize(nameInput.value),
+      type: getSelectValue("Type"),
+      rarity: getSelectValue("rarity"),
+      description: sanitize(descInput.value),
+      image: previewImage.src
+    };
+
+    const data = await apiCreateAccessory(payload, token);
+
+    if (!data.success) {
+      showMessage(data.message || "Une erreur est survenue.", "error-message");
+      return;
+    }
+
+    showMessage("Votre accessoire a été créé avec succès !", "success-message");
 
     createBtn.classList.add("state-disabled");
     createBtn.setAttribute("disabled", "true");
 
-    setTimeout(() => success.classList.add("show"), 10);
-
     setTimeout(() => {
-      window.location.href = "/my-space";
+      window.location.href = "/management#accessories";
     }, 1000);
   });
+}
+
+
+// Charge les types puis initialise les selects et la validation
+async function initCreateAccessory() {
+  await buildTypeOptions();
+  initCustomSelects();
+  initCreateAccessoryValidation();
 }
 
 
@@ -192,6 +299,8 @@ export function validateAccessoryForTest({ name, description, image, selects }) 
     errors.name = "empty";
   } else if (sanitizedName.length < 3) {
     errors.name = "too_short";
+  } else if (sanitizedName.length > 20) {
+    errors.name = "too_long";
   }
 
   if (sanitizedDesc.length === 0) {
@@ -219,6 +328,5 @@ export function validateAccessoryForTest({ name, description, image, selects }) 
 if (typeof window !== "undefined") {
   initReveal();
   initImageUpload();
-  initCustomSelects();
-  initCreateAccessoryValidation();
+  initCreateAccessory();
 }

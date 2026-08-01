@@ -17,6 +17,35 @@ async function apiGetCharacter(id) {
   }
 }
 
+async function apiGetAccessories() {
+  try {
+    const res = await fetch("http://localhost:8080/api/accessories");
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.accessories || [];
+  } catch (e) {
+    console.error("Erreur API accessories:", e);
+    return [];
+  }
+}
+
+
+// Construit dynamiquement les options des selects armure / arme / relique
+async function buildAccessoryOptions() {
+  const accessories = await apiGetAccessories();
+  const selectors = { armor: "#armor", weapon: "#weapon", relique: "#relique" };
+
+  Object.entries(selectors).forEach(([type, selector]) => {
+    const optionsBox = document.querySelector(selector + " .custom-options");
+    if (!optionsBox) return;
+
+    optionsBox.innerHTML = accessories
+      .filter(a => a.type === type)
+      .map(a => `<span class="custom-option" data-value="${a.id}" data-rarity="${a.rarity}"><span class="dot dot-${a.rarity}"></span> ${a.name}</span>`)
+      .join("");
+  });
+}
+
 
 // Gestion de l'upload de l'image
 function initImageUpload() {
@@ -346,10 +375,15 @@ async function initCharacterForm() {
 
 
 // Lance le js de la page Create-character quand elle est chargée
-if (typeof window !== "undefined") {
+async function start() {
   initReveal();
   initImageUpload();
+  await buildAccessoryOptions();
   initCustomSelects();
   initBackReload();
   initCharacterForm();
+}
+
+if (typeof window !== "undefined") {
+  start();
 }

@@ -51,7 +51,7 @@ test("select manquant = invalide", () => {
 
 test("toutes les valeurs valides = valide", () => {
   const result = validateAccessoryForTest({
-    name: "Accessoire",
+    name: "Bouclier",
     description: "Une description suffisamment longue pour être valide.",
     image: "data:image/png;base64,...",
     selects: ["a", "b", "c"]

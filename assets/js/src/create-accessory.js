@@ -36,6 +36,18 @@ async function apiGetAccessoryTypes() {
   }
 }
 
+async function apiGetRarities() {
+  try {
+    const res = await fetch("http://localhost:8080/api/rarities");
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.rarities || [];
+  } catch (e) {
+    console.error("Erreur API rarities:", e);
+    return [];
+  }
+}
+
 async function apiCreateAccessory(payload, token) {
   const res = await fetch("http://localhost:8080/api/accessories", {
     method: "POST",
@@ -65,6 +77,19 @@ async function buildTypeOptions() {
 
   optionsBox.innerHTML = types
     .map(t => `<div class="custom-option" data-value="${t.value}">${t.label}</div>`)
+    .join("");
+}
+
+
+// Récupère les raretés et construit les options du select
+async function buildRarityOptions() {
+  const optionsBox = document.querySelector("#rarity .custom-options");
+  if (!optionsBox) return;
+
+  const rarities = await apiGetRarities();
+
+  optionsBox.innerHTML = rarities
+    .map(r => `<span class="custom-option" data-value="${r.value}" data-rarity="${r.value}"><span class="dot dot-${r.value}"></span> ${r.label}</span>`)
     .join("");
 }
 
@@ -283,6 +308,7 @@ function initCreateAccessoryValidation() {
 // Charge les types puis initialise les selects et la validation
 async function initCreateAccessory() {
   await buildTypeOptions();
+  await buildRarityOptions();
   initCustomSelects();
   initCreateAccessoryValidation();
 }

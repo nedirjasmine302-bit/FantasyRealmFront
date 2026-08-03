@@ -490,6 +490,14 @@ function initBackButton() {
   if (!backBtn) return;
 
   backBtn.setAttribute("href", getDetailsOrigin());
+
+  backBtn.addEventListener("click", (e) => {
+
+    if (window.history.length > 1) {
+      e.preventDefault();
+      window.history.back();
+    }
+  });
 }
 
 

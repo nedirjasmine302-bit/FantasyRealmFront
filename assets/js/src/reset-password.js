@@ -167,8 +167,10 @@ function initResetPasswordForm() {
 
 
 // Lance le JS de la page Reset-password quand elle est chargée
-if (typeof window !== "undefined") {
+function start() {
   initReveal();
   initResetPasswordForm();
   initBackReload();
 }
+
+if (typeof window !== "undefined") start();

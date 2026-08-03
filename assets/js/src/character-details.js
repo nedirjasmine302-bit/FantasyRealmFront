@@ -496,6 +496,4 @@ async function start() {
   initCharacterDetails();
 }
 
-if (typeof window !== "undefined") {
-  start();
-}
+if (typeof window !== "undefined") start();

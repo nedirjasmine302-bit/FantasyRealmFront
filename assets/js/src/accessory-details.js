@@ -173,6 +173,4 @@ async function start() {
   initAccessoryDetails();
 }
 
-if (typeof window !== "undefined") {
-  start();
-}
+if (typeof window !== "undefined") start();

@@ -244,7 +244,9 @@ export function toggleFavoriteForTest(fav, name) {
 
 
 // Lance le js de la page My-space quand elle est chargée
-if (typeof window !== "undefined") {
+function start() {
   initReveal();
   initMySpace();
 }
+
+if (typeof window !== "undefined") start();

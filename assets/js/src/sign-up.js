@@ -197,8 +197,10 @@ function initSignUpForm() {
 
 
 // Lance le js de la page Sign-up quand elle est chargée
-if (typeof window !== "undefined") {
+function start() {
   initReveal();
   initSignUpForm();
   initBackReload();
 }
+
+if (typeof window !== "undefined") start();

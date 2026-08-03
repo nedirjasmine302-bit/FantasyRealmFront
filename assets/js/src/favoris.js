@@ -218,8 +218,10 @@ async function initFavoris() {
 
 
 // Lance le js de la page Favoris quand elle est chargée
-if (typeof window !== "undefined") {
+function start() {
   initReveal();
   initDetailsOrigin("favoris");
   initFavoris();
 }
+
+if (typeof window !== "undefined") start();

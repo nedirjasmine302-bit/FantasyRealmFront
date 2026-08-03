@@ -173,8 +173,10 @@ document.addEventListener("click", (e) => {
 
 
 // Lance le js de la page Management quand elle est chargée
-if (typeof window !== "undefined") {
+function start() {
   initReveal();
   initCustomSelects();
   initAutocomplete();
 }
+
+if (typeof window !== "undefined") start();

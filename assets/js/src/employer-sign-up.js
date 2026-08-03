@@ -195,8 +195,10 @@ function initEmployerSignUpForm() {
 
 
 // Lance le js de la page Employer-sign-up quand elle est chargée
-if (typeof window !== "undefined") {
+function start() {
   initReveal();
   initEmployerSignUpForm();
   initBackReload();
 }
+
+if (typeof window !== "undefined") start();

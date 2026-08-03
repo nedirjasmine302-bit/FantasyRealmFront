@@ -72,8 +72,10 @@ function initSpaceLink() {
 
 
 // Lance le js du Header quand elle est chargée
-if (typeof window !== "undefined") {
+function start() {
   initBurger();
   initAuthLink();
   initSpaceLink();
 }
+
+if (typeof window !== "undefined") start();

@@ -384,6 +384,4 @@ async function start() {
   initCharacterForm();
 }
 
-if (typeof window !== "undefined") {
-  start();
-}
+if (typeof window !== "undefined") start();

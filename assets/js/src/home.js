@@ -93,9 +93,11 @@ export function toggleCardForTest(card) {
 
 
 // Lance le js de la page Home quand elle est chargée
-if (typeof window !== "undefined") {
+function start() {
   initReveal();
   initAboutTilt();
   initCards();
   initAccountLinks();
 }
+
+if (typeof window !== "undefined") start();

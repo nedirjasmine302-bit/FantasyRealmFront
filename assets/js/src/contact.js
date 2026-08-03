@@ -211,7 +211,9 @@ export function getContactFormState(user) {
 
 
 // Lance le JS de la page Contact quand elle est chargée
-if (typeof window !== "undefined") {
+function start() {
   initReveal();
   initContactForm();
 }
+
+if (typeof window !== "undefined") start();

@@ -152,8 +152,10 @@ function initResetEmployerPasswordForm() {
 
 
 // Lance le JS de la page Reset-employer-password quand elle est chargée
-if (typeof window !== "undefined") {
+function start() {
   initReveal();
   initResetEmployerPasswordForm();
   initBackReload();
 }
+
+if (typeof window !== "undefined") start();

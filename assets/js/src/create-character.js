@@ -47,6 +47,43 @@ async function buildAccessoryOptions() {
 }
 
 
+async function apiGetCharacterOptions() {
+  try {
+    const res = await fetch("http://localhost:8080/api/character-options");
+    if (!res.ok) return {};
+    return res.json();
+  } catch (e) {
+    console.error("Erreur API character-options:", e);
+    return {};
+  }
+}
+
+
+// Construit les options des selects classe + apparence
+async function buildCharacterOptions() {
+  const options = await apiGetCharacterOptions();
+
+  const mapping = {
+    gender: options.classes,
+    hairColor: options.hairColors,
+    eyeColor: options.eyeColors,
+    skinColor: options.skinColors,
+    mouthShape: options.mouthShapes,
+    eyeShape: options.eyeShapes,
+    noseShape: options.noseShapes,
+  };
+
+  Object.entries(mapping).forEach(([id, list]) => {
+    const optionsBox = document.querySelector(`#${id} .custom-options`);
+    if (!optionsBox || !Array.isArray(list)) return;
+
+    optionsBox.innerHTML = list
+      .map(o => `<div class="custom-option" data-value="${o.value}">${o.label}</div>`)
+      .join("");
+  });
+}
+
+
 // Gestion de l'upload de l'image
 function initImageUpload() {
   const uploadBox = document.getElementById("uploadBox");
@@ -378,6 +415,7 @@ async function initCharacterForm() {
 async function start() {
   initReveal();
   initImageUpload();
+  await buildCharacterOptions();
   await buildAccessoryOptions();
   initCustomSelects();
   initBackReload();

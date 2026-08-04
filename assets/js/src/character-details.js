@@ -484,6 +484,18 @@ async function initFavoriteToggle(characterId) {
 }
 
 
+// Pour la page Management masque le bouton Favoris et centre le Retour
+function applyManagementView() {
+  if (getDetailsOrigin() !== "management") return;
+
+  const favBtn = document.getElementById("favBtn");
+  const wrapper = document.querySelector(".bottom-actions .actions-wrapper");
+
+  favBtn?.remove();
+  wrapper?.classList.add("center");
+}
+
+
 // Renvoie le bouton Retour vers la page d'où l'on vient
 function initBackButton() {
   const backBtn = document.getElementById("backBtn");
@@ -539,6 +551,7 @@ async function start() {
   initCustomSelects();
   initBackReload();
   initBackButton();
+  applyManagementView();
   initCharacterDetails();
 }
 

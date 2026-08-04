@@ -138,8 +138,13 @@
       }
     }
 
+    .card-actions .action-details:hover {
+      color: abs.$secondary;
+      text-decoration: underline;
+    }
 
-    // Responsive 
+
+    // Responsive
     @media (max-width: 565px) {
 
       // Section: Filters

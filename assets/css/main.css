@@ -14493,6 +14493,10 @@ input[type=password]::-ms-reveal {
   pointer-events: none;
   filter: grayscale(40%);
 }
+.admin-characters-section .card-horizontal .card-actions .action-details:hover {
+  color: #B07CFF;
+  text-decoration: underline;
+}
 @media (max-width: 565px) {
   .admin-characters-section .card-horizontal .filters-form {
     max-width: 100%;

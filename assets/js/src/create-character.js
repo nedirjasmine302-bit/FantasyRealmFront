@@ -40,7 +40,7 @@ async function buildAccessoryOptions() {
     if (!optionsBox) return;
 
     optionsBox.innerHTML = accessories
-      .filter(a => a.type === type)
+      .filter(a => a.type === type && a.active)
       .map(a => `<span class="custom-option" data-value="${a.id}" data-rarity="${a.rarity}"><span class="dot dot-${a.rarity}"></span> ${a.name}</span>`)
       .join("");
   });

@@ -211,6 +211,11 @@
   }
 
   .card-horizontal {
+
+    .card-name {
+      max-width: 24rem;
+    }
+
     .card-img {
       top: 0.5rem;
       right: 1rem;

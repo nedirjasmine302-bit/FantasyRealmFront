@@ -176,6 +176,10 @@
         text-align: center;
       }
 
+      .card-name {
+        @include abs.title-style(2.5rem, white, center);
+      }
+
       .card-buttons {
         align-self: center;
       }

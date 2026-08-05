@@ -12661,6 +12661,13 @@ footer {
     width: 100%;
     text-align: center;
   }
+  .card-horizontal .card-content .card-name {
+    font-family: "Cinzel", serif;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+  }
   .card-horizontal .card-content .card-buttons {
     align-self: center;
   }
@@ -14579,6 +14586,9 @@ input[type=password]::-ms-reveal {
 .admin-accessories-section .card-actions .action-modifier:hover {
   color: #B07CFF;
   text-decoration: underline;
+}
+.admin-accessories-section .card-horizontal .card-name {
+  max-width: 24rem;
 }
 .admin-accessories-section .card-horizontal .card-img {
   top: 0.5rem;

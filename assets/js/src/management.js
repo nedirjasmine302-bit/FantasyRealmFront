@@ -62,16 +62,6 @@ if (userRole === "employer") {
 }
 
 
-// Activer ou désativer accessoire
-document.querySelectorAll('.action-duplicate').forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.textContent = btn.textContent === "Désactiver" 
-      ? "Activer"
-      : "Désactiver";
-  });
-});
-
-
 // Pop Up commentaire (Données fictives // Besoin API)
 const fakeComments = [
   {
@@ -173,7 +163,7 @@ document.addEventListener("click", (e) => {
 });
 
 
-// Section: Personnages
+// Section: Character
 
 // Appels API
 async function apiGetCharacters() {
@@ -392,12 +382,207 @@ async function initCharactersSection() {
 }
 
 
+// Section: Accessory
+
+// Appels API
+async function apiGetAccessories() {
+  try {
+    const res = await fetch("http://localhost:8080/api/accessories");
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.accessories || [];
+  } catch (e) {
+    console.error("Erreur API accessories:", e);
+    return [];
+  }
+}
+
+async function apiToggleAccessoryActive(id, token) {
+  const res = await fetch("http://localhost:8080/api/accessories/" + id + "/active", {
+    method: "PATCH",
+    headers: { "Authorization": "Bearer " + token }
+  });
+
+  return res.json();
+}
+
+async function apiDeleteAccessory(id, token) {
+  const res = await fetch("http://localhost:8080/api/accessories/" + id, {
+    method: "DELETE",
+    headers: { "Authorization": "Bearer " + token }
+  });
+
+  return res.json();
+}
+
+
+// Récupère les types d'accessoires
+async function apiGetAccessoryTypes() {
+  try {
+    const res = await fetch("http://localhost:8080/api/accessory-types");
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.types || [];
+  } catch (e) {
+    console.error("Erreur API accessory-types:", e);
+    return [];
+  }
+}
+
+async function apiGetRarities() {
+  try {
+    const res = await fetch("http://localhost:8080/api/rarities");
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.rarities || [];
+  } catch (e) {
+    console.error("Erreur API rarities:", e);
+    return [];
+  }
+}
+
+
+// Tables de correspondance pour les labels des types et des raretés
+let accessoryTypeLabels = {};
+let accessoryRarityLabels = {};
+
+async function loadAccessoryLabels() {
+  const [types, rarities] = await Promise.all([
+    apiGetAccessoryTypes(),
+    apiGetRarities()
+  ]);
+
+  accessoryTypeLabels = Object.fromEntries(types.map(t => [t.value, t.label]));
+  accessoryRarityLabels = Object.fromEntries(rarities.map(r => [r.value, r.label]));
+}
+
+
+// Le filtre statut correspond à l'état actif / inactif de l'accessoire
+function matchAccessoryStatus(active, filter) {
+  if (filter === "") return true;
+  return filter === "active" ? active : !active;
+}
+
+
+// Filtre les accessoires selon la rareté, le statut et la date
+function filterAccessories(accessories) {
+  const rarity = getSelectValue("rarity-filter-accessories");
+  const status = getSelectValue("status-filter-accessories");
+  const date = getSelectValue("date-filter-accessories");
+
+  return accessories.filter(acc => {
+    const matchRarity = rarity === "" || acc.rarity === rarity;
+    const matchStatus = matchAccessoryStatus(acc.active, status);
+    const matchCreated = matchDate(acc.createdAt, date);
+
+    return matchRarity && matchStatus && matchCreated;
+  });
+}
+
+
+// Construit la carte d'un accessoire
+function renderAccessoryCard(acc) {
+  return `
+    <article class="card-horizontal" data-id="${acc.id}">
+      <div class="card-img-wrapper">
+        <img src="${acc.image}" alt="${acc.name}" class="card-img">
+      </div>
+      <div class="card-content">
+        <h3 class="card-name">${acc.name}</h3>
+        <div class="status-item">
+          <span class="label">Type :</span>
+          <div class="status-value">
+            <span class="status status-type-accessory">${accessoryTypeLabels[acc.type] || acc.type}</span>
+          </div>
+        </div>
+        <div class="rarity-item">
+          <span class="label">Rareté :</span>
+          <div class="rarity-value">
+            <span class="dot dot-${acc.rarity}"></span>
+            <span class="value">${accessoryRarityLabels[acc.rarity] || acc.rarity}</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a href="accessory-details?id=${acc.id}" class="action-modifier">Description</a>
+        <span>|</span>
+        <a class="action-duplicate">${acc.active ? "Désactiver" : "Activer"}</a>
+        <span>|</span>
+        <a class="action-delete">Supprimer</a>
+      </div>
+    </article>
+  `;
+}
+
+
+// Affiche une liste d'accessoires
+function renderAccessories(list) {
+  const container = document.querySelector("#accessories .card-container");
+  const results = document.querySelector("#results-accessories");
+  if (!container) return;
+
+  container.innerHTML = list.map(renderAccessoryCard).join("");
+
+  if (results) {
+    results.innerHTML = list.length === 0
+      ? `<p class="message error-message show text-center">Aucun accessoire ne correspond à votre recherche.</p>`
+      : "";
+  }
+}
+
+
+// Récupère la liste des accessoires, gère l'activation et la suppression
+async function initAccessoriesSection() {
+  const container = document.querySelector("#accessories .card-container");
+  if (!container) return;
+
+  const token = localStorage.getItem("token");
+
+  await loadAccessoryLabels();
+
+  let accessories = await apiGetAccessories();
+
+  renderAccessories(accessories);
+
+  const filterBtn = document.querySelector("#accessories .filters-form .btn");
+  filterBtn?.addEventListener("click", () => {
+    renderAccessories(filterAccessories(accessories));
+  });
+
+  container.addEventListener("click", async (e) => {
+    const card = e.target.closest(".card-horizontal");
+    if (!card) return;
+
+    const id = Number(card.dataset.id);
+
+    if (e.target.classList.contains("action-duplicate")) {
+      const data = await apiToggleAccessoryActive(id, token);
+      if (data && data.success) {
+        accessories = accessories.map(a => a.id === id ? { ...a, active: data.active } : a);
+        renderAccessories(filterAccessories(accessories));
+      }
+      return;
+    }
+
+    if (e.target.classList.contains("action-delete")) {
+      const data = await apiDeleteAccessory(id, token);
+      if (data && data.success) {
+        accessories = accessories.filter(a => a.id !== id);
+        renderAccessories(filterAccessories(accessories));
+      }
+      return;
+    }
+  });
+}
+
+
 // Lance le js de la page Management quand elle est chargée
 function start() {
   initReveal();
   initCustomSelects();
   initDetailsOrigin("management");
   initCharactersSection();
+  initAccessoriesSection();
 }
 
 if (typeof window !== "undefined") start();

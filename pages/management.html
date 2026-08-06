@@ -262,6 +262,21 @@
           </div>
         </div>
       </div>
+
+      <!-- Section: Pop up motif de refus -->
+      <div id="reject-popup" class="popup-overlay reject-popup">
+        <div class="popup-content">
+          <button class="popup-close"><i class="bi bi-x-lg"></i></button>
+          <h3 class="popup-title">Motif du refus</h3>
+          <p class="reject-hint">Un mail avec ce motif sera envoyé au propriétaire, puis l'élément sera supprimé définitivement.</p>
+          <textarea id="reject-reason" class="reject-text" placeholder="Expliquez la raison du refus..." minlength="10" maxlength="500"></textarea>
+          <p class="input-error input-error-character" id="reject-error">Le motif du refus doit contenir au moins 10 caractères.</p>
+          <div class="popup-buttons reject-buttons">
+            <button type="button" class="btn btn-danger" id="reject-confirm">Refuser et supprimer</button>
+            <button type="button" class="btn btn-ghost-secondary" id="reject-cancel">Annuler</button>
+          </div>
+        </div>
+      </div>
     </section>
   </section>
 

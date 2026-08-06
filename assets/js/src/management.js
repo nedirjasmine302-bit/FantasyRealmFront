@@ -2,6 +2,7 @@ import { initReveal } from "../modules/animations.js";
 import { initCustomSelects } from "../modules/forms.js";
 import { initAutocomplete } from "../modules/autocomplete.js";
 import { initDetailsOrigin } from "../modules/details-origin.js";
+import { sanitize } from "../modules/security.js";
 
 
 // Gestion des onglets
@@ -81,6 +82,77 @@ document.addEventListener("click", (e) => {
 });
 
 
+// Modal de motif de refus
+let rejectPopup = null;
+
+function initRejectModal() {
+  rejectPopup = document.getElementById("reject-popup");
+  if (rejectPopup) document.body.appendChild(rejectPopup);
+}
+
+// Ouvre le modal et résout le motif saisi
+function askRejectReason(title) {
+  return new Promise((resolve) => {
+    if (!rejectPopup) return resolve(null);
+
+    const textarea = rejectPopup.querySelector("#reject-reason");
+    const error = rejectPopup.querySelector("#reject-error");
+    const confirmBtn = rejectPopup.querySelector("#reject-confirm");
+    const cancelBtn = rejectPopup.querySelector("#reject-cancel");
+    const closeBtn = rejectPopup.querySelector(".popup-close");
+    const titleEl = rejectPopup.querySelector(".popup-title");
+
+    if (title && titleEl) titleEl.textContent = title;
+
+    textarea.value = "";
+    error.style.opacity = "0";
+    confirmBtn.classList.add("state-disabled");
+    rejectPopup.style.display = "flex";
+    document.body.style.overflow = "hidden";
+    textarea.focus();
+
+    function validate() {
+      const reason = sanitize(textarea.value).trim();
+
+      if (reason.length >= 10) {
+        confirmBtn.classList.remove("state-disabled");
+        error.style.opacity = "0";
+        return true;
+      }
+
+      confirmBtn.classList.add("state-disabled");
+      error.style.opacity = reason.length > 0 ? "1" : "0";
+      return false;
+    }
+
+    function cleanup() {
+      rejectPopup.style.display = "none";
+      document.body.style.overflow = "";
+      textarea.removeEventListener("input", validate);
+      confirmBtn.removeEventListener("click", onConfirm);
+      cancelBtn.removeEventListener("click", onCancel);
+      closeBtn.removeEventListener("click", onCancel);
+    }
+
+    function onConfirm() {
+      if (!validate()) return;
+      cleanup();
+      resolve(sanitize(textarea.value).trim());
+    }
+
+    function onCancel() {
+      cleanup();
+      resolve(null);
+    }
+
+    textarea.addEventListener("input", validate);
+    confirmBtn.addEventListener("click", onConfirm);
+    cancelBtn.addEventListener("click", onCancel);
+    closeBtn.addEventListener("click", onCancel);
+  });
+}
+
+
 // Section: Character
 
 // Appels API
@@ -109,9 +181,22 @@ async function apiUpdateStatus(id, status, token) {
   return res.json();
 }
 
-async function apiArchiveCharacter(id, token) {
-  const res = await fetch("http://localhost:8080/api/characters/" + id + "/archive", {
-    method: "PATCH",
+async function apiRejectCharacter(id, reason, token) {
+  const res = await fetch("http://localhost:8080/api/characters/" + id + "/reject", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({ reason })
+  });
+
+  return res.json();
+}
+
+async function apiDeleteCharacter(id, token) {
+  const res = await fetch("http://localhost:8080/api/characters/" + id, {
+    method: "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });
 
@@ -280,16 +365,19 @@ async function initCharactersSection() {
     }
 
     if (e.target.classList.contains("action-refuse")) {
-      const data = await apiUpdateStatus(id, "refused", token);
+      const reason = await askRejectReason("Refuser le personnage");
+      if (!reason) return;
+
+      const data = await apiRejectCharacter(id, reason, token);
       if (data && data.success) {
-        characters = updateLocalStatus(characters, id, "refused");
+        characters = characters.filter(c => c.id !== id);
         renderCharacters(filterCharacters(characters));
       }
       return;
     }
 
     if (e.target.classList.contains("action-delete")) {
-      const data = await apiArchiveCharacter(id, token);
+      const data = await apiDeleteCharacter(id, token);
       if (data && data.success) {
         characters = characters.filter(c => c.id !== id);
         renderCharacters(filterCharacters(characters));
@@ -534,6 +622,19 @@ async function apiUpdateCommentStatus(id, status, token) {
   return res.json();
 }
 
+async function apiRejectComment(id, reason, token) {
+  const res = await fetch("http://localhost:8080/api/comments/" + id + "/reject", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({ reason })
+  });
+
+  return res.json();
+}
+
 async function apiDeleteComment(id, token) {
   const res = await fetch("http://localhost:8080/api/comments/" + id, {
     method: "DELETE",
@@ -705,11 +806,16 @@ async function initCommentsSection() {
 
   popup.querySelector(".btn-danger")?.addEventListener("click", async () => {
     if (!currentId) return;
-    const data = await apiUpdateCommentStatus(currentId, "refused", token);
+    const id = currentId;
+    closeCommentPopup(popup);
+
+    const reason = await askRejectReason("Refuser le commentaire");
+    if (!reason) return;
+
+    const data = await apiRejectComment(id, reason, token);
     if (data && data.success) {
-      comments = updateLocalCommentStatus(comments, currentId, "refused");
+      comments = comments.filter(c => c.id !== id);
       renderComments(filterComments(comments));
-      closeCommentPopup(popup);
     }
   });
 
@@ -745,6 +851,7 @@ function start() {
   initReveal();
   initCustomSelects();
   initDetailsOrigin("management");
+  initRejectModal();
   initCharactersSection();
   initAccessoriesSection();
   initCommentsSection();

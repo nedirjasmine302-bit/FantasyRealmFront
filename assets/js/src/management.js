@@ -62,88 +62,6 @@ if (userRole === "employer") {
 }
 
 
-// Pop Up commentaire (Données fictives // Besoin API)
-const fakeComments = [
-  {
-    id: 1,
-    pseudo: "Little_moon",
-    comment: "Super personnage, j'adore le design et l'histoire !",
-    stars: 4
-  },
-  {
-    id: 2,
-    pseudo: "DarkWolf",
-    comment: "Pas mal, mais je trouve que la description manque de détails.",
-    stars: 3
-  },
-  {
-    id: 3,
-    pseudo: "Crystaline",
-    comment: "Magnifique ! Rien à dire, c'est validé direct.",
-    stars: 5
-  }
-];
-
-const popup = document.getElementById("comment-popup");
-
-document.body.appendChild(popup);
-
-const popupPseudo = document.getElementById("popup-pseudo");
-const popupText = document.getElementById("popup-text");
-const popupStars = document.getElementById("popup-stars");
-const closeBtn = document.querySelector(".popup-close");
-
-if (closeBtn) {
-  closeBtn.addEventListener("click", () => {
-    popup.style.display = "none";
-    document.body.style.overflow = "";
-
-    popup.classList.remove("popup-pending", "popup-valid", "popup-refused");
-  });
-}
-
-document.querySelectorAll('.card-buttons .btn.btn-secondary').forEach(btn => {
-  btn.addEventListener('click', () => {
-
-    const id = parseInt(btn.dataset.id);
-    const data = fakeComments.find(c => c.id === id);
-    if (!data) return;
-
-    popupPseudo.textContent = data.pseudo;
-    popupText.value = data.comment;
-
-    const stars = popupStars.querySelectorAll("i");
-    stars.forEach(star => {
-      const value = parseInt(star.dataset.value);
-      if (value <= data.stars) {
-        star.classList.remove("bi-star");
-        star.classList.add("bi-star-fill");
-      } else {
-        star.classList.remove("bi-star-fill");
-        star.classList.add("bi-star");
-      }
-    });
-
-    const card = btn.closest('.card-horizontal');
-
-    popup.classList.remove("popup-pending", "popup-valid", "popup-refused");
-
-    if (card.querySelector('.status-pending')) {
-      popup.classList.add('popup-pending');
-    }
-    if (card.querySelector('.status-valid')) {
-      popup.classList.add('popup-valid');
-    }
-    if (card.querySelector('.status-refused')) {
-      popup.classList.add('popup-refused');
-    }
-
-    popup.style.display = "flex";
-    document.body.style.overflow = "hidden";
-  });
-});
-
-
 // Activé ou suspendre un utilisateur
 document.addEventListener("click", (e) => {
   if (!e.target.classList.contains("action-suspend")) return;
@@ -576,6 +494,252 @@ async function initAccessoriesSection() {
 }
 
 
+// Section: Comment
+
+// Appels API
+async function apiGetComments() {
+  try {
+    const res = await fetch("http://localhost:8080/api/comments");
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.comments || [];
+  } catch (e) {
+    console.error("Erreur API comments:", e);
+    return [];
+  }
+}
+
+async function apiGetComment(id) {
+  try {
+    const res = await fetch("http://localhost:8080/api/comments/" + id);
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.comment;
+  } catch (e) {
+    console.error("Erreur API get-comment:", e);
+    return null;
+  }
+}
+
+async function apiUpdateCommentStatus(id, status, token) {
+  const res = await fetch("http://localhost:8080/api/comments/" + id + "/status", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({ status })
+  });
+
+  return res.json();
+}
+
+async function apiDeleteComment(id, token) {
+  const res = await fetch("http://localhost:8080/api/comments/" + id, {
+    method: "DELETE",
+    headers: { "Authorization": "Bearer " + token }
+  });
+
+  return res.json();
+}
+
+
+// Le filtre "validated" correspond au statut "valid" côté API
+function matchCommentStatus(status, filter) {
+  if (filter === "") return true;
+  return status === (filter === "validated" ? "valid" : filter);
+}
+
+
+// Filtre les commentaires selon le pseudo, le statut et la date
+function filterComments(comments) {
+  const pseudo = document.querySelector("#pseudo-input-comment")?.value.trim().toLowerCase() || "";
+  const status = getSelectValue("status-filter-comment");
+  const date = getSelectValue("date-filter-comment");
+
+  return comments.filter(c => {
+    const matchPseudo = pseudo === "" || (c.author || "").toLowerCase().includes(pseudo);
+    const matchStatus = matchCommentStatus(c.status, status);
+    const matchCreated = matchDate(c.createdAt, date);
+
+    return matchPseudo && matchStatus && matchCreated;
+  });
+}
+
+
+// Badge de statut
+function commentStatusBadge(status) {
+  switch (status) {
+    case "pending":
+      return `<span class="status status-pending">En attente de validation</span>`;
+    case "refused":
+      return `<span class="status status-refused">Refusé</span>`;
+    case "valid":
+      return `<span class="status status-valid">Validé</span>`;
+    default:
+      return "";
+  }
+}
+
+
+// Construit la carte d'un commentaire
+function renderCommentCard(c) {
+  return `
+    <article class="card-horizontal" data-id="${c.id}">
+      <div class="creator-tag creator-tag-horizontal">
+        <i class="bi bi-person-fill"></i>
+        <span>${c.author}</span>
+      </div>
+      <div class="card-img-wrapper">
+        <img src="${c.character.image}" alt="${c.character.name}" class="card-img">
+      </div>
+      <div class="card-content">
+        <h3 class="card-name">${c.character.name}</h3>
+        ${commentStatusBadge(c.status)}
+        <div class="card-buttons">
+          <button class="btn btn-secondary action-view">Voir le commentaire</button>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a class="action-delete">Supprimer</a>
+      </div>
+    </article>
+  `;
+}
+
+
+// Affiche une liste de commentaires
+function renderComments(list) {
+  const container = document.querySelector("#comments .card-container");
+  const results = document.querySelector("#results-comment");
+  if (!container) return;
+
+  container.innerHTML = list.map(renderCommentCard).join("");
+
+  if (results) {
+    results.innerHTML = list.length === 0
+      ? `<p class="message error-message show text-center">Aucun commentaire ne correspond à votre recherche.</p>`
+      : "";
+  }
+}
+
+
+// Met à jour le statut d'un commentaire dans la liste locale
+function updateLocalCommentStatus(comments, id, status) {
+  return comments.map(c => c.id === id ? { ...c, status } : c);
+}
+
+
+// Ouvre le popup avec le détail d'un commentaire
+function fillCommentPopup(popup, comment) {
+  const popupPseudo = document.getElementById("popup-pseudo");
+  const popupText = document.getElementById("popup-text");
+  const popupStars = document.getElementById("popup-stars");
+
+  popupPseudo.textContent = comment.author;
+  popupText.value = comment.message;
+
+  popupStars.querySelectorAll("i").forEach(star => {
+    const value = parseInt(star.dataset.value);
+    if (value <= comment.rating) {
+      star.classList.remove("bi-star");
+      star.classList.add("bi-star-fill");
+    } else {
+      star.classList.remove("bi-star-fill");
+      star.classList.add("bi-star");
+    }
+  });
+
+  popup.classList.remove("popup-pending", "popup-valid", "popup-refused");
+  popup.classList.add("popup-" + comment.status);
+
+  popup.style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+function closeCommentPopup(popup) {
+  popup.style.display = "none";
+  document.body.style.overflow = "";
+  popup.classList.remove("popup-pending", "popup-valid", "popup-refused");
+}
+
+
+// Récupère la liste des commentaires, gère la validation et la suppression
+async function initCommentsSection() {
+  const container = document.querySelector("#comments .card-container");
+  if (!container) return;
+
+  const token = localStorage.getItem("token");
+
+  let comments = await apiGetComments();
+
+  const pseudos = [...new Set(comments.map(c => c.author).filter(Boolean))];
+
+  renderComments(comments);
+
+  const filterBtn = document.querySelector("#comments .filters-form .btn");
+  filterBtn?.addEventListener("click", () => {
+    renderComments(filterComments(comments));
+  });
+
+  initAutocomplete(pseudos, () => {
+    renderComments(filterComments(comments));
+  }, { input: "#pseudo-input-comment", suggestions: "#suggestions-comment" });
+
+  const popup = document.getElementById("comment-popup");
+  document.body.appendChild(popup);
+
+  let currentId = null;
+
+  popup.querySelector(".popup-close")?.addEventListener("click", () => closeCommentPopup(popup));
+
+  popup.querySelector(".btn-success")?.addEventListener("click", async () => {
+    if (!currentId) return;
+    const data = await apiUpdateCommentStatus(currentId, "valid", token);
+    if (data && data.success) {
+      comments = updateLocalCommentStatus(comments, currentId, "valid");
+      renderComments(filterComments(comments));
+      closeCommentPopup(popup);
+    }
+  });
+
+  popup.querySelector(".btn-danger")?.addEventListener("click", async () => {
+    if (!currentId) return;
+    const data = await apiUpdateCommentStatus(currentId, "refused", token);
+    if (data && data.success) {
+      comments = updateLocalCommentStatus(comments, currentId, "refused");
+      renderComments(filterComments(comments));
+      closeCommentPopup(popup);
+    }
+  });
+
+  container.addEventListener("click", async (e) => {
+    const card = e.target.closest(".card-horizontal");
+    if (!card) return;
+
+    const id = Number(card.dataset.id);
+
+    if (e.target.classList.contains("action-view")) {
+      const comment = await apiGetComment(id);
+      if (comment) {
+        currentId = id;
+        fillCommentPopup(popup, comment);
+      }
+      return;
+    }
+
+    if (e.target.classList.contains("action-delete")) {
+      const data = await apiDeleteComment(id, token);
+      if (data && data.success) {
+        comments = comments.filter(c => c.id !== id);
+        renderComments(filterComments(comments));
+      }
+      return;
+    }
+  });
+}
+
+
 // Lance le js de la page Management quand elle est chargée
 function start() {
   initReveal();
@@ -583,6 +747,7 @@ function start() {
   initDetailsOrigin("management");
   initCharactersSection();
   initAccessoriesSection();
+  initCommentsSection();
 }
 
 if (typeof window !== "undefined") start();

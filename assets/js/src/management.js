@@ -3,6 +3,7 @@ import { initCustomSelects } from "../modules/forms.js";
 import { initAutocomplete } from "../modules/autocomplete.js";
 import { initDetailsOrigin } from "../modules/details-origin.js";
 import { sanitize } from "../modules/security.js";
+import { initConfirmModal, askConfirmDelete } from "../modules/confirm.js";
 
 
 // Gestion des onglets
@@ -65,7 +66,7 @@ if (userRole === "employer") {
 
 // Activé ou suspendre un utilisateur
 document.addEventListener("click", (e) => {
-  if (!e.target.classList.contains("action-suspend")) return;
+  if (!e.target.classList.contains("action-suspend") || !e.target.closest("#employees")) return;
 
   const btn = e.target;
 
@@ -377,6 +378,9 @@ async function initCharactersSection() {
     }
 
     if (e.target.classList.contains("action-delete")) {
+      const ok = await askConfirmDelete("Supprimer le personnage");
+      if (!ok) return;
+
       const data = await apiDeleteCharacter(id, token);
       if (data && data.success) {
         characters = characters.filter(c => c.id !== id);
@@ -571,6 +575,9 @@ async function initAccessoriesSection() {
     }
 
     if (e.target.classList.contains("action-delete")) {
+      const ok = await askConfirmDelete("Supprimer l'accessoire");
+      if (!ok) return;
+
       const data = await apiDeleteAccessory(id, token);
       if (data && data.success) {
         accessories = accessories.filter(a => a.id !== id);
@@ -835,10 +842,167 @@ async function initCommentsSection() {
     }
 
     if (e.target.classList.contains("action-delete")) {
+      const ok = await askConfirmDelete("Supprimer le commentaire");
+      if (!ok) return;
+
       const data = await apiDeleteComment(id, token);
       if (data && data.success) {
         comments = comments.filter(c => c.id !== id);
         renderComments(filterComments(comments));
+      }
+      return;
+    }
+  });
+}
+
+
+// Section: Player
+
+// Appels API
+async function apiGetPlayers() {
+  try {
+    const res = await fetch("http://localhost:8080/api/players");
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.players || [];
+  } catch (e) {
+    console.error("Erreur API players:", e);
+    return [];
+  }
+}
+
+async function apiUpdatePlayerStatus(id, status, token) {
+  const res = await fetch("http://localhost:8080/api/players/" + id + "/status", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({ status })
+  });
+
+  return res.json();
+}
+
+async function apiDeletePlayer(id, token) {
+  const res = await fetch("http://localhost:8080/api/players/" + id, {
+    method: "DELETE",
+    headers: { "Authorization": "Bearer " + token }
+  });
+
+  return res.json();
+}
+
+
+// Le filtre correspond à l'état du compte du joueur
+function matchPlayerState(status, filter) {
+  if (filter === "") return true;
+  return status === filter;
+}
+
+
+// Filtre les joueurs selon le pseudo, l'état du compte et la date
+function filterPlayers(players) {
+  const pseudo = document.querySelector("#pseudo-input-user")?.value.trim().toLowerCase() || "";
+  const state = getSelectValue("account-state-filter-user");
+  const date = getSelectValue("date-filter-user");
+
+  return players.filter(p => {
+    const matchPseudo = pseudo === "" || (p.pseudo || "").toLowerCase().includes(pseudo);
+    const matchState = matchPlayerState(p.status, state);
+    const matchCreated = matchDate(p.createdAt, date);
+
+    return matchPseudo && matchState && matchCreated;
+  });
+}
+
+
+// Construit la carte d'un joueur
+function renderPlayerCard(p) {
+  const suspended = p.status === "suspended";
+
+  return `
+    <article class="card-vertical" data-id="${p.id}">
+      <div class="img-wrapper">
+        <i class="bi bi-person-fill user-avatar-icon"></i>
+      </div>
+      <div class="info-box">
+        <h3>${p.pseudo}</h3>
+        <div class="actions">
+          <button class="btn ${suspended ? "btn-ghost-secondary" : "btn-secondary"} action-suspend">${suspended ? "Réactiver" : "Suspendre"}</button>
+          <a class="action-delete">Supprimer</a>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+
+// Affiche une liste de joueurs
+function renderPlayers(list) {
+  const container = document.querySelector("#players .characters");
+  const results = document.querySelector("#results-user");
+  if (!container) return;
+
+  container.innerHTML = list.map(renderPlayerCard).join("");
+
+  if (results) {
+    results.innerHTML = list.length === 0
+      ? `<p class="message error-message show text-center">Aucun joueur ne correspond à votre recherche.</p>`
+      : "";
+  }
+}
+
+
+// Récupère la liste des joueurs, gère la suspension, la réactivation et la suppression
+async function initPlayersSection() {
+  const container = document.querySelector("#players .characters");
+  if (!container) return;
+
+  const token = localStorage.getItem("token");
+
+  let players = await apiGetPlayers();
+
+  const pseudos = [...new Set(players.map(p => p.pseudo).filter(Boolean))];
+
+  renderPlayers(players);
+
+  const filterBtn = document.querySelector("#players .filters-form .btn");
+  filterBtn?.addEventListener("click", () => {
+    renderPlayers(filterPlayers(players));
+  });
+
+  initAutocomplete(pseudos, () => {
+    renderPlayers(filterPlayers(players));
+  }, { input: "#pseudo-input-user", suggestions: "#suggestions-user" });
+
+  container.addEventListener("click", async (e) => {
+    const card = e.target.closest(".card-vertical");
+    if (!card) return;
+
+    const id = Number(card.dataset.id);
+
+    if (e.target.classList.contains("action-suspend")) {
+      const current = players.find(p => p.id === id);
+      if (!current) return;
+
+      const newStatus = current.status === "suspended" ? "active" : "suspended";
+      const data = await apiUpdatePlayerStatus(id, newStatus, token);
+      if (data && data.success) {
+        players = players.map(p => p.id === id ? { ...p, status: newStatus } : p);
+        renderPlayers(filterPlayers(players));
+      }
+      return;
+    }
+
+    if (e.target.classList.contains("action-delete")) {
+      const ok = await askConfirmDelete("Supprimer le joueur");
+      if (!ok) return;
+
+      const data = await apiDeletePlayer(id, token);
+      if (data && data.success) {
+        players = players.filter(p => p.id !== id);
+        renderPlayers(filterPlayers(players));
       }
       return;
     }
@@ -852,9 +1016,11 @@ function start() {
   initCustomSelects();
   initDetailsOrigin("management");
   initRejectModal();
+  initConfirmModal();
   initCharactersSection();
   initAccessoriesSection();
   initCommentsSection();
+  initPlayersSection();
 }
 
 if (typeof window !== "undefined") start();

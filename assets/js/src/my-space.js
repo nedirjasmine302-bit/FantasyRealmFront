@@ -1,4 +1,5 @@
 import { initReveal } from "../modules/animations.js";
+import { initConfirmModal, askConfirmDelete } from "../modules/confirm.js";
 
 
 // Appels API
@@ -211,6 +212,9 @@ async function initMySpace() {
     }
 
     if (e.target.classList.contains("action-delete")) {
+      const ok = await askConfirmDelete("Supprimer le personnage");
+      if (!ok) return;
+
       const data = await apiDelete(id, token);
       if (data && data.success) await loadAndRender();
       return;
@@ -246,6 +250,7 @@ export function toggleFavoriteForTest(fav, name) {
 // Lance le js de la page My-space quand elle est chargée
 function start() {
   initReveal();
+  initConfirmModal();
   initMySpace();
 }
 

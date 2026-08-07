@@ -277,6 +277,19 @@
           </div>
         </div>
       </div>
+
+      <!-- Section: Pop up confirmation de suppression -->
+      <div id="confirm-popup" class="popup-overlay confirm-popup">
+        <div class="popup-content">
+          <button class="popup-close"><i class="bi bi-x-lg"></i></button>
+          <h3 class="popup-title">Confirmer la suppression</h3>
+          <p class="confirm-hint">Cette action est définitive : l'élément sera supprimé et ne pourra pas être récupéré.</p>
+          <div class="popup-buttons confirm-buttons">
+            <button type="button" class="btn btn-danger" id="confirm-accept">Supprimer</button>
+            <button type="button" class="btn btn-ghost-secondary" id="confirm-cancel">Annuler</button>
+          </div>
+        </div>
+      </div>
     </section>
   </section>
 
@@ -336,47 +349,9 @@
     </section>
   
     <!-- Section: Players cards -->
-    <section class="characters fade-up delay-7">
-  
-      <article class="card-vertical">
-        <div class="img-wrapper">
-          <i class="bi bi-person-fill user-avatar-icon"></i>
-        </div>
-        <div class="info-box">
-          <h3>Little_mo0n</h3>
-          <div class="actions">
-            <button class="btn btn-secondary action-suspend">Suspendre</button>
-            <a class="action-delete">Supprimer</a>
-          </div>
-        </div>
-      </article>
-  
-      <article class="card-vertical">
-        <div class="img-wrapper">
-          <i class="bi bi-person-fill user-avatar-icon"></i>
-        </div>
-        <div class="info-box">
-          <h3>Little_mo0n</h3>
-          <div class="actions">
-            <button class="btn btn-secondary action-suspend">Suspendre</button>
-            <a class="action-delete">Supprimer</a>
-          </div>
-        </div>
-      </article>
-  
-      <article class="card-vertical">
-        <div class="img-wrapper">
-          <i class="bi bi-person-fill user-avatar-icon"></i>
-        </div>
-        <div class="info-box">
-          <h3>Little_mo0n</h3>
-          <div class="actions">
-            <button class="btn btn-secondary action-suspend">Suspendre</button>
-            <a class="action-delete">Supprimer</a>
-          </div>
-        </div>
-      </article>
-  
+    <section class="fade-up delay-7">
+      <div id="results-user"></div>
+      <div class="characters"></div>
     </section>
   </section>
   

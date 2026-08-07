@@ -382,6 +382,25 @@
 }
 
 
+// Section: Pop up confirmation de suppression
+.confirm-popup {
+  .confirm-hint {
+    @include abs.text-style(0.9rem, abs.$font-family-sans-serif, rgba(white, 0.75), left);
+    margin: 1rem 0;
+  }
+
+  .confirm-buttons {
+    margin-top: 1.5rem;
+    justify-content: flex-start;
+
+    .btn {
+      width: auto;
+      padding: 0 1.25rem;
+    }
+  }
+}
+
+
 // Section: Players
 .admin-players-section {
   margin: 4rem;
@@ -403,6 +422,10 @@
   .card-vertical h3 {
     margin-bottom: 1.5rem;
     margin-top: 1rem;
+  }
+
+  .card-vertical .action-delete {
+    cursor: pointer;
   }
 
   // Responsive

@@ -56,31 +56,38 @@ document.querySelectorAll('a[href]').forEach(link => {
 
 
 // Gestion des rôles
-const userRole = "admin"; // ou "employer"
 
-if (userRole === "employer") {
-  document.querySelector('[data-tab="employees"]').classList.add('state-disabled');
-  document.querySelector('[data-tab="logs"]').classList.add('state-disabled');
+// Récupère l'utilisateur connecté (pour connaître ses rôles)
+async function apiGetMe(token) {
+  try {
+    const res = await fetch("http://localhost:8080/api/me", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    if (!res.ok) return null;
+    return res.json();
+  } catch (e) {
+    console.error("Erreur API me:", e);
+    return null;
+  }
 }
 
+// Les onglets Employés et Logs sont réservés aux administrateurs
+async function isAdmin() {
+  const token = localStorage.getItem("token");
+  const me = token ? await apiGetMe(token) : null;
+  return (me?.roles || []).includes("ROLE_ADMIN");
+}
 
-// Activé ou suspendre un utilisateur
-document.addEventListener("click", (e) => {
-  if (!e.target.classList.contains("action-suspend") || !e.target.closest("#employees")) return;
+async function initRoleAccess() {
+  const admin = await isAdmin();
 
-  const btn = e.target;
-
-  if (btn.classList.contains("btn-secondary")) {
-    btn.classList.remove("btn-secondary");
-    btn.classList.add("btn-ghost-secondary");
-    btn.textContent = "Réactivé";
+  if (!admin) {
+    document.querySelector('[data-tab="employees"]')?.classList.add('state-disabled');
+    document.querySelector('[data-tab="logs"]')?.classList.add('state-disabled');
   }
-  else {
-    btn.classList.remove("btn-ghost-secondary");
-    btn.classList.add("btn-secondary");
-    btn.textContent = "Suspendre";
-  }
-});
+
+  return admin;
+}
 
 
 // Modal de motif de refus
@@ -1010,8 +1017,166 @@ async function initPlayersSection() {
 }
 
 
+// Section: Employee
+
+// Appels API
+async function apiGetEmployees() {
+  try {
+    const res = await fetch("http://localhost:8080/api/employers");
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.employers || [];
+  } catch (e) {
+    console.error("Erreur API employers:", e);
+    return [];
+  }
+}
+
+async function apiUpdateEmployeeStatus(id, status, token) {
+  const res = await fetch("http://localhost:8080/api/employers/" + id + "/status", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({ status })
+  });
+
+  return res.json();
+}
+
+async function apiDeleteEmployee(id, token) {
+  const res = await fetch("http://localhost:8080/api/employers/" + id, {
+    method: "DELETE",
+    headers: { "Authorization": "Bearer " + token }
+  });
+
+  return res.json();
+}
+
+
+// Le filtre correspond à l'état du compte de l'employé
+function matchEmployeeState(status, filter) {
+  if (filter === "") return true;
+  return status === filter;
+}
+
+
+// Filtre les employés selon le pseudo, l'état du compte et la date
+function filterEmployees(employees) {
+  const pseudo = document.querySelector("#pseudo-input-employees")?.value.trim().toLowerCase() || "";
+  const state = getSelectValue("account-state-filter-employees");
+  const date = getSelectValue("date-filter-employees");
+
+  return employees.filter(emp => {
+    const matchPseudo = pseudo === "" || (emp.pseudo || "").toLowerCase().includes(pseudo);
+    const matchState = matchEmployeeState(emp.status, state);
+    const matchCreated = matchDate(emp.createdAt, date);
+
+    return matchPseudo && matchState && matchCreated;
+  });
+}
+
+
+// Construit la carte d'un employé
+function renderEmployeeCard(emp) {
+  const suspended = emp.status === "suspended";
+
+  return `
+    <article class="card-vertical" data-id="${emp.id}">
+      <div class="img-wrapper">
+        <i class="bi bi-person-fill user-avatar-icon"></i>
+      </div>
+      <div class="info-box">
+        <h3>${emp.pseudo}</h3>
+        <div class="actions">
+          <button class="btn ${suspended ? "btn-ghost-secondary" : "btn-secondary"} action-suspend">${suspended ? "Réactiver" : "Suspendre"}</button>
+          <div class="card-actions">
+            <a href="reset-employer-password" class="action-edit">Modifier</a>
+            <span>|</span>
+            <a class="action-delete">Supprimer</a>
+          </div>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+
+// Affiche une liste d'employés
+function renderEmployees(list) {
+  const container = document.querySelector("#employees .characters");
+  const results = document.querySelector("#results-employees");
+  if (!container) return;
+
+  container.innerHTML = list.map(renderEmployeeCard).join("");
+
+  if (results) {
+    results.innerHTML = list.length === 0
+      ? `<p class="message error-message show text-center">Aucun employé ne correspond à votre recherche.</p>`
+      : "";
+  }
+}
+
+
+// Récupère la liste des employés, gère la suspension, la réactivation et la suppression
+async function initEmployeesSection() {
+  const container = document.querySelector("#employees .characters");
+  if (!container) return;
+
+  const token = localStorage.getItem("token");
+
+  let employees = await apiGetEmployees();
+
+  const pseudos = [...new Set(employees.map(emp => emp.pseudo).filter(Boolean))];
+
+  renderEmployees(employees);
+
+  const filterBtn = document.querySelector("#employees .filters-form .btn");
+  filterBtn?.addEventListener("click", () => {
+    renderEmployees(filterEmployees(employees));
+  });
+
+  initAutocomplete(pseudos, () => {
+    renderEmployees(filterEmployees(employees));
+  }, { input: "#pseudo-input-employees", suggestions: "#suggestions-employees" });
+
+  container.addEventListener("click", async (e) => {
+    const card = e.target.closest(".card-vertical");
+    if (!card) return;
+
+    const id = Number(card.dataset.id);
+
+    if (e.target.classList.contains("action-suspend")) {
+      const current = employees.find(emp => emp.id === id);
+      if (!current) return;
+
+      const newStatus = current.status === "suspended" ? "active" : "suspended";
+      const data = await apiUpdateEmployeeStatus(id, newStatus, token);
+      if (data && data.success) {
+        employees = employees.map(emp => emp.id === id ? { ...emp, status: newStatus } : emp);
+        renderEmployees(filterEmployees(employees));
+      }
+      return;
+    }
+
+    if (e.target.classList.contains("action-delete")) {
+      const ok = await askConfirmDelete("Supprimer l'employé");
+      if (!ok) return;
+
+      const data = await apiDeleteEmployee(id, token);
+      if (data && data.success) {
+        employees = employees.filter(emp => emp.id !== id);
+        renderEmployees(filterEmployees(employees));
+      }
+      return;
+    }
+  });
+}
+
+
 // Lance le js de la page Management quand elle est chargée
-function start() {
+async function start() {
   initReveal();
   initCustomSelects();
   initDetailsOrigin("management");
@@ -1021,6 +1186,11 @@ function start() {
   initAccessoriesSection();
   initCommentsSection();
   initPlayersSection();
+
+  // La section Employés est réservée aux administrateurs
+  if (await initRoleAccess()) {
+    initEmployeesSection();
+  }
 }
 
 if (typeof window !== "undefined") start();

@@ -71,11 +71,44 @@ function initSpaceLink() {
 }
 
 
+// Récupère l'utilisateur connecté
+async function apiGetMe(token) {
+  try {
+    const res = await fetch("http://localhost:8080/api/me", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    if (!res.ok) return null;
+    return res.json();
+  } catch (e) {
+    console.error("Erreur API me:", e);
+    return null;
+  }
+}
+
+
+// Affiche "Gestion" uniquement pour les employés et les administrateurs
+async function initManagementLink() {
+  const managementItem = document.querySelector(".menu .management-item");
+  if (!managementItem) return;
+
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  const me = await apiGetMe(token);
+  const roles = me?.roles || [];
+
+  if (roles.includes("ROLE_EMPLOYER") || roles.includes("ROLE_ADMIN")) {
+    managementItem.classList.remove("d-none");
+  }
+}
+
+
 // Lance le js du Header quand elle est chargée
 function start() {
   initBurger();
   initAuthLink();
   initSpaceLink();
+  initManagementLink();
 }
 
 if (typeof window !== "undefined") start();

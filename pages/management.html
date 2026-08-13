@@ -440,9 +440,9 @@
             </div>
             <div class="custom-options">
               <span class="custom-option" data-value="">Tous</span>
-              <span class="custom-option" data-value="validated">Joueur</span>
-              <span class="custom-option" data-value="pending">Employé</span>
-              <span class="custom-option" data-value="refused">Administrateur</span>
+              <span class="custom-option" data-value="player">Joueur</span>
+              <span class="custom-option" data-value="employer">Employé</span>
+              <span class="custom-option" data-value="admin">Administrateur</span>
             </div>
           </div>
         </div>
@@ -456,13 +456,13 @@
             </div>
             <div class="custom-options">
               <span class="custom-option" data-value="">Tous</span>
-              <span class="custom-option" data-value="validated">Création</span>
-              <span class="custom-option" data-value="pending">Modification</span>
-              <span class="custom-option" data-value="refused">Suppression</span>
-              <span class="custom-option" data-value="">Publication</span>
-              <span class="custom-option" data-value="validated">Dépublication</span>
-              <span class="custom-option" data-value="pending">Validation / Refus</span>
-              <span class="custom-option" data-value="refused">Suspension / Réactivation</span>
+              <span class="custom-option" data-value="create">Création</span>
+              <span class="custom-option" data-value="update">Modification</span>
+              <span class="custom-option" data-value="delete">Suppression</span>
+              <span class="custom-option" data-value="publish">Publication</span>
+              <span class="custom-option" data-value="unpublish">Dépublication</span>
+              <span class="custom-option" data-value="moderate">Validation / Refus</span>
+              <span class="custom-option" data-value="suspend">Suspension / Réactivation</span>
             </div>
           </div>
         </div>
@@ -492,102 +492,8 @@
   
     <!-- Section: Logs cards -->
     <section class="fade-up delay-7">
-      <div class="card-container logs-container">
-  
-        <!-- Card 1 -->
-        <article class="card-horizontal card-log fade-up delay-1">
-          <div class="creator-tag creator-tag-horizontal">
-            <i class="bi bi-person-fill"></i>
-            <span>8_Lc</span>
-          </div>
-  
-          <div class="card-content">
-            <h3 class="card-name">Joueur</h3>
-  
-            <div class="log-type">
-              <span class="label">Type d'utilisateur :</span>
-              <div class="log-value">
-                <span class="status status-type-accessory log-action">Création d'un personnage</span>
-              </div>
-            </div>
-  
-            <div class="log-message">
-              <div class="log-value">
-                <span class="log-text">Le joueur ShadowBlade42 a créé le personnage Kael Stormblade.</span>
-              </div>
-            </div>
-  
-            <div class="log-date">
-              <div class="log-date-value">
-                <span class="log-text">04/07/2026 - 11:12</span>
-              </div>
-            </div>
-          </div>
-        </article>
-  
-        <!-- Card 2 -->
-        <article class="card-horizontal card-log fade-up delay-1">
-          <div class="creator-tag creator-tag-horizontal">
-            <i class="bi bi-person-fill"></i>
-            <span>LucasDev</span>
-          </div>
-  
-          <div class="card-content">
-            <h3 class="card-name">Employé</h3>
-  
-            <div class="log-type">
-              <span class="label">Type d'utilisateur :</span>
-              <div class="log-value">
-                <span class="status status-type-accessory log-action">Validation d'un commentaire</span>
-              </div>
-            </div>
-  
-            <div class="log-message">
-              <div class="log-value">
-                <span class="log-text">L'employé LucasDev a validé le commentaire du joueur FireWolf sur le personnage Astra Nova.</span>
-              </div>
-            </div>
-  
-            <div class="log-date">
-              <div class="log-date-value">
-                <span class="log-text">04/07/2026 - 11:18</span>
-              </div>
-            </div>
-          </div>
-        </article>
-  
-        <!-- Card 3 -->
-        <article class="card-horizontal card-log fade-up delay-1">
-          <div class="creator-tag creator-tag-horizontal">
-            <i class="bi bi-person-fill"></i>
-            <span>Admin1</span>
-          </div>
-  
-          <div class="card-content">
-            <h3 class="card-name">Administrateur</h3>
-  
-            <div class="log-type">
-              <span class="label">Type d'utilisateur :</span>
-              <div class="log-value">
-                <span class="status status-type-accessory log-action">Suspension d'un employé</span>
-              </div>
-            </div>
-  
-            <div class="log-message">
-              <div class="log-value">
-                <span class="log-text">L'administrateur AdminMaster a suspendu l'employé LucasDev.</span>
-              </div>
-            </div>
-  
-            <div class="log-date">
-              <div class="log-date-value">
-                <span class="log-text">04/07/2026 - 11:25</span>
-              </div>
-            </div>
-          </div>
-        </article>
-  
-      </div>
+      <div id="results-logs"></div>
+      <div class="card-container logs-container"></div>
     </section>
   </section>
 

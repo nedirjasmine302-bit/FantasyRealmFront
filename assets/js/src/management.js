@@ -1175,6 +1175,131 @@ async function initEmployeesSection() {
 }
 
 
+// Section: Logs
+
+// Appels API
+async function apiGetLogs(token) {
+  try {
+    const res = await fetch("http://localhost:8080/api/logs", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.logs || [];
+  } catch (e) {
+    console.error("Erreur API logs:", e);
+    return [];
+  }
+}
+
+
+// Le filtre correspond au type d'utilisateur qui a effectué l'action
+function matchLogType(userType, filter) {
+  if (filter === "") return true;
+  return userType === filter;
+}
+
+
+// Le filtre correspond à la catégorie d'action enregistrée
+function matchLogAction(action, filter) {
+  if (filter === "") return true;
+  return action === filter;
+}
+
+
+// Filtre les logs selon le type d'utilisateur, l'action et la date
+function filterLogs(logs) {
+  const type = getSelectValue("type-filter-logs");
+  const action = getSelectValue("status-filter-logs");
+  const date = getSelectValue("date-filter-logs");
+
+  return logs.filter(log => {
+    const matchType = matchLogType(log.userType, type);
+    const matchAction = matchLogAction(log.action, action);
+    const matchCreated = matchDate(log.createdAt, date);
+
+    return matchType && matchAction && matchCreated;
+  });
+}
+
+
+// Formate une date ISO en "JJ/MM/AAAA - HH:MM"
+function formatLogDate(createdAt) {
+  if (!createdAt) return "";
+
+  const date = new Date(createdAt);
+  const pad = n => String(n).padStart(2, "0");
+
+  return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} - ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+
+// Construit la carte d'un log
+function renderLogCard(log) {
+  return `
+    <article class="card-horizontal card-log">
+      <div class="creator-tag creator-tag-horizontal">
+        <i class="bi bi-person-fill"></i>
+        <span>${log.actorPseudo}</span>
+      </div>
+      <div class="card-content">
+        <h3 class="card-name">${log.userTypeLabel}</h3>
+        <div class="log-type">
+          <span class="label">Type d'utilisateur :</span>
+          <div class="log-value">
+            <span class="status status-type-accessory log-action">${log.label}</span>
+          </div>
+        </div>
+        <div class="log-message">
+          <div class="log-value">
+            <span class="log-text">${log.message}</span>
+          </div>
+        </div>
+        <div class="log-date">
+          <div class="log-date-value">
+            <span class="log-text">${formatLogDate(log.createdAt)}</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+
+// Affiche une liste de logs
+function renderLogs(list) {
+  const container = document.querySelector("#logs .logs-container");
+  const results = document.querySelector("#results-logs");
+  if (!container) return;
+
+  container.innerHTML = list.map(renderLogCard).join("");
+
+  if (results) {
+    results.innerHTML = list.length === 0
+      ? `<p class="message error-message show text-center">Aucun log ne correspond à votre recherche.</p>`
+      : "";
+  }
+}
+
+
+// Récupère le journal d'activité et gère le filtre dynamique
+async function initLogsSection() {
+  const container = document.querySelector("#logs .logs-container");
+  if (!container) return;
+
+  const token = localStorage.getItem("token");
+
+  const logs = await apiGetLogs(token);
+
+  renderLogs(logs);
+
+  const filterBtn = document.querySelector("#logs .filters-form .btn");
+  filterBtn?.addEventListener("click", () => {
+    renderLogs(filterLogs(logs));
+  });
+}
+
+
 // Lance le js de la page Management quand elle est chargée
 async function start() {
   initReveal();
@@ -1187,9 +1312,10 @@ async function start() {
   initCommentsSection();
   initPlayersSection();
 
-  // La section Employés est réservée aux administrateurs
+  // Les sections Employés et Logs sont réservées aux administrateurs
   if (await initRoleAccess()) {
     initEmployeesSection();
+    initLogsSection();
   }
 }
 

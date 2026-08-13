@@ -23,6 +23,33 @@ async function signInApi(email, password) {
 }
 
 
+// Récupère l'utilisateur connecté
+async function apiGetMe(token) {
+  try {
+    const res = await fetch("http://localhost:8080/api/me", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    if (!res.ok) return null;
+    return res.json();
+  } catch (e) {
+    console.error("Erreur API me:", e);
+    return null;
+  }
+}
+
+// Détermine la page d'accueil selon le rôle
+async function resolveHomeRoute(token) {
+  const me = await apiGetMe(token);
+  const roles = me?.roles || [];
+
+  if (roles.includes("ROLE_EMPLOYER") || roles.includes("ROLE_ADMIN")) {
+    return "/management";
+  }
+
+  return "/my-space";
+}
+
+
 // Gestion du formulaire de connexion
 function initSignInForm() {
   const form = document.querySelector(".auth-form-container");
@@ -177,8 +204,10 @@ function initSignInForm() {
     submitBtn.classList.add("btn-disabled");
     submitBtn.setAttribute("disabled", "true");
 
+    const homeRoute = await resolveHomeRoute(data.token);
+
     setTimeout(() => {
-      window.location.href = "/my-space";
+      window.location.href = homeRoute;
     }, 1000);
   });
 }

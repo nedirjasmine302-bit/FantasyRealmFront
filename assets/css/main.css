@@ -12615,6 +12615,17 @@ footer {
   z-index: 3;
 }
 
+#accessories .card-img {
+  position: static;
+  top: auto;
+  width: 100%;
+  height: 100%;
+  padding: 0.6rem;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+}
+
 @media (max-width: 650px) {
   .card-horizontal {
     align-items: flex-start;

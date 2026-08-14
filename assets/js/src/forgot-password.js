@@ -1,6 +1,9 @@
 import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail, isValidPseudo } from "../modules/security.js";
 import { initBackReload } from "../modules/back-reload.js";
+import { saveRateLimit, getRateLimitRemaining, clearRateLimit } from "../modules/rate-limit.js";
+
+const RATE_KEY = "forgot-password";
 
 
 // Appel API
@@ -69,13 +72,38 @@ function initForgotPasswordForm() {
       } else hideError(pseudoError);
     }
 
-    if (valid && isValidEmail(email) && isValidPseudo(pseudo)) {
+    if (valid && isValidEmail(email) && isValidPseudo(pseudo) && getRateLimitRemaining(RATE_KEY) === 0) {
       submitBtn.classList.remove("btn-disabled");
     } else {
       submitBtn.classList.add("btn-disabled");
     }
 
     return valid;
+  }
+
+  // Affiche le message de blocage et désactive le bouton
+  function applyBlock(ms, message) {
+    const oldMsg = form.querySelector(".message");
+    if (oldMsg) oldMsg.remove();
+
+    const error = document.createElement("p");
+    error.textContent = message;
+    error.classList.add("message", "error-message");
+    form.appendChild(error);
+
+    setTimeout(() => error.classList.add("show"), 10);
+
+    submitBtn.classList.add("btn-disabled");
+    submitBtn.setAttribute("disabled", "true");
+
+    setTimeout(() => {
+      error.classList.remove("show");
+      setTimeout(() => error.remove(), 300);
+
+      clearRateLimit(RATE_KEY);
+      submitBtn.removeAttribute("disabled");
+      validateForm();
+    }, ms);
   }
 
   function markTouched(field) {
@@ -88,8 +116,15 @@ function initForgotPasswordForm() {
 
   validateForm();
 
+  // Restaure un blocage encore actif après un refresh / changement de page
+  const remaining = getRateLimitRemaining(RATE_KEY);
+  if (remaining > 0) {
+    applyBlock(remaining, "Trop de tentatives. Réessayez dans quelques instants.");
+  }
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (getRateLimitRemaining(RATE_KEY) > 0) return;
     if (!validateForm()) return;
 
     const email = sanitize(emailInput.value);
@@ -101,26 +136,10 @@ function initForgotPasswordForm() {
     const result = await apiForgotPassword(email, pseudo);
 
     if (result.status === 429) {
-      const error = document.createElement("p");
-      error.textContent = result.data.message || "Trop de tentatives. Réessayez dans quelques instants.";
-      error.classList.add("message", "error-message");
-      form.appendChild(error);
+      const waitSeconds = result.retryAfter ? parseInt(result.retryAfter) : 60;
 
-      setTimeout(() => error.classList.add("show"), 10);
-
-      submitBtn.classList.add("btn-disabled");
-      submitBtn.setAttribute("disabled", "true");
-
-      const waitTime = result.retryAfter ? parseInt(result.retryAfter) * 1000 : 60000;
-
-      setTimeout(() => {
-        error.classList.remove("show");
-
-        setTimeout(() => error.remove(), 300);
-
-        submitBtn.classList.remove("btn-disabled");
-        submitBtn.removeAttribute("disabled");
-      }, waitTime);
+      saveRateLimit(RATE_KEY, waitSeconds);
+      applyBlock(waitSeconds * 1000, result.data.message || "Trop de tentatives. Réessayez dans quelques instants.");
 
       return;
     }

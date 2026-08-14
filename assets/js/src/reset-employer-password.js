@@ -1,6 +1,9 @@
 import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail, isValidPassword } from "../modules/security.js";
 import { initBackReload } from "../modules/back-reload.js";
+import { saveRateLimit, getRateLimitRemaining, clearRateLimit } from "../modules/rate-limit.js";
+
+const RATE_KEY = "reset-employer-password";
 
 
 // Gestion du formulaire de réinitialisation du mot de passe employé
@@ -71,7 +74,8 @@ function initResetEmployerPasswordForm() {
     if (
       isValidEmail(email) &&
       isValidPassword(password) &&
-      password === password2
+      password === password2 &&
+      getRateLimitRemaining(RATE_KEY) === 0
     ) {
       submitBtn.classList.remove("btn-disabled");
     } else {
@@ -79,6 +83,31 @@ function initResetEmployerPasswordForm() {
     }
 
     return valid;
+  }
+
+  // Affiche le message de blocage et désactive le bouton
+  function applyBlock(ms, message) {
+    const oldMsg = form.querySelector(".message");
+    if (oldMsg) oldMsg.remove();
+
+    const error = document.createElement("p");
+    error.textContent = message;
+    error.classList.add("message", "error-message");
+    form.appendChild(error);
+
+    setTimeout(() => error.classList.add("show"), 10);
+
+    submitBtn.classList.add("btn-disabled");
+    submitBtn.setAttribute("disabled", "true");
+
+    setTimeout(() => {
+      error.classList.remove("show");
+      setTimeout(() => error.remove(), 300);
+
+      clearRateLimit(RATE_KEY);
+      submitBtn.removeAttribute("disabled");
+      validateForm();
+    }, ms);
   }
 
   function markTouched(field) {
@@ -92,8 +121,15 @@ function initResetEmployerPasswordForm() {
 
   validateForm();
 
+  // Restaure un blocage encore actif après un refresh / changement de page
+  const remaining = getRateLimitRemaining(RATE_KEY);
+  if (remaining > 0) {
+    applyBlock(remaining, "Trop de tentatives. Réessayez dans quelques instants.");
+  }
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (getRateLimitRemaining(RATE_KEY) > 0) return;
     if (!validateForm()) return;
 
     const email = sanitize(emailInput.value);
@@ -115,6 +151,16 @@ function initResetEmployerPasswordForm() {
       });
 
       const data = await response.json();
+
+      if (response.status === 429) {
+        const retryAfter = response.headers.get("Retry-After");
+        const waitSeconds = retryAfter ? parseInt(retryAfter) : 60;
+
+        saveRateLimit(RATE_KEY, waitSeconds);
+        applyBlock(waitSeconds * 1000, data.message || "Trop de tentatives. Réessayez dans quelques instants.");
+
+        return;
+      }
 
       if (!response.ok || !data.success) {
         const error = document.createElement("p");

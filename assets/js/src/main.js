@@ -1,4 +1,6 @@
 import { API_BASE } from "../modules/config.js";
+
+
 // Animation du burger
 // Le click
 function initBurger() {

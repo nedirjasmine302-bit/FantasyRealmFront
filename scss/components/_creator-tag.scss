@@ -1,0 +1,32 @@
+@use "../abstracts/all" as abs;
+
+
+.creator-tag {
+  position: absolute;
+  background: rgba(abs.$secondary, 0.30);
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  backdrop-filter: blur(2px);
+  z-index: 3;
+
+  i {
+    font-size: 1rem;
+  }
+}
+
+.creator-tag-horizontal{
+  top: 0.7rem;
+  right: 1rem;
+  margin-top: 0.4rem;
+}
+
+.creator-tag-vertical{
+  top: 1rem;
+  left: 1rem;
+}

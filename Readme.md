@@ -1,7 +1,6 @@
-#FantasyRealm Online
-
-Ce site est un site vitrine pour le jeu FantasyRealm Online
+# FantasyRealm Online
+Ce site est un site vitrine pour FantasyRealm Online
 
 # Installation
 
-#Déploiment 
+# Déploimente

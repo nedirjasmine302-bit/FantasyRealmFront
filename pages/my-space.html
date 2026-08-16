@@ -1,0 +1,43 @@
+<!--Section: Hero -->
+<section class="hero">
+  <div class="hero-container text-center">
+    <h1 class="hero-title fade-up">Mon Espace</h1>
+
+    <p class="hero-subtitle fade-up delay-1">
+      Découvrez les héros créés par les joueurs et trouvez l'inspiration pour votre prochaine aventure.
+    </p>
+  </div>
+</section>
+
+<!--Section: Global layout -->
+<section class="characters-layout fade-up delay-2">
+  <div class="layout-container">
+
+    <!--Section: Top buttons -->
+    <section class="characters-top-actions">
+      <div class="actions-wrapper">
+        <a href="create-character" class="btn btn-primary">Créer mon personnage</a>
+        <a href="favoris" class="btn btn-secondary">Voir mes favoris</a>
+      </div>
+    </section>
+
+    <!--Section: My characters -->
+    <section class="characters-section fade-up delay-5">
+      <div class="characters-container"></div>
+    </section>
+
+  </div>
+
+  <!-- Section: Pop up confirmation de suppression -->
+  <div id="confirm-popup" class="popup-overlay confirm-popup">
+    <div class="popup-content">
+      <button class="popup-close"><i class="bi bi-x-lg"></i></button>
+      <h3 class="popup-title">Confirmer la suppression</h3>
+      <p class="confirm-hint">Cette action est définitive : l'élément sera supprimé et ne pourra pas être récupéré.</p>
+      <div class="popup-buttons confirm-buttons">
+        <button type="button" class="btn btn-danger" id="confirm-accept">Supprimer</button>
+        <button type="button" class="btn btn-ghost-secondary" id="confirm-cancel">Annuler</button>
+      </div>
+    </div>
+  </div>
+</section>

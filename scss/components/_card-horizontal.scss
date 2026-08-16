@@ -1,0 +1,216 @@
+@use "../abstracts/all" as abs;
+
+
+.card-horizontal {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
+  text-align: left;
+
+  width: 100%;
+  max-width: 60rem;
+  min-height: 15rem;
+  padding: 0.5rem;
+
+  background: abs.$card-bg-primary;
+  border-radius: 0.4rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+
+  @include abs.anim-transition(transform, 0.3s);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  }
+
+  .card-img-wrapper {
+    width: 16rem;
+    height: 16rem;
+    background: abs.$dark;
+    border-radius: 0.3rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .card-img {
+    width: 160%;
+    height: auto;
+    position: absolute;
+    top: 2rem;
+    object-fit: cover;
+    object-position: 50% 20%;
+    transform: scale(1.1);
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: flex-start;
+    height: 100%;
+    margin-top: 0.9rem;
+
+    .card-name {
+      @include abs.title-style(2.5rem, white, left);
+      margin-bottom: 0.3rem;
+    }
+
+    .card-buttons {
+      display: flex;
+      margin: 0.5rem 0;
+      align-self: flex-start;
+
+      .btn {
+        width: auto;
+        padding: 0 1rem;
+        height: 2.3rem;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .card-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: auto;
+    margin-right: 0.5rem;
+    align-self: flex-end;
+
+    @include abs.text-style(0.93rem);
+
+    a {
+      display: flex;
+      justify-content: center;
+      flex-wrap: nowrap;
+      text-decoration: none;
+      cursor: pointer;
+
+      @include abs.text-style(0.9rem, abs.$font-family-sans-serif, abs.$primary);
+    }
+
+    a.action-edit:hover {
+    color: abs.$secondary;
+    text-decoration: underline;
+    }
+
+    a.action-delete:hover {
+      color: abs.$danger;
+      text-decoration: underline;
+    }
+
+    span {
+      color: white;
+    }
+  }
+
+  .fav-btn {
+    background: transparent;
+    border: none;
+    position: absolute;
+    top: 0.7rem;
+    right: 1rem;
+
+    .heart {
+      @include abs.heart-icon(1.8rem);
+    }
+  }
+}
+
+
+// Cards accessories
+#accessories .card-img {
+  position: static;
+  top: auto;
+  width: 100%;
+  height: 100%;
+  padding: 0.6rem;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+}
+
+
+// Responsive
+@media (max-width: 650px) {
+  .card-horizontal {
+    align-items: flex-start;
+
+    .card-img-wrapper {
+      width: 14rem;
+      height: 14rem;
+      flex-shrink: 0;
+    }
+
+    .card-img {
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform: none;
+    }
+  }
+}
+
+@media (max-width: 540px) {
+  .characters-container {
+    width: 100%;
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+
+  .card-horizontal {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    max-width: 19rem;
+
+    .card-img {
+      top: 1rem;
+    }
+
+    .card-img-wrapper {
+      width: 18rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-content {
+      width: 100%;
+      margin: 0;
+      align-items: center;
+      text-align: center;
+
+      .card-title {
+        width: 100%;
+        text-align: center;
+      }
+
+      .card-name {
+        @include abs.title-style(2.5rem, white, center);
+      }
+
+      .card-buttons {
+        align-self: center;
+      }
+    }
+
+    .status {
+      margin: 0.3rem 0 0.6rem;
+    }
+
+    .card-actions {
+      margin-top: 1rem;
+      margin-right: 0;
+      align-self: center;
+      justify-content: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+

@@ -1,0 +1,232 @@
+<!--Section: Hero -->
+<section class="hero">
+  <div class="hero-container text-center">
+    <h1 class="hero-title fade-up">Créer votre personnage</h1>
+    <p class="hero-subtitle fade-up delay-1">
+      Importez votre héros et définissez ses caractéristiques.
+    </p>
+  </div>
+</section>
+
+<div class="create-page">
+
+  <!--Section: Upload image -->
+  <section class="upload upload-secondary fade-up delay-2">
+    <h2 class="section-title">Ajouter l'image de votre héros</h2>
+
+    <div class="upload-box" id="uploadBox">
+      <i class="bi bi-file-earmark-arrow-up upload-icon"></i>
+      <p>Glissez votre image ici ou cliquez pour importer</p>
+      <input type="file" id="heroImage" accept="image/*" hidden>
+    </div>
+
+    <div class="upload-preview" id="uploadPreview">
+      <img id="previewImage" alt="Aperçu du héros">
+      <p class="upload-success">Image importée avec succès !</p>
+    </div>
+  </section>
+
+  <!--Section: Form -->
+  <section class="form-structure fade-up delay-3">
+
+    <!-- Identity -->
+    <div class="form-section form-section-secondary fade-up">
+      <h2 class="section-title">Identité</h2>
+
+      <div class="field">
+        <label for="name">Nom du personnage</label>
+        <input type="text" id="name" placeholder="Entrez un nom" maxlength="9" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="gender">Genre</label>
+
+        <div class="custom-select custom-select-secondary" id="gender">
+          <div class="custom-select-trigger">
+            <span class="trigger-text" data-value="">Sélectionnez</span>
+            <i class="bi bi-chevron-down arrow"></i>
+          </div>
+
+          <div class="custom-options"></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="description">Description</label>
+        <textarea id="description" maxlength="300" placeholder="Décrivez votre personnage" autocomplete="off"></textarea>
+      </div>
+    </div>
+
+    <!-- Appearance -->
+    <div class="form-section form-section-secondary fade-up delay-1">
+      <h2 class="section-title">Apparence</h2>
+
+      <h3 class="sub-title">Couleur</h3>
+
+      <div class="grid-3">
+
+        <div class="field">
+          <label for="hairColor">Cheveux</label>
+          <div class="custom-select custom-select-secondary" id="hairColor">
+            <div class="custom-select-trigger">
+              <span class="trigger-text" data-value="">Sélectionnez</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+
+            <div class="custom-options"></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="eyeColor">Yeux</label>
+          <div class="custom-select custom-select-secondary" id="eyeColor">
+            <div class="custom-select-trigger">
+              <span class="trigger-text" data-value="">Sélectionnez</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+
+            <div class="custom-options"></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="skinColor">Peau</label>
+          <div class="custom-select custom-select-secondary" id="skinColor">
+            <div class="custom-select-trigger">
+              <span class="trigger-text" data-value="">Sélectionnez</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+
+            <div class="custom-options"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <h3 class="sub-title">Forme</h3>
+
+      <div class="grid-3">
+
+        <div class="field">
+          <label for="mouthShape">Bouche</label>
+          <div class="custom-select custom-select-secondary" id="mouthShape">
+            <div class="custom-select-trigger">
+              <span class="trigger-text" data-value="">Sélectionnez</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+
+            <div class="custom-options"></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="eyeShape">Yeux</label>
+          <div class="custom-select custom-select-secondary" id="eyeShape">
+            <div class="custom-select-trigger">
+              <span class="trigger-text" data-value="">Sélectionnez</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+
+            <div class="custom-options"></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="noseShape">Nez</label>
+          <div class="custom-select custom-select-secondary" id="noseShape">
+            <div class="custom-select-trigger">
+              <span class="trigger-text" data-value="">Sélectionnez</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+
+            <div class="custom-options"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Equipment -->
+    <div class="form-section form-section-secondary fade-up delay-2">
+      <h2 class="section-title">Équipements</h2>
+      <div class="equip-content"></div>
+    </div>
+
+    <!-- Accessoires -->
+    <div class="form-section form-section-secondary accessoires disabled fade-up delay-3">
+      <h2 class="section-title">Accessoires</h2>
+
+      <div class="rarity-legend">
+        <div class="rarity-item">
+          <span class="dot dot-standard"></span>
+          <span>Standard</span>
+        </div>
+
+        <div class="rarity-item">
+          <span class="dot dot-legendary"></span>
+          <span>Légendaire</span>
+        </div>
+
+        <div class="rarity-item">
+          <span class="dot dot-rare"></span>
+          <span>Rare</span>
+        </div>
+      </div>
+
+      <div class="grid-3">
+
+        <div class="field">
+          <label for="armor">Armure</label>
+          <div class="custom-select custom-select-secondary" data-type="armure" id="armor">
+            <div class="custom-select-trigger">
+              <span class="trigger-text" data-value="standard">Standard</span>
+              <i class="arrow bi bi-chevron-down"></i>
+            </div>
+
+            <div class="custom-options"></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="weapon">Arme</label>
+          <div class="custom-select custom-select-secondary" data-type="arme" id="weapon">
+            <div class="custom-select-trigger">
+              <span class="trigger-text" data-value="standard">Standard</span>
+              <i class="arrow bi bi-chevron-down"></i>
+            </div>
+
+            <div class="custom-options"></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="relique">Relique</label>
+          <div class="custom-select custom-select-secondary" data-type="relique" id="relique">
+            <div class="custom-select-trigger">
+              <span class="trigger-text" data-value="standard">Standard</span>
+              <i class="arrow bi bi-chevron-down"></i>
+            </div>
+
+            <div class="custom-options"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!--Section: Bottom buttons -->
+    <section class="bottom-actions fade-up delay-3">
+      <div class="actions-wrapper">
+        <button type="button" class="btn btn-secondary create-character-btn">
+          Créer mon personnage
+        </button>
+        <a href="my-space" class="btn btn-ghost-secondary">Annuler</a>
+      </div>
+
+      <div class="feedback-zone"></div>
+    </section>
+
+  </section>
+
+</div>

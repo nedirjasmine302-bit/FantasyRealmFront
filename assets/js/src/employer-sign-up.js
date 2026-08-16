@@ -1,0 +1,250 @@
+import { API_BASE } from "../modules/config.js";
+import { initReveal } from "../modules/animations.js";
+import { sanitize, isValidEmail, isValidEmployerPseudo, isValidPassword } from "../modules/security.js";
+import { initBackReload } from "../modules/back-reload.js";
+import { saveRateLimit, getRateLimitRemaining, clearRateLimit } from "../modules/rate-limit.js";
+
+const RATE_KEY = "employer-sign-up";
+
+
+// Appel API
+async function checkEmailUnique(email) {
+  try {
+    const res = await fetch(`${API_BASE}/api/check-email?email=` + encodeURIComponent(email));
+    if (!res.ok) return true;
+    const data = await res.json();
+    return data.unique !== false;
+  } catch (e) {
+    console.error("Erreur API check-email:", e);
+    return true;
+  }
+}
+
+async function checkPseudoUnique(pseudo) {
+  try {
+    const res = await fetch(`${API_BASE}/api/check-pseudo?pseudo=` + encodeURIComponent(pseudo));
+    if (!res.ok) return true;
+    const data = await res.json();
+    return data.unique !== false;
+  } catch (e) {
+    console.error("Erreur API check-pseudo:", e);
+    return true;
+  }
+}
+
+
+// Gestion du formulaire de création d'un compte employeur
+function initEmployerSignUpForm() {
+  const form = document.querySelector(".auth-form-container");
+  if (!form) return;
+
+  const emailInput = document.querySelector("#email");
+  const pseudoInput = document.querySelector("#pseudo");
+  const passwordInput = document.querySelector("#password");
+  const password2Input = document.querySelector("#password2");
+  const submitBtn = document.querySelector(".btn.btn-secondary");
+
+  function createErrorElement(input) {
+    const error = document.createElement("p");
+    error.classList.add("input-error");
+    input.insertAdjacentElement("afterend", error);
+    return error;
+  }
+
+  const emailError = createErrorElement(emailInput);
+  const pseudoError = createErrorElement(pseudoInput);
+  const passwordError = createErrorElement(passwordInput);
+  const password2Error = createErrorElement(password2Input);
+
+  let touched = {
+    email: false,
+    pseudo: false,
+    password: false,
+    password2: false
+  };
+
+  function showError(errorEl, msg) {
+    errorEl.textContent = msg;
+    errorEl.style.opacity = "1";
+  }
+
+  function hideError(errorEl) {
+    errorEl.textContent = "";
+    errorEl.style.opacity = "0";
+  }
+
+  async function validateForm() {
+    const email = sanitize(emailInput.value);
+    const pseudo = sanitize(pseudoInput.value);
+    const password = sanitize(passwordInput.value);
+    const password2 = sanitize(password2Input.value);
+
+    let valid = true;
+
+    if (touched.email) {
+      if (!isValidEmail(email)) {
+        showError(emailError, "Email invalide");
+        valid = false;
+      } else {
+        const unique = await checkEmailUnique(email);
+        if (!unique) {
+          showError(emailError, "Cet email est déjà utilisé");
+          valid = false;
+        } else {
+          hideError(emailError);
+        }
+      }
+    }
+
+    if (touched.pseudo) {
+      if (!isValidEmployerPseudo(pseudo)) {
+        showError(pseudoError, "3 à 9 caractères (lettres, chiffres, _ -)");
+        valid = false;
+      } else {
+        const unique = await checkPseudoUnique(pseudo);
+        if (!unique) {
+          showError(pseudoError, "Ce pseudo est déjà utilisé");
+          valid = false;
+        } else {
+          hideError(pseudoError);
+        }
+      }
+    }
+
+    if (touched.password) {
+      if (!isValidPassword(password)) {
+        showError(passwordError, "Mot de passe non conforme (8 caractères dont une majuscule, une minuscule, un chiffre et un spécial)");
+        valid = false;
+      } else {
+        hideError(passwordError);
+      }
+    }
+
+    if (touched.password2) {
+      if (password !== password2) {
+        showError(password2Error, "La confirmation n'est pas identique au mot de passe");
+        valid = false;
+      } else {
+        hideError(password2Error);
+      }
+    }
+
+    if (
+      isValidEmail(email) &&
+      await checkEmailUnique(email) &&
+      isValidEmployerPseudo(pseudo) &&
+      await checkPseudoUnique(pseudo) &&
+      isValidPassword(password) &&
+      password === password2 &&
+      getRateLimitRemaining(RATE_KEY) === 0
+    ) {
+      submitBtn.classList.remove("btn-disabled");
+    } else {
+      submitBtn.classList.add("btn-disabled");
+    }
+
+    return valid;
+  }
+
+  // Affiche le message de blocage et désactive le bouton
+  function applyBlock(ms, message) {
+    const oldMsg = form.querySelector(".message");
+    if (oldMsg) oldMsg.remove();
+
+    const error = document.createElement("p");
+    error.textContent = message;
+    error.classList.add("message", "error-message");
+    form.appendChild(error);
+
+    setTimeout(() => error.classList.add("show"), 10);
+
+    submitBtn.classList.add("btn-disabled");
+    submitBtn.setAttribute("disabled", "true");
+
+    setTimeout(() => {
+      error.classList.remove("show");
+      setTimeout(() => error.remove(), 300);
+
+      clearRateLimit(RATE_KEY);
+      submitBtn.removeAttribute("disabled");
+      validateForm();
+    }, ms);
+  }
+
+  function markTouched(field) {
+    touched[field] = true;
+    validateForm();
+  }
+
+  emailInput.addEventListener("input", () => markTouched("email"));
+  pseudoInput.addEventListener("input", () => markTouched("pseudo"));
+  passwordInput.addEventListener("input", () => markTouched("password"));
+  password2Input.addEventListener("input", () => markTouched("password2"));
+
+  validateForm();
+
+  const remaining = getRateLimitRemaining(RATE_KEY);
+  if (remaining > 0) {
+    applyBlock(remaining, "Trop de tentatives. Réessayez dans quelques instants.");
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (getRateLimitRemaining(RATE_KEY) > 0) return;
+    if (!await validateForm()) return;
+
+    const payload = {
+      email: sanitize(emailInput.value),
+      pseudo: sanitize(pseudoInput.value),
+      password: sanitize(passwordInput.value),
+      password2: sanitize(password2Input.value)
+    };
+
+    const res = await fetch(`${API_BASE}/api/employer-sign-up`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (res.status === 429) {
+      const retryAfter = res.headers.get("Retry-After");
+      const waitSeconds = retryAfter ? parseInt(retryAfter) : 60;
+
+      saveRateLimit(RATE_KEY, waitSeconds);
+      applyBlock(waitSeconds * 1000, data.message || "Trop de tentatives. Réessayez dans quelques instants.");
+
+      return;
+    }
+
+    if (!data.success) {
+      alert(data.message);
+      return;
+    }
+
+    const success = document.createElement("p");
+    success.textContent = data.message;
+    success.classList.add("message", "success-message");
+    form.appendChild(success);
+
+    submitBtn.classList.add("btn-disabled");
+    submitBtn.setAttribute("disabled", "true");
+
+    setTimeout(() => success.classList.add("show"), 10);
+
+    setTimeout(() => {
+      window.location.href = "/management#employees";
+    }, 1000);
+  });
+}
+
+
+// Lance le js de la page Employer-sign-up quand elle est chargée
+function start() {
+  initReveal();
+  initEmployerSignUpForm();
+  initBackReload();
+}
+
+if (typeof window !== "undefined") start();

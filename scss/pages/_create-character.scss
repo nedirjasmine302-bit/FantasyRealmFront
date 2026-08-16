@@ -1,0 +1,135 @@
+@use "../abstracts/all" as abs;
+
+
+.create-character {
+  padding-bottom: 4rem;
+}
+
+
+// Section: Form
+.create-page .field {
+  margin-bottom: 1.3rem;
+
+  label {
+    @include abs.text-style(0.9rem, abs.$font-family-serif, white, left);
+    margin: 0;
+    font-weight: normal;
+  }
+
+  input,
+  select,
+  textarea {
+    margin: 0;
+  }
+}
+
+.input-error-character {
+  margin: 0rem;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.equip-status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+
+  .sub-title {
+    margin: 0;
+  }
+}
+
+.equip-info {
+  padding: 1rem;
+  border-radius: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  p {
+    @include abs.text-style(0.95rem, abs.$font-family-sans-serif, white, left);
+    margin: 0;
+    flex: 1;
+  }
+}
+
+.equip-info-secondary {
+  background: rgba(abs.$secondary, 0.15);
+  border-left: 3px solid abs.$secondary;
+}
+
+.equip-info-warning {
+  background: rgba(abs.$warning, 0.15);
+  border-left: 3px solid abs.$warning;
+}
+
+.equip-info-success {
+  background: rgba(abs.$success, 0.15);
+  border-left: 3px solid abs.$success;
+}
+
+.equip-info-danger {
+  background: rgba(abs.$danger, 0.15);
+  border-left: 3px solid abs.$danger;
+}
+
+.form-card.accessoires.disabled .custom-select-secondary {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.rarity-legend {
+  display: flex;
+  gap: 4rem;
+  margin-bottom: 2rem;
+
+  .rarity-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    @include abs.text-style(0.9rem, abs.$font-family-sans-serif, white);
+  }
+}
+
+.feedback-zone {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+
+// Responsive
+@media (max-width: 700px) {
+
+  // Section: Form
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 426px) {
+
+  // Section: Top buttons
+  .btn {
+    width: 12rem;
+  }
+}
+
+@media (max-width: 386px) {
+
+  // Section: Hero
+  .hero {
+    .hero-title {
+      @include abs.title-style(2.4rem, white, center, abs.$font-family-serif, normal);
+    }
+  }
+}
+

@@ -1,0 +1,45 @@
+@use "../abstracts/all" as abs;
+
+
+.form-structure {
+  width: min(90%, 60rem);
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.form-section {
+  background: abs.$card-bg-secondary;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  z-index: 1;
+
+  &:nth-of-type(3) {
+    z-index: 0;
+  }
+
+  &.disabled {
+    @include abs.state-disabled();
+  }
+
+  .section-title {
+    margin-bottom: 1.5rem;
+  }
+
+  .sub-title {
+    @include abs.text-style(1.7rem, abs.$font-family-serif, white, left);
+    margin: 1.5rem 0 1rem;
+    opacity: 0.95;
+  }
+}
+
+.form-section-secondary .section-title {
+  @include abs.title-style(2rem, abs.$secondary, left);
+}
+
+.form-section-primary .section-title {
+  @include abs.title-style(2rem, abs.$primary, left);
+}

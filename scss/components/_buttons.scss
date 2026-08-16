@@ -1,0 +1,74 @@
+@use "../abstracts/all" as abs;
+
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14.5rem;
+  height: 2.7rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  color: white !important;
+  white-space: nowrap;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  }
+}
+
+.btn-primary {
+  background-color: abs.$primary;
+
+  &:hover {
+    background-color: darken(abs.$primary, 3%);
+  }
+}
+
+.btn-secondary {
+  background-color: abs.$secondary;
+
+  &:hover {
+    background-color: darken(abs.$secondary, 3%) !important;
+  }
+
+  &:active,
+  &:focus {
+    background-color: abs.$secondary !important;
+  }
+}
+
+.btn-ghost-secondary {
+  background-color: rgba(abs.$secondary, 0.2);
+  border: 1px solid abs.$secondary;
+
+  &:hover {
+    background-color: rgba(abs.$secondary, 0.30);
+    border: 1px solid abs.$secondary;
+  }
+}
+
+.btn-success {
+  background-color: abs.$success;
+
+  &:hover {
+    background-color: darken(abs.$success, 3%);
+  }
+}
+
+.btn-danger {
+  background-color: abs.$danger;
+
+  &:hover {
+    background-color: darken(abs.$danger, 3%);
+  }
+}
+
+.btn-disabled {
+  @include abs.state-disabled();
+}
+
+

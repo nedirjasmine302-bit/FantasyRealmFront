@@ -1,0 +1,170 @@
+@use "../abstracts/all" as abs;
+
+
+.main {
+  background-color: abs.$black;
+}
+
+.navbar,
+footer {
+  background-color: abs.$dark;
+  border-bottom: none;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.logo,
+.logo a {
+  @include abs.logo-style(2rem);
+}
+
+.navbar .logo {
+  margin: 0;
+  padding: 0.5rem 0 0.5rem 0.2rem;
+  line-height: 1;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu a {
+  text-decoration: none;
+  @include abs.text-style(0.93rem, abs.$font-family-serif);
+}
+
+.burger {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.3rem;
+  @include abs.anim-transition(transform);
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+
+// Responsive
+@media (max-width: 1300px) {
+  .burger {
+    display: block;
+    margin-left: auto;
+  }
+
+  .navbar {
+    gap: 0;
+    transition: gap 1s ease;
+  }
+
+  .navbar.menu-open {
+    gap: 1rem;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    text-align: center;
+
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transform: translateY(-10px);
+
+    background: transparent;
+
+    transition:
+      max-height 0.7s ease,
+      opacity 0.3s ease,
+      transform 0.3s ease;
+
+    li {
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+  }
+
+  // Ouverture du menu 
+  .menu.show {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transform: translateY(0);
+
+    max-height: 260px;
+    background: abs.$dark;
+
+    li {
+      animation: fadeInUp 0.7s forwards;
+      opacity: 1;
+    }
+
+    li:nth-child(1) { animation-delay: 0.05s; }
+    li:nth-child(2) { animation-delay: 0.10s; }
+    li:nth-child(3) { animation-delay: 0.15s; }
+    li:nth-child(4) { animation-delay: 0.20s; }
+    li:nth-child(5) { animation-delay: 0.25s; }
+    li:nth-child(6) { animation-delay: 0.30s; }
+  }
+
+  // Fermeture du menu 
+  .menu.closing {
+    display: flex;
+    opacity: 1;
+    pointer-events: none;
+    visibility: visible;
+    max-height: 0;
+  }
+
+  .menu.closing li {
+    animation: fadeOutDown 0.25s forwards;
+    opacity: 1;
+  }
+
+  .menu.closing li:nth-child(1) { animation-delay: 0.55s; }
+  .menu.closing li:nth-child(2) { animation-delay: 0.45s; }
+  .menu.closing li:nth-child(3) { animation-delay: 0.35s; }
+  .menu.closing li:nth-child(4) { animation-delay: 0.25s; }
+  .menu.closing li:nth-child(5) { animation-delay: 0.15s; }
+  .menu.closing li:nth-child(6) { animation-delay: 0.05s; }
+
+  .logo,
+  .logo a {
+    font-size: 1.8rem;
+  }
+
+  .menu a {
+    @include abs.text-style(0.9rem, abs.$font-family-serif);
+  }
+
+  // Animations
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeOutDown {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(10px); }
+  }
+}

@@ -1,0 +1,15 @@
+.dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-standard { background: #999999; }
+.dot-legendary { background: #5B38F8; }
+.dot-rare { background: #FFD700; }
+
+.custom-select .custom-option .dot,
+.custom-select .trigger-text .dot {
+  margin-right: 0.4rem;
+}

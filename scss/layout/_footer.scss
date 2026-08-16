@@ -1,0 +1,44 @@
+@use "../abstracts/all" as abs;
+
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+
+  p {
+    @include abs.text-style(0.9rem);
+  }
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  margin-right: 0.6rem;
+  @include abs.text-style(0.93rem);
+
+  a {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    text-decoration: none;
+    @include abs.text-style(0.93rem, abs.$font-family-sans-serif, abs.$primary);
+
+    &:hover {
+      color: abs.$secondary;
+      text-decoration: underline;
+    }
+  }
+}
+
+
+// Responsive
+@media (max-width: 337px) {
+  .footer-links a {
+    max-width: 7rem;
+  }
+}

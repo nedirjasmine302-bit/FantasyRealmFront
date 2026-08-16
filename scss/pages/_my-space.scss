@@ -1,0 +1,137 @@
+@use "../abstracts/all" as abs;
+
+
+// Section: Global layout
+.characters-layout {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.layout-container {
+  width: 100%;
+  max-width: 70rem;
+  padding: 0 6rem;
+  margin: 0 auto;
+}
+
+
+// Section: Top buttons
+.characters-top-actions {
+  margin-top: 4.5rem;
+  margin-bottom: 3rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .actions-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+}
+
+
+// Section: My characters
+.characters-section{
+  padding-top: 0;
+  padding-bottom: 4rem;
+
+  .characters-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+
+  .card-horizontal {
+
+    &:not(:has(.status-valid)) .heart {
+      opacity: 0.35;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    &:has(.status-valid) .heart {
+      opacity: 1;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    &:has(.status-pending),
+    &:has(.status-refused) {
+      .card-buttons .btn-secondary {
+        @include abs.state-disabled();
+      }
+    }
+
+    &:has(.card-buttons:first-of-type .btn-secondary)
+      .card-buttons:nth-of-type(2) .btn-secondary {
+      @include abs.state-disabled();
+    }
+  
+    &:has(.status-pending) {
+      .card-actions a {
+        @include abs.state-disabled();
+      }
+    }
+  
+    &:has(.status-refused) {
+      .card-actions a.action-duplicate {
+        @include abs.state-disabled();
+      }
+    }
+  }
+}
+
+
+// Responsive
+@media (max-width: 540px) {
+
+  .characters-section {
+    .characters-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      justify-items: center;
+      gap: 2rem;
+    }
+  }
+}
+
+@media (max-width: 470px) {
+
+  .characters-section {
+    .characters-container {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@media (max-width: 426px) {
+
+  .layout-container {
+    padding: 0 5rem;
+  }
+
+  .characters-top-actions {
+    .actions-wrapper {
+      a.btn {
+        width: 12rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 350px) {
+
+  .layout-container {
+    padding: 0 3rem;
+  }
+}

@@ -1,0 +1,31 @@
+@use "../abstracts/all" as abs;
+
+
+.input-error {
+  @include abs.text-style(0.85rem, abs.$font-family-sans-serif, abs.$danger,left);
+  margin: 0 1.8rem;
+  opacity: 0;
+}
+  
+.message {
+  @include abs.text-style(1rem, abs.$font-family-sans-serif, white);
+  margin: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.message.show {
+  opacity: 1;
+}
+
+.success-message {
+  color: abs.$success;
+}
+
+.error-message {
+  color: abs.$danger;
+}
+
+input[type="password"]::-ms-reveal {
+  filter: invert(1);
+}

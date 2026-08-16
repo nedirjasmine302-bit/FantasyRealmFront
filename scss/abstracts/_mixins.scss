@@ -1,0 +1,152 @@
+@use "../abstracts/variables" as var;
+
+
+// Pour les animations et transitions
+@mixin anim-transition($props: all, $time: .3s, $ease: ease) {
+  transition: $props $time $ease;
+}
+
+// Pour les ::before et ::after
+@mixin pseudo-base($z: null) {
+  content: "";
+  position: absolute;
+  @if $z != null { z-index: $z; }
+}
+
+// Pour le logo
+@mixin logo-style($size) {
+  font-size: $size;
+  font-weight: bold;
+  letter-spacing: 0.04rem;
+  font-family: var.$font-family-serif;
+  text-decoration: none;
+
+  -webkit-text-stroke: 0.5px white;
+  text-shadow: 0px 6px 4px rgba(0, 0, 0, 0.5);
+
+  background: linear-gradient(to right, var.$primary, var.$secondary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+//Pour les textes 
+@mixin text-style(
+  $size: 1.1rem,
+  $family: var.$font-family-sans-serif,
+  $color: white,
+  $align: center,
+) {
+  font-family: $family;
+  font-size: $size;
+  color: $color;
+  text-align: $align;
+}
+
+//Pour les titres 
+@mixin title-style(
+  $size: 2rem,
+  $color: var.$secondary,
+  $align: center,
+  $family: var.$font-family-serif,
+  $weight: bold
+) {
+  font-family: $family;
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+  text-align: $align;
+}
+
+//Pour les éléments qui sont désactivés
+@mixin state-disabled() {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(40%);
+}
+
+//Pour l’icône cœur
+@mixin heart-icon($size: 1.6rem) {
+  font-size: $size;
+  color: var.$primary;
+  cursor: pointer;
+  z-index: 3;
+}
+
+//Pour le responsive du filtre (grand écran)
+@mixin filters-breakpoint-medium-fields {
+  max-width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0.7rem;
+  column-gap: 1rem;
+
+  .field:first-child {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .field {
+    flex: 1 1 48%;
+    min-width: 11rem;
+    flex-shrink: 1;
+  }
+
+  .custom-select {
+    width: 100%;
+  }
+
+  .custom-select-trigger {
+    min-width: 0;
+    width: 100%;
+    white-space: normal;
+    padding-right: 1.8rem;
+  }
+
+  .trigger-text {
+    flex-shrink: 1;
+    min-width: 0;
+  }
+}
+
+//Pour le responsive du filtre (bouton)
+@mixin filters-breakpoint-medium-button {
+  .filters .filters-form .btn {
+    order: 10;
+    width: 100%;
+    margin-top: 1.5rem;
+    margin-left: 0;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+//Pour le responsive du filtre (petit écran)
+@mixin filters-breakpoint-small {
+  .filters {
+    .filters-form {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+
+      .field {
+        flex: 1 1 100%;
+        min-width: 100%;
+      }
+
+      .custom-select {
+        width: 100%;
+      }
+
+      .custom-select-trigger {
+        width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+}

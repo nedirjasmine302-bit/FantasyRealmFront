@@ -1,0 +1,161 @@
+@use "../abstracts/all" as abs;
+
+
+.character-details {
+
+  // Section: Form
+  .field input,
+  .field textarea {
+    border: 1px solid rgba(abs.$primary, 0.5);
+
+    &:focus {
+      border-color: abs.$primary;
+    }
+  }
+
+  .custom-select-secondary .custom-select-trigger {
+    border: 0.0625rem solid rgba(abs.$primary, 0.5); 
+  }
+
+
+  // Section: Write a Review
+  .add-comment-card textarea {
+    border: 1px solid rgba(abs.$secondary, 0.5);
+
+    &:focus {
+      border-color: abs.$secondary;
+    }
+  }
+
+  .comment-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .comment-info {
+      @include abs.text-style(0.9rem, abs.$font-family-sans-serif, white, left);
+      opacity: 0.7;
+      margin: 0;
+    }
+
+    .btn {
+      margin-left: 1rem;
+      background-color: abs.$secondary;
+
+      &:hover {
+        background-color: darken(abs.$secondary, 5%);
+      }
+    }
+  }
+
+  .rating-stars {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 1.8rem;
+    margin-top: 1rem;
+  
+    i {
+      cursor: pointer;
+      color: #ffd86b;
+      @include abs.anim-transition(transform, .2s);
+  
+      &:hover {
+        transform: scale(1.15);
+      }
+    }
+  }
+
+  .success-message-character {
+    margin-top: 2rem;
+    margin-bottom: 0;
+  }
+
+  .input-error-character {
+    margin: 0rem;
+  }
+
+
+// Section: Player Reviews
+  .character-comments {
+    margin-top: 1rem;
+
+    .section-title {
+      @include abs.title-style(2rem, abs.$primary, center);
+      margin-bottom: 2rem;
+    }
+
+    .comments-carousel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+
+    .carousel-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      @include abs.anim-transition(color, .2s);
+
+      &:hover {
+        color: abs.$primary;
+        transform: scale(1.1);
+      }
+    }
+
+    .comment-card {
+      background: abs.$card-bg-secondary;
+      border: 2px solid rgba(abs.$primary, 0.5);
+      padding: 2rem;
+      border-radius: 0.75rem;
+      width: 100%;
+      max-width: 45rem;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      @include abs.anim-transition(all, .3s);
+    }
+
+    .comment-author {
+      @include abs.text-style(1.1rem, abs.$font-family-serif, abs.$primary, center);
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .comment-date {
+      @include abs.text-style(0.9rem, abs.$font-family-sans-serif, white, center);
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .comment-text {
+      @include abs.text-style(1rem, abs.$font-family-sans-serif, white, center);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .comment-stars {
+      display: flex;
+      justify-content: center;
+      gap: 0.25rem;
+      font-size: 1.4rem;
+
+      i {
+        color: #ffd86b;
+      }
+    }
+  }
+}
+
+
+.custom-select.disabled .arrow {
+  opacity: 0.5;
+}
+
+.state-disabled {
+  @include abs.state-disabled();
+}

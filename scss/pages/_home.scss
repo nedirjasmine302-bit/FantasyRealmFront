@@ -1,0 +1,697 @@
+@use "../abstracts/all" as abs;
+
+
+// Section: Hero 
+.hero {
+
+  .container{
+    position: relative;
+    z-index: 2;
+  }
+
+  h1.logo {
+    @include abs.logo-style(2.6rem);
+    margin-bottom: 0.1rem;
+  }
+
+  .lien {
+    @include abs.text-style(0.9rem);
+    margin-bottom: 3rem;
+  }
+
+  .hero-description {
+    @include abs.text-style();
+    max-width: 80rem;
+    margin: 0 auto 1.5rem auto;
+    margin-bottom: 1.2rem;
+    white-space: normal;
+    overflow-x: visible;
+  }
+
+  .hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8rem;
+    flex-wrap: wrap;
+
+    a {
+      white-space: nowrap;
+    }
+  }
+
+  h2 {
+    @include abs.text-style(1.7rem, abs.$font-family-serif);
+    color: white;
+  }
+
+  .text-hero {
+    margin-bottom: 1.5rem;
+  }
+}
+
+
+// Section: About
+.about {
+  display: flex;
+  align-items: center;
+  gap: 6rem;
+  padding: 8rem clamp(4rem, 5vw, 4rem);
+  max-width: 75rem;
+  margin: 0 auto;
+
+  .about-img-wrapper {
+    position: relative;
+    display: inline-block;
+    perspective: 800px;
+    order: 0;
+    flex-shrink: 0;
+
+    &::before {
+      @include abs.pseudo-base(1);
+      inset: -0.3rem;
+      background: abs.$secondary;
+      opacity: 0.22;
+      border-radius: 0.5rem;
+      transform: rotate(-3deg);
+    }
+  }
+
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    order: 1;
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .about-img {
+    width: 24rem;
+    height: 24rem;
+    object-fit: cover;
+    object-position: 40% 20%;
+    flex-shrink: 0;
+    border-radius: 0.3rem;
+    position: relative;
+    z-index: 2;
+    transform-style: preserve-3d;
+    transform: scale(1);
+    @include abs.anim-transition(transform, .25s);
+  }
+
+  .about-title {
+    @include abs.title-style();
+    margin: 0 0 1.5rem 0;
+    justify-self: center;
+  }
+
+  .about-text {
+    @include abs.text-style();
+    max-width: 30rem;
+
+    p {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+
+// Section: Presentiton
+.presentation {
+  position: relative;
+  padding: 4.5rem 1.5rem;
+  text-align: center;
+  @include abs.anim-transition(transform, .5s);
+
+  &::before {
+    @include abs.pseudo-base(0);
+    top: 1rem;
+    left: 50%;
+    width: 85%;
+    height: calc(100% - 2rem);
+    transform: translateX(-50%);
+    border-radius: 0.3rem;
+    background: url('../images/home/fond-presentation.webp') center/cover no-repeat;
+    opacity: 0.7;
+    transition: transform .45s ease, opacity .45s ease;
+  }
+
+  &::after {
+    @include abs.pseudo-base(1);
+    top: 2.5rem;
+    left: 50%;
+    width: 70%;
+    height: calc(100% - 5rem);
+    transform: translateX(-50%);
+    border-radius: 0.8rem;
+    background: rgba(10, 10, 25, 0.65);
+    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    transition: background .45s ease, box-shadow .45s ease;
+  }
+
+  &:hover::before {
+    transform: translateX(-50%) scale(1.03);
+    opacity: 0.8;
+  }
+
+  &:hover::after {
+    background: rgba(10, 10, 25, 0.75);
+  }
+
+  .presentation-content {
+    position: relative;
+    z-index: 2;
+    margin: 1.7rem auto 0 auto;
+  }
+
+  .presentation-title {
+    @include abs.title-style();
+    max-width: 70%;
+    margin: 0 auto 2.5rem auto;
+  }
+
+  p {
+    @include abs.text-style();
+    max-width: 60%;
+    margin: 1.6rem auto;
+    line-height: 1.6rem;
+  }
+}
+
+
+// Section: Cards
+.cards {
+  text-align: center;
+  padding-top: 6.5rem;
+  padding-bottom: 10.7rem;
+
+  .cards-title {
+    @include abs.title-style();
+    max-width: 97%;
+    margin: 0 auto 3.5rem;
+  }
+
+  .cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(30rem, 1fr));
+    row-gap: 5.4rem;
+    column-gap: 4.5rem;
+    justify-content: center;
+    max-width: 70rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .card-item {
+    position: relative;
+
+    &::before {
+      @include abs.pseudo-base(0);
+      top: 0.8rem;
+      left: 0.8rem;
+      width: calc(100% - 1.6rem);
+      height: 4.3rem;
+      border-radius: 0.7rem;
+      background: linear-gradient(
+        135deg,
+        rgba(80,120,255,0.25),
+        rgba(150,80,255,0.25)
+      );
+      @include abs.anim-transition();
+    }
+
+    &:hover::before {
+      background: linear-gradient(
+        135deg,
+        rgba(150,80,255,0.35),
+        rgba(200,120,255,0.35)
+      );
+    }
+
+    &:hover .card-box {
+      background-color: darken(abs.$secondary, 3%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    }
+
+    &.open::before {
+      height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  .card-box {
+    position: relative;
+    background-color: abs.$primary;
+    color: white;
+    padding: 0.9rem 1.7rem;
+    border-radius: 0.6rem;
+    cursor: pointer;
+    text-align: center;
+    z-index: 2;
+    @include abs.anim-transition();
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+
+    &:hover {
+      transform: none;
+      background-color: abs.$primary;
+      box-shadow: none;
+    }
+
+    &::before {
+      display: none;
+    }
+
+    .card-content {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    p {
+      margin: 0;
+      color: white;
+    }
+
+    i {
+      font-size: 1.5rem;
+    }
+
+    .toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.7rem;
+      font-weight: bold;
+    }
+
+    &.active {
+      background-color: abs.$secondary;
+    }
+  }
+
+  .card-detail {
+    position: relative;
+    width: 85%;
+    margin: -0.5rem auto;
+    padding: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    border-radius: 0.6rem;
+    transform: translateY(-10px);
+
+    transition:
+      max-height 0.35s ease,
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      padding 0.35s ease;
+
+    &.show {
+      padding: 2.3rem;
+      max-height: 25rem;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    &::before {
+      @include abs.pseudo-base(1);
+      inset: 0;
+      background: rgba(176, 124, 255, 0.7);
+    }
+
+    * {
+      position: relative;
+      z-index: 2;
+    }
+
+    p {
+      @include abs.text-style();
+      max-width: 18rem;
+      margin: 0 auto;
+      line-height: 1.6rem;
+    }
+  }
+}
+
+
+
+// Section: CTA
+.cta-final {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 2rem;
+  overflow: visible;
+  @include abs.anim-transition(transform, .45s);
+
+  &:hover {
+    transform: translateY(-8px);
+  }
+
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    top: 1rem;
+    left: 50%;
+    width: 52%;
+    height: 17.5rem;
+    transform: translateX(-50%);
+    border-radius: 0.8rem;
+    object-fit: cover;
+    object-position: 50% 62%;
+    flex-shrink: 0;
+    z-index: 1;
+    opacity: 0.45;
+
+    transition:
+      transform .45s ease,
+      opacity .45s ease,
+      box-shadow .45s ease;
+
+    box-shadow:
+      0 0 25px rgba(120, 90, 255, 0.45),
+      0 0 45px rgba(150, 80, 255, 0.40),
+      0 0 75px #b07cff61;
+  }
+
+  &:hover .cta-bg {
+    opacity: 0.55;
+    transform: translateX(-50%) scale(1.03);
+    box-shadow:
+      0 0 35px rgba(120, 90, 255, 0.55),
+      0 0 65px rgba(150, 80, 255, 0.50),
+      0 0 95px rgba(176, 124, 255, 0.48);
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 40rem;
+    transform: translateY(-1.5rem);
+    margin-bottom: 3.5rem;
+  }
+
+  .cta-title {
+    @include abs.title-style(1.8rem);
+    margin-bottom: 0;
+  }
+
+  .cta-text {
+    @include abs.text-style();
+    max-width: 24rem;
+    margin: 1rem auto;
+    line-height: 1.8rem;
+
+    a.btn {
+      @extend .btn;
+      background-color: abs.$secondary;
+      margin-top: 1.5rem;
+
+      &:hover {
+        background-color: darken(abs.$secondary, 3%);
+      }
+    }
+  }
+}
+
+
+// Responsive 
+@media (max-width: 1200px) {
+
+  // Section: About 
+  .about {
+    .about-img {
+      width: 22.5rem;
+      height: 22.5rem;
+    }
+
+    .about-img-wrapper {
+      padding: 0.6rem;
+    }
+
+    .about-img-wrapper::before {
+      inset: 0;
+    }
+  }
+
+  // Section: Cards
+  .cards {
+    padding-top: 6.5rem;
+    padding-bottom: 10.7rem;
+    padding-left: 0;
+    padding-right: 0;
+
+    .cards-wrapper {
+      padding: 0 6rem;
+    }
+  }
+
+  // Section: CTA
+  .cta-final .cta-bg {
+    width: 58%;
+  }
+}
+
+@media (max-width: 857px) {
+
+  // Section: Hero
+  .hero {
+    h2 { font-size: 1.5rem; }
+    h1.logo { font-size: 2.4rem; }
+    .lien { @include abs.text-style(0.8rem); }
+    .hero-description { @include abs.text-style(1rem); }
+
+    .hero-buttons {
+      gap: 6rem;
+
+      a {
+        width: 14rem;
+        height: 2.5rem;
+      }
+    }
+  }
+
+  // Section: About
+  .about {
+    gap: 5rem;
+    max-width: 70rem;
+
+    .about-img {
+      width: 20.5rem;
+      height: 20.5rem;
+    }
+
+    .about-title {
+      @include abs.title-style(1.9rem);
+    }
+
+    .about-text {
+      @include abs.text-style(1rem);
+    }
+  }
+
+  // Section: Presentation
+  .presentation {
+    .presentation-title {
+      @include abs.title-style(1.9rem);
+    }
+
+    p {
+      @include abs.text-style(1rem);
+      line-height: 1.4rem;
+    }
+  }
+
+  // Section: Cards
+  .cards {
+    .cards-wrapper {
+      grid-template-columns: repeat(2, minmax(0, 30rem));
+    }
+
+    .card-item::before {
+      height: 3.8rem;
+    }
+
+    .cards-title {
+      @include abs.title-style(1.9rem);
+    }
+
+    .card-box {
+      padding: 0.7rem 1.5rem;
+    }
+  }
+
+  // Section: CTA
+  .cta-final {
+    .cta-bg {
+      width: 55%;
+    }
+
+    .cta-text {
+      @include abs.text-style(1rem);
+    }
+
+    a.btn {
+      width: 14rem;
+      height: 2.5rem;
+    }
+  }
+}
+
+@media (max-width: 638px) {
+
+  // Section: About
+  .about {
+    max-width: 65rem;
+
+    .about-img {
+      width: 18.5rem;
+      height: 18.5rem;
+    }
+  }
+
+  // Section: Cards
+  .cards {
+    .cards-wrapper {
+      grid-template-columns: 1fr;
+      max-width: 47rem;
+    }
+
+    .cards-title {
+      max-width: 95%;
+    }
+  }
+}
+
+@media (max-width: 538px) {
+
+  // Section: Hero
+  .hero {
+    h2 { @include abs.text-style(1.3rem); }
+    h1.logo { font-size: 2.2rem; }
+    .lien { @include abs.text-style(0.7rem); }
+
+    .hero-description {
+      font-size: 1rem;
+      max-width: 27rem;
+      margin: 0 auto 1.7rem auto;
+    }
+
+    .hero-buttons {
+      gap: 5rem;
+
+      a {
+        width: 12rem;
+        height: 2.3rem;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  // Section: About
+  .about {
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin-top: 3rem;
+    gap: 4rem;
+    padding: 9rem 2rem 4.7rem 2rem;
+
+    .about-img {
+      width: 22rem;
+      height: 14rem;
+    }
+  }
+
+  .about-title {
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding-top: 1rem;
+  }
+
+  // Section: Cards
+  .cards {
+    .cards-title {
+      max-width: 80%;
+    }
+  }
+  
+  // Section: CTA
+  .cta-final {
+    padding: 4rem 1.5rem;
+
+    .cta-bg {
+      width: 80%;
+      height: 13.7rem;
+      top: 0.5rem;
+    }
+
+    .cta-content {
+      max-width: 90%;
+      margin-bottom: 2rem;
+    }
+
+    .cta-title {
+      @include abs.title-style(1.5rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-text {
+      max-width: 20rem;
+      line-height: 1.4rem;
+    }
+
+    a.btn {
+      width: 12rem;
+      height: 2.3rem;
+      @include abs.text-style(0.9rem);
+      margin-top: 1rem;
+    }
+  }
+}
+
+@media (max-width: 450px) {
+
+  // Section: About
+  .about .about-img {
+    width: 20rem;
+    height: 14rem;
+  }
+}
+
+@media (max-width: 344px) {
+  
+  // Section: About
+  .about {
+    margin-top: 5rem;
+
+    .about-title {
+      position: absolute;
+      top: -0.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: max-content;
+      max-width: 30rem;
+      text-align: center;
+      margin: 0 0 3rem 0;
+    }
+
+    .about-img {
+      width: 17rem;
+    }
+  }
+}
+

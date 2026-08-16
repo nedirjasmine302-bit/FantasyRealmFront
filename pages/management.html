@@ -1,0 +1,500 @@
+<!-- Section: Hero -->
+<section class="hero">
+  <div class="hero-container text-center">
+    <h1 class="hero-title fade-up delay-2">Gestion de la plateforme</h1>
+    <p class="hero-subtitle fade-up delay-3">
+      Modérez les contenus, gérez les personnages, les accessoires et les comptes utilisateurs.
+    </p>
+  </div>
+</section>
+
+<!-- Section: Dashboard-->
+<div class="admin-management fade-up delay-4">
+
+  <!-- Section: Navigation -->
+  <nav class="admin-tabs fade-up delay-2">
+    <div class="tab-card active" data-tab="characters">
+      <i class="bi bi-people-fill"></i>
+      <span>Personnages</span>
+    </div>
+    <div class="tab-card" data-tab="accessories">
+      <i class="bi bi-shield-fill"></i>
+      <span>Accessoires</span>
+    </div>
+    <div class="tab-card" data-tab="comments">
+      <i class="bi bi-chat-left-text-fill"></i>
+      <span>Commentaires</span>
+    </div>
+    <div class="tab-card" data-tab="players">
+      <i class="bi bi-person-fill"></i>
+      <span>Joueurs</span>
+    </div>
+    <div class="tab-card" data-tab="employees">
+      <i class="bi bi-person-badge-fill"></i>
+      <span>Employés</span>
+    </div>
+    <div class="tab-card" data-tab="logs">
+      <i class="bi bi-bar-chart-fill"></i>
+      <span>Logs</span>
+    </div>
+  </nav>
+
+  <!-- Section: Character -->
+  <section id="characters" class="admin-characters-section tab-section active fade-up delay-3">
+
+    <h2 class="section-title fade-up delay-3">Les personnages</h2>
+
+    <!-- Section: Filters -->
+    <section class="filters fade-up delay-5">
+      <form class="filters-form">
+
+        <div class="field pseudo-field">
+          <label for="pseudo">Pseudo</label>
+          <div class="input-wrapper">
+            <input type="text" id="pseudo-input-characters" placeholder="Rechercher un pseudo..." autocomplete="off">
+            <i class="bi bi-search search-icon"></i>
+          </div>
+          <div id="suggestions-characters" class="pseudo-suggestions"></div>
+        </div>
+
+        <div class="field">
+          <label for="status-filter">Statut</label>
+          <div class="custom-select" id="status-filter-characters">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="validated">Valider</span>
+              <span class="custom-option" data-value="pending">Attente de validation</span>
+              <span class="custom-option" data-value="refused">Refusé</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="date-filter">Date</label>
+          <div class="custom-select" id="date-filter-characters">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="today">Aujourd'hui</span>
+              <span class="custom-option" data-value="yesterday">Hier</span>
+              <span class="custom-option" data-value="7days">7 derniers jours</span>
+              <span class="custom-option" data-value="30days">30 derniers jours</span>
+              <span class="custom-option" data-value="year">Cette année</span>
+              <span class="custom-option" data-value="old">Années précédentes</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary">Filtrer</button>
+      </form>
+    </section>
+
+    <!-- Section: Character Cards -->
+    <section class="fade-up delay-7">
+      <div id="results-characters"></div>
+      <div class="card-container"></div>
+    </section>
+  </section>
+
+  <!-- Section: Accessory -->
+  <section id="accessories" class="admin-accessories-section tab-section fade-up delay-3">
+    <div class="section-wrapper">
+  
+      <div class="section-header fade-up delay-5">
+        <h2 class="section-title">Les accessoires</h2>
+        <a href="create-accessory" class="btn btn-secondary">Créer un accessoire</a>
+      </div>
+  
+      <!-- Section: Filters -->
+      <section class="filters fade-up delay-5">
+        <form class="filters-form">
+  
+          <div class="field">
+            <label for="rarity-filter">Rareté</label>
+            <div class="custom-select rarity-select" id="rarity-filter-accessories">
+              <div class="custom-select-trigger">
+                <span class="trigger-text">Tous</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+              <div class="custom-options">
+                <span class="custom-option" data-value="">Tous</span>
+                <span class="custom-option" data-value="standard" data-rarity="standard"><span class="dot dot-standard"></span> Standard</span>
+                <span class="custom-option" data-value="rare" data-rarity="rare"><span class="dot dot-rare"></span> Rare</span>
+                <span class="custom-option" data-value="legendary" data-rarity="legendary"><span class="dot dot-legendary"></span> Légendaire</span>
+              </div>
+            </div>
+          </div>
+  
+          <div class="field">
+            <label for="status-filter">Statut</label>
+            <div class="custom-select status-filter" id="status-filter-accessories">
+              <div class="custom-select-trigger">
+                <span class="trigger-text">Tous</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+              <div class="custom-options">
+                <span class="custom-option" data-value="">Tous</span>
+                <span class="custom-option" data-value="active">Actif</span>
+                <span class="custom-option" data-value="inactive">Inactif</span>
+              </div>
+            </div>
+          </div>
+  
+          <div class="field">
+            <label for="date-filter">Date</label>
+            <div class="custom-select date-select" id="date-filter-accessories">
+              <div class="custom-select-trigger">
+                <span class="trigger-text">Tous</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+              <div class="custom-options">
+                <span class="custom-option" data-value="">Tous</span>
+                <span class="custom-option" data-value="today">Aujourd'hui</span>
+                <span class="custom-option" data-value="yesterday">Hier</span>
+                <span class="custom-option" data-value="7days">7 derniers jours</span>
+                <span class="custom-option" data-value="30days">30 derniers jours</span>
+                <span class="custom-option" data-value="year">Cette année</span>
+                <span class="custom-option" data-value="old">Années précédentes</span>
+              </div>
+            </div>
+          </div>
+  
+          <button type="button" class="btn btn-primary">Filtrer</button>
+        </form>
+      </section>
+    </div>
+  
+    <!-- Section: Accessory cards -->
+    <section class="fade-up delay-7">
+      <div id="results-accessories"></div>
+      <div class="card-container"></div>
+    </section>
+  </section>
+  
+  <!-- Section: Comment -->
+  <section id="comments" class="tab-section admin-comment-section fade-up delay-3">
+    <h2 class="section-title fade-up delay-3">Les commentaires</h2>
+  
+    <!-- Section: Filters -->
+    <section class="filters fade-up delay-5">
+      <form class="filters-form">
+  
+        <div class="field pseudo-field">
+          <label for="pseudo">Pseudo</label>
+          <div class="input-wrapper">
+            <input type="text" id="pseudo-input-comment" placeholder="Rechercher un pseudo..." autocomplete="off">
+            <i class="bi bi-search search-icon"></i>
+          </div>
+          <div id="suggestions-comment" class="pseudo-suggestions"></div>
+        </div>
+  
+        <div class="field">
+          <label for="status-filter">Statut</label>
+          <div class="custom-select" id="status-filter-comment">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="validated">Valider</span>
+              <span class="custom-option" data-value="pending">Attente de validation</span>
+              <span class="custom-option" data-value="refused">Refusé</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="field">
+          <label for="date-filter">Date</label>
+          <div class="custom-select" id="date-filter-comment">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="today">Aujourd'hui</span>
+              <span class="custom-option" data-value="yesterday">Hier</span>
+              <span class="custom-option" data-value="7days">7 derniers jours</span>
+              <span class="custom-option" data-value="30days">30 derniers jours</span>
+              <span class="custom-option" data-value="year">Cette année</span>
+              <span class="custom-option" data-value="old">Années précédentes</span>
+            </div>
+          </div>
+        </div>
+  
+        <button type="button" class="btn btn-primary">Filtrer</button>
+      </form>
+    </section>
+  
+    <!-- Section: Comments Cards -->
+    <section class="fade-up delay-7">
+      <div id="results-comment"></div>
+      <div class="card-container"></div>
+
+      <!-- Section: Pop up comment -->
+      <div id="comment-popup" class="popup-overlay">
+        <div class="popup-content">
+          <button class="popup-close"><i class="bi bi-x-lg"></i></button>
+          <h3 class="popup-title">Commentaire de :</h3>
+          <div class="creator-tag">
+            <i class="bi bi-person-fill"></i>
+            <span id="popup-pseudo"></span>
+          </div>
+          <textarea id="popup-text" class="popup-text" readonly></textarea>
+          <div class="popup-stars comment-stars" id="popup-stars">
+            <i class="bi bi-star" data-value="1"></i>
+            <i class="bi bi-star" data-value="2"></i>
+            <i class="bi bi-star" data-value="3"></i>
+            <i class="bi bi-star" data-value="4"></i>
+            <i class="bi bi-star" data-value="5"></i>
+          </div>
+          <div class="popup-buttons">
+            <button class="btn btn-success">Valider</button>
+            <button class="btn btn-danger">Refuser</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Pop up motif de refus -->
+      <div id="reject-popup" class="popup-overlay reject-popup">
+        <div class="popup-content">
+          <button class="popup-close"><i class="bi bi-x-lg"></i></button>
+          <h3 class="popup-title">Motif du refus</h3>
+          <p class="reject-hint">Un mail avec ce motif sera envoyé au propriétaire, puis l'élément sera supprimé définitivement.</p>
+          <textarea id="reject-reason" class="reject-text" placeholder="Expliquez la raison du refus..." minlength="10" maxlength="500"></textarea>
+          <p class="input-error input-error-character" id="reject-error">Le motif du refus doit contenir au moins 10 caractères.</p>
+          <div class="popup-buttons reject-buttons">
+            <button type="button" class="btn btn-danger" id="reject-confirm">Refuser et supprimer</button>
+            <button type="button" class="btn btn-ghost-secondary" id="reject-cancel">Annuler</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Pop up confirmation de suppression -->
+      <div id="confirm-popup" class="popup-overlay confirm-popup">
+        <div class="popup-content">
+          <button class="popup-close"><i class="bi bi-x-lg"></i></button>
+          <h3 class="popup-title">Confirmer la suppression</h3>
+          <p class="confirm-hint">Cette action est définitive : l'élément sera supprimé et ne pourra pas être récupéré.</p>
+          <div class="popup-buttons confirm-buttons">
+            <button type="button" class="btn btn-danger" id="confirm-accept">Supprimer</button>
+            <button type="button" class="btn btn-ghost-secondary" id="confirm-cancel">Annuler</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!--Section: Players -->
+  <section id="players" class="tab-section admin-players-section">
+    <h2 class="section-title fade-up delay-3">Les joueurs</h2>
+  
+    <!-- Section: Filters -->
+    <section class="filters fade-up delay-5">
+      <form class="filters-form">
+  
+        <div class="field pseudo-field">
+          <label for="pseudo">Pseudo</label>
+          <div class="input-wrapper">
+            <input type="text" id="pseudo-input-user" placeholder="Rechercher un pseudo..." autocomplete="off">
+            <i class="bi bi-search search-icon"></i>
+          </div>
+          <div id="suggestions-user" class="pseudo-suggestions"></div>
+        </div>
+  
+        <div class="field">
+          <label for="account-state-filter">État du compte</label>
+          <div class="custom-select" id="account-state-filter-user">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="active">Actif</span>
+              <span class="custom-option" data-value="suspended">Suspendu</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="field">
+          <label for="date-filter">Date</label>
+          <div class="custom-select" id="date-filter-user">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="today">Aujourd'hui</span>
+              <span class="custom-option" data-value="yesterday">Hier</span>
+              <span class="custom-option" data-value="7days">7 derniers jours</span>
+              <span class="custom-option" data-value="30days">30 derniers jours</span>
+              <span class="custom-option" data-value="year">Cette année</span>
+              <span class="custom-option" data-value="old">Années précédentes</span>
+            </div>
+          </div>
+        </div>
+  
+        <button type="button" class="btn btn-primary">Filtrer</button>
+      </form>
+    </section>
+  
+    <!-- Section: Players cards -->
+    <section class="fade-up delay-7">
+      <div id="results-user"></div>
+      <div class="characters"></div>
+    </section>
+  </section>
+  
+  <!-- Section: Employees -->
+  <section id="employees" class="tab-section admin-employees-section">
+    <div class="section-wrapper">
+  
+      <div class="section-header fade-up delay-5">
+        <h2 class="section-title">Les employés</h2>
+        <a href="employer-sign-up" class="btn btn-secondary">Créer un employé</a>
+      </div>
+  
+      <!-- Section: Filters -->
+      <section class="filters fade-up delay-5">
+        <form class="filters-form">
+  
+          <div class="field pseudo-field">
+            <label for="pseudo">Pseudo</label>
+            <div class="input-wrapper">
+              <input type="text" id="pseudo-input-employees" placeholder="Rechercher un pseudo..." autocomplete="off">
+              <i class="bi bi-search search-icon"></i>
+            </div>
+            <div id="suggestions-employees" class="pseudo-suggestions"></div>
+          </div>
+  
+          <div class="field">
+            <label for="account-state-filter">État du compte</label>
+            <div class="custom-select" id="account-state-filter-employees">
+              <div class="custom-select-trigger">
+                <span class="trigger-text">Tous</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+              <div class="custom-options">
+                <span class="custom-option" data-value="">Tous</span>
+                <span class="custom-option" data-value="active">Actif</span>
+                <span class="custom-option" data-value="suspended">Suspendu</span>
+              </div>
+            </div>
+          </div>
+  
+          <div class="field">
+            <label for="date-filter">Date</label>
+            <div class="custom-select" id="date-filter-employees">
+              <div class="custom-select-trigger">
+                <span class="trigger-text">Tous</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+              <div class="custom-options">
+                <span class="custom-option" data-value="">Tous</span>
+                <span class="custom-option" data-value="today">Aujourd'hui</span>
+                <span class="custom-option" data-value="yesterday">Hier</span>
+                <span class="custom-option" data-value="7days">7 derniers jours</span>
+                <span class="custom-option" data-value="30days">30 derniers jours</span>
+                <span class="custom-option" data-value="year">Cette année</span>
+                <span class="custom-option" data-value="old">Années précédentes</span>
+              </div>
+            </div>
+          </div>
+  
+          <button type="button" class="btn btn-primary">Filtrer</button>
+        </form>
+      </section>
+    </div>
+  
+    <!-- Section: Employees cards -->
+    <section class="fade-up delay-7">
+      <div id="results-employees"></div>
+      <div class="characters"></div>
+    </section>
+  </section>
+
+  <!-- Section: Logs -->
+  <section id="logs" class="tab-section admin-logs-section">
+    <h2 class="section-title fade-up delay-3">Journal d'activité</h2>
+  
+    <!-- Section: Filters -->
+    <section class="filters fade-up delay-5">
+      <form class="filters-form">
+  
+        <div class="field">
+          <label for="type-filter">Type d'utilisateur</label>
+          <div class="custom-select type-select" id="type-filter-logs">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="player">Joueur</span>
+              <span class="custom-option" data-value="employer">Employé</span>
+              <span class="custom-option" data-value="admin">Administrateur</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="field">
+          <label for="action-filter">Action</label>
+          <div class="custom-select status-filter" id="status-filter-logs">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="create">Création</span>
+              <span class="custom-option" data-value="update">Modification</span>
+              <span class="custom-option" data-value="delete">Suppression</span>
+              <span class="custom-option" data-value="publish">Publication</span>
+              <span class="custom-option" data-value="unpublish">Dépublication</span>
+              <span class="custom-option" data-value="moderate">Validation / Refus</span>
+              <span class="custom-option" data-value="suspend">Suspension / Réactivation</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="field">
+          <label for="date-filter">Date</label>
+          <div class="custom-select date-select" id="date-filter-logs">
+            <div class="custom-select-trigger">
+              <span class="trigger-text">Tous</span>
+              <i class="bi bi-chevron-down arrow"></i>
+            </div>
+            <div class="custom-options">
+              <span class="custom-option" data-value="">Tous</span>
+              <span class="custom-option" data-value="today">Aujourd'hui</span>
+              <span class="custom-option" data-value="yesterday">Hier</span>
+              <span class="custom-option" data-value="7days">7 derniers jours</span>
+              <span class="custom-option" data-value="30days">30 derniers jours</span>
+              <span class="custom-option" data-value="year">Cette année</span>
+              <span class="custom-option" data-value="old">Années précédentes</span>
+            </div>
+          </div>
+        </div>
+  
+        <button type="button" class="btn btn-primary">Filtrer</button>
+      </form>
+    </section>
+  
+    <!-- Section: Logs cards -->
+    <section class="fade-up delay-7">
+      <div id="results-logs"></div>
+      <div class="card-container logs-container"></div>
+    </section>
+  </section>
+
+</div>

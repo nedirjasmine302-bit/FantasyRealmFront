@@ -1,0 +1,90 @@
+@use "../abstracts/all" as abs;
+
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 2.5rem; 
+
+  label {
+    @include abs.title-style(2rem, abs.$secondary, left);
+    margin: 0 1.8rem;
+  }
+
+  input,
+  select,
+  textarea {
+    background: abs.$card-bg-primary;
+    border: 1px solid rgba(abs.$secondary, 0.5);
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.25rem;
+    color: white;
+    @include abs.anim-transition(border-color);
+    margin: 0 1.8rem;
+
+    &:focus {
+      border-color: abs.$secondary;
+      outline: none;
+    }
+  }
+
+  textarea {
+    min-height: 12rem;
+    max-height: 12rem;
+    resize: none;
+  }
+}
+
+.field-primary {
+
+  input,
+  textarea {
+    border-color: rgba(abs.$primary, 0.5);
+
+    &:focus {
+      border-color: abs.$primary;
+    }
+  }
+
+  label {
+    color: abs.$primary;
+  }
+}
+
+.field-secondary {
+
+  input,
+  textarea {
+    border-color: rgba(abs.$secondary, 0.5);
+
+    &:focus {
+      border-color: abs.$secondary;
+    }
+  }
+
+  label {
+    color: abs.$secondary;
+  }
+}
+
+
+// Responsive spécifique pour la page Reset-passsword et Reset-employer-password
+@media (max-width: 500px) {
+
+  .reset-password {
+    .field label {
+      max-width: 30rem;
+    }
+  }
+}
+
+// Responsive spécifique pour la page Sign-up et Employer-sign-up
+@media (max-width: 400px) {
+
+  .sign-up {
+    .field label {
+      max-width: 20rem;
+    }
+  }
+}

@@ -1,0 +1,63 @@
+@use "../abstracts/all" as abs;
+
+
+.hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 1rem;
+    
+  
+    &::before {
+      @include abs.pseudo-base(1);
+      inset: 0;
+      background: url('../images/home/fond-hero.webp') center/cover no-repeat;
+      opacity: 0.4;
+    }
+  
+    .hero-container {
+      position: relative;
+      z-index: 2;
+      transform: translateY(-0.1rem);
+      margin: 5.5rem 0;
+    }
+  
+  .hero-title {
+    @include abs.title-style(2.7rem, white, center, abs.$font-family-serif, normal);
+    margin-bottom: 0.4rem;
+  }
+  
+  .hero-subtitle {
+    @include abs.text-style(1.1rem);
+  }
+}
+
+
+// Responsive 
+@media (max-width: 857px) {
+
+  .hero {
+    .hero-container {
+      margin: 10rem 0;
+    }
+
+    .hero-subtitle {
+      padding: 0 1rem;
+    }
+  }
+}
+
+@media (max-width: 386px) {
+
+  .hero {
+    .hero-title {
+      @include abs.title-style(2.5rem, white, center, abs.$font-family-serif, normal);
+    }
+
+    .hero-subtitle {
+      @include abs.text-style(1.1rem);
+      padding: 0 1rem;
+    }
+  }
+}

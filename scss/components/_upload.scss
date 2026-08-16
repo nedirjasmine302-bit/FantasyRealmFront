@@ -1,0 +1,112 @@
+@use "../abstracts/all" as abs;
+
+
+.upload {
+  text-align: center;
+  margin: 4.5rem 3rem;
+
+  .section-title {
+    margin-bottom: 2.5rem;
+  }
+
+  .upload-box {
+    background: abs.$card-bg-primary;
+    border: 2px dashed transparent;
+    border-radius: 0.5rem;
+    padding: 7rem 5rem;
+    max-width: 40rem;
+    margin: 0 auto;
+    cursor: pointer;
+    @include abs.anim-transition(border-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+
+    &:hover {
+      box-shadow: 0 6px 12px rgba(0,0,0,0.6);
+    }
+
+    .upload-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    p {
+      @include abs.text-style(1rem, abs.$font-family-sans-serif, white);
+      opacity: 0.6;
+    }
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  .upload-preview {
+    display: none;
+    margin-top: 2rem;
+
+    img {
+      width: 100%;
+      max-width: 22rem;
+      height: auto;
+      border-radius: 0.5rem;
+      border: 2px solid transparent;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    .upload-success {
+      margin-top: 1rem;
+      @include abs.text-style(1rem, abs.$font-family-sans-serif, abs.$success);
+    }
+
+    &.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}
+
+.upload-secondary {
+  .section-title {
+    @include abs.title-style(2rem, abs.$secondary, center);
+  }
+
+  .upload-box {
+    border-color: rgba(abs.$secondary, 0.5);
+
+    &:hover {
+      border-color: abs.$secondary;
+    }
+
+    .upload-icon {
+      color: abs.$secondary;
+    }
+  }
+
+  .upload-preview img {
+    border-color: rgba(abs.$secondary, 0.5);
+  }
+}
+
+.upload-primary {
+  .section-title {
+    @include abs.title-style(2rem, abs.$primary, center);
+  }
+
+  .upload-box {
+    border-color: rgba(abs.$primary, 0.5);
+
+    &:hover {
+      border-color: abs.$primary;
+    }
+
+    .upload-icon {
+      color: abs.$primary;
+    }
+  }
+
+  .upload-preview img {
+    border-color: rgba(abs.$primary, 0.5);
+  }
+}
+

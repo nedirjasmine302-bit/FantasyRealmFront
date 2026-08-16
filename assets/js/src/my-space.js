@@ -1,3 +1,4 @@
+import { API_BASE } from "../modules/config.js";
 import { initReveal } from "../modules/animations.js";
 import { initConfirmModal, askConfirmDelete } from "../modules/confirm.js";
 
@@ -5,7 +6,7 @@ import { initConfirmModal, askConfirmDelete } from "../modules/confirm.js";
 // Appels API
 async function apiGetMyCharacters(token) {
   try {
-    const res = await fetch("http://localhost:8080/api/my-characters", {
+    const res = await fetch(`${API_BASE}/api/my-characters`, {
       headers: { "Authorization": "Bearer " + token }
     });
     if (!res.ok) return [];
@@ -19,7 +20,7 @@ async function apiGetMyCharacters(token) {
 
 async function apiGetFavoriteIds(token) {
   try {
-    const res = await fetch("http://localhost:8080/api/favorites", {
+    const res = await fetch(`${API_BASE}/api/favorites`, {
       headers: { "Authorization": "Bearer " + token }
     });
     if (!res.ok) return [];
@@ -32,7 +33,7 @@ async function apiGetFavoriteIds(token) {
 }
 
 async function apiRequestValidation(id, token) {
-  const res = await fetch("http://localhost:8080/api/characters/" + id + "/request-validation", {
+  const res = await fetch(`${API_BASE}/api/characters/` + id + "/request-validation", {
     method: "POST",
     headers: { "Authorization": "Bearer " + token }
   });
@@ -41,7 +42,7 @@ async function apiRequestValidation(id, token) {
 }
 
 async function apiToggleShare(id, token) {
-  const res = await fetch("http://localhost:8080/api/characters/" + id + "/share", {
+  const res = await fetch(`${API_BASE}/api/characters/` + id + "/share", {
     method: "PATCH",
     headers: { "Authorization": "Bearer " + token }
   });
@@ -50,7 +51,7 @@ async function apiToggleShare(id, token) {
 }
 
 async function apiDuplicate(id, token) {
-  const res = await fetch("http://localhost:8080/api/characters/" + id + "/duplicate", {
+  const res = await fetch(`${API_BASE}/api/characters/` + id + "/duplicate", {
     method: "POST",
     headers: { "Authorization": "Bearer " + token }
   });
@@ -59,7 +60,7 @@ async function apiDuplicate(id, token) {
 }
 
 async function apiDelete(id, token) {
-  const res = await fetch("http://localhost:8080/api/characters/" + id, {
+  const res = await fetch(`${API_BASE}/api/characters/` + id, {
     method: "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });
@@ -68,7 +69,7 @@ async function apiDelete(id, token) {
 }
 
 async function apiToggleFavorite(id, token, add) {
-  const res = await fetch("http://localhost:8080/api/characters/" + id + "/favorite", {
+  const res = await fetch(`${API_BASE}/api/characters/` + id + "/favorite", {
     method: add ? "POST" : "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });

@@ -1,3 +1,4 @@
+import { API_BASE } from "../modules/config.js";
 import { initReveal } from "../modules/animations.js";
 import { initCustomSelects } from "../modules/forms.js";
 
@@ -11,7 +12,7 @@ function getAccessoryId() {
 // Appels API
 async function apiGetAccessory(id) {
   try {
-    const res = await fetch("http://localhost:8080/api/accessories/" + id);
+    const res = await fetch(`${API_BASE}/api/accessories/` + id);
     if (!res.ok) return null;
     const data = await res.json();
     return data.accessory;
@@ -23,7 +24,7 @@ async function apiGetAccessory(id) {
 
 async function apiGetAccessoryTypes() {
   try {
-    const res = await fetch("http://localhost:8080/api/accessory-types");
+    const res = await fetch(`${API_BASE}/api/accessory-types`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.types || [];
@@ -35,7 +36,7 @@ async function apiGetAccessoryTypes() {
 
 async function apiGetRarities() {
   try {
-    const res = await fetch("http://localhost:8080/api/rarities");
+    const res = await fetch(`${API_BASE}/api/rarities`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.rarities || [];

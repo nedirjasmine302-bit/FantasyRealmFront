@@ -1,3 +1,4 @@
+import { API_BASE } from "../modules/config.js";
 import { initReveal } from "../modules/animations.js";
 import { initCustomSelects } from "../modules/forms.js";
 import { initAutocomplete } from "../modules/autocomplete.js";
@@ -13,7 +14,7 @@ function isLoggedIn() {
 // Appels API
 async function apiGetCharacters() {
   try {
-    const res = await fetch("http://localhost:8080/api/characters");
+    const res = await fetch(`${API_BASE}/api/characters`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.characters || [];
@@ -25,7 +26,7 @@ async function apiGetCharacters() {
 
 async function apiGetFavoriteIds(token) {
   try {
-    const res = await fetch("http://localhost:8080/api/favorites", {
+    const res = await fetch(`${API_BASE}/api/favorites`, {
       headers: { "Authorization": "Bearer " + token }
     });
     if (!res.ok) return [];
@@ -38,7 +39,7 @@ async function apiGetFavoriteIds(token) {
 }
 
 async function apiToggleFavorite(id, token, add) {
-  const res = await fetch("http://localhost:8080/api/characters/" + id + "/favorite", {
+  const res = await fetch(`${API_BASE}/api/characters/` + id + "/favorite", {
     method: add ? "POST" : "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });

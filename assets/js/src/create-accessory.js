@@ -1,3 +1,4 @@
+import { API_BASE } from "../modules/config.js";
 import { initReveal } from "../modules/animations.js";
 import { initCustomSelects } from "../modules/forms.js";
 import { sanitize } from "../modules/security.js";
@@ -6,7 +7,7 @@ import { sanitize } from "../modules/security.js";
 // Appels API
 async function apiGetMe(token) {
   try {
-    const res = await fetch("http://localhost:8080/api/me", {
+    const res = await fetch(`${API_BASE}/api/me`, {
       headers: { "Authorization": "Bearer " + token }
     });
     if (!res.ok) return null;
@@ -26,7 +27,7 @@ async function isEmployerOrAdmin(token) {
 
 async function apiGetAccessoryTypes() {
   try {
-    const res = await fetch("http://localhost:8080/api/accessory-types");
+    const res = await fetch(`${API_BASE}/api/accessory-types`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.types || [];
@@ -38,7 +39,7 @@ async function apiGetAccessoryTypes() {
 
 async function apiGetRarities() {
   try {
-    const res = await fetch("http://localhost:8080/api/rarities");
+    const res = await fetch(`${API_BASE}/api/rarities`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.rarities || [];
@@ -49,7 +50,7 @@ async function apiGetRarities() {
 }
 
 async function apiCreateAccessory(payload, token) {
-  const res = await fetch("http://localhost:8080/api/accessories", {
+  const res = await fetch(`${API_BASE}/api/accessories`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

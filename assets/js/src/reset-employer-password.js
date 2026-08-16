@@ -1,3 +1,4 @@
+import { API_BASE } from "../modules/config.js";
 import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail, isValidPassword } from "../modules/security.js";
 import { initBackReload } from "../modules/back-reload.js";
@@ -139,7 +140,7 @@ function initResetEmployerPasswordForm() {
     if (oldMsg) oldMsg.remove();
 
     try {
-      const response = await fetch("http://localhost:8080/api/auth/reset-employer-password", {
+      const response = await fetch(`${API_BASE}/api/auth/reset-employer-password`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

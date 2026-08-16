@@ -1,3 +1,4 @@
+import { API_BASE } from "../modules/config.js";
 import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail, isValidPseudo } from "../modules/security.js";
 
@@ -5,7 +6,7 @@ import { sanitize, isValidEmail, isValidPseudo } from "../modules/security.js";
 // Appels API
 async function apiGetMe(token) {
   try {
-    const res = await fetch("http://localhost:8080/api/me", {
+    const res = await fetch(`${API_BASE}/api/me`, {
       headers: { "Authorization": "Bearer " + token }
     });
     if (!res.ok) return null;
@@ -20,7 +21,7 @@ async function apiSendContact(payload, token) {
   const headers = { "Content-Type": "application/json" };
   if (token) headers["Authorization"] = "Bearer " + token;
 
-  const res = await fetch("http://localhost:8080/api/contact", {
+  const res = await fetch(`${API_BASE}/api/contact`, {
     method: "POST",
     headers,
     body: JSON.stringify(payload)

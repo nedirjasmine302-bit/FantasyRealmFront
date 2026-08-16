@@ -1,3 +1,4 @@
+import { API_BASE } from "../modules/config.js";
 import { initReveal } from "../modules/animations.js";
 import { initCustomSelects } from "../modules/forms.js";
 import { initAutocomplete } from "../modules/autocomplete.js";
@@ -60,7 +61,7 @@ document.querySelectorAll('a[href]').forEach(link => {
 // Récupère l'utilisateur connecté (pour connaître ses rôles)
 async function apiGetMe(token) {
   try {
-    const res = await fetch("http://localhost:8080/api/me", {
+    const res = await fetch(`${API_BASE}/api/me`, {
       headers: { "Authorization": "Bearer " + token }
     });
     if (!res.ok) return null;
@@ -166,7 +167,7 @@ function askRejectReason(title) {
 // Appels API
 async function apiGetCharacters() {
   try {
-    const res = await fetch("http://localhost:8080/api/characters");
+    const res = await fetch(`${API_BASE}/api/characters`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.characters || [];
@@ -177,7 +178,7 @@ async function apiGetCharacters() {
 }
 
 async function apiUpdateStatus(id, status, token) {
-  const res = await fetch("http://localhost:8080/api/characters/" + id + "/status", {
+  const res = await fetch(`${API_BASE}/api/characters/` + id + "/status", {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -190,7 +191,7 @@ async function apiUpdateStatus(id, status, token) {
 }
 
 async function apiRejectCharacter(id, reason, token) {
-  const res = await fetch("http://localhost:8080/api/characters/" + id + "/reject", {
+  const res = await fetch(`${API_BASE}/api/characters/` + id + "/reject", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -203,7 +204,7 @@ async function apiRejectCharacter(id, reason, token) {
 }
 
 async function apiDeleteCharacter(id, token) {
-  const res = await fetch("http://localhost:8080/api/characters/" + id, {
+  const res = await fetch(`${API_BASE}/api/characters/` + id, {
     method: "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });
@@ -404,7 +405,7 @@ async function initCharactersSection() {
 // Appels API
 async function apiGetAccessories() {
   try {
-    const res = await fetch("http://localhost:8080/api/accessories");
+    const res = await fetch(`${API_BASE}/api/accessories`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.accessories || [];
@@ -415,7 +416,7 @@ async function apiGetAccessories() {
 }
 
 async function apiToggleAccessoryActive(id, token) {
-  const res = await fetch("http://localhost:8080/api/accessories/" + id + "/active", {
+  const res = await fetch(`${API_BASE}/api/accessories/` + id + "/active", {
     method: "PATCH",
     headers: { "Authorization": "Bearer " + token }
   });
@@ -424,7 +425,7 @@ async function apiToggleAccessoryActive(id, token) {
 }
 
 async function apiDeleteAccessory(id, token) {
-  const res = await fetch("http://localhost:8080/api/accessories/" + id, {
+  const res = await fetch(`${API_BASE}/api/accessories/` + id, {
     method: "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });
@@ -436,7 +437,7 @@ async function apiDeleteAccessory(id, token) {
 // Récupère les types d'accessoires
 async function apiGetAccessoryTypes() {
   try {
-    const res = await fetch("http://localhost:8080/api/accessory-types");
+    const res = await fetch(`${API_BASE}/api/accessory-types`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.types || [];
@@ -448,7 +449,7 @@ async function apiGetAccessoryTypes() {
 
 async function apiGetRarities() {
   try {
-    const res = await fetch("http://localhost:8080/api/rarities");
+    const res = await fetch(`${API_BASE}/api/rarities`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.rarities || [];
@@ -601,7 +602,7 @@ async function initAccessoriesSection() {
 // Appels API
 async function apiGetComments() {
   try {
-    const res = await fetch("http://localhost:8080/api/comments");
+    const res = await fetch(`${API_BASE}/api/comments`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.comments || [];
@@ -613,7 +614,7 @@ async function apiGetComments() {
 
 async function apiGetComment(id) {
   try {
-    const res = await fetch("http://localhost:8080/api/comments/" + id);
+    const res = await fetch(`${API_BASE}/api/comments/` + id);
     if (!res.ok) return null;
     const data = await res.json();
     return data.comment;
@@ -624,7 +625,7 @@ async function apiGetComment(id) {
 }
 
 async function apiUpdateCommentStatus(id, status, token) {
-  const res = await fetch("http://localhost:8080/api/comments/" + id + "/status", {
+  const res = await fetch(`${API_BASE}/api/comments/` + id + "/status", {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -637,7 +638,7 @@ async function apiUpdateCommentStatus(id, status, token) {
 }
 
 async function apiRejectComment(id, reason, token) {
-  const res = await fetch("http://localhost:8080/api/comments/" + id + "/reject", {
+  const res = await fetch(`${API_BASE}/api/comments/` + id + "/reject", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -650,7 +651,7 @@ async function apiRejectComment(id, reason, token) {
 }
 
 async function apiDeleteComment(id, token) {
-  const res = await fetch("http://localhost:8080/api/comments/" + id, {
+  const res = await fetch(`${API_BASE}/api/comments/` + id, {
     method: "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });
@@ -868,7 +869,7 @@ async function initCommentsSection() {
 // Appels API
 async function apiGetPlayers() {
   try {
-    const res = await fetch("http://localhost:8080/api/players");
+    const res = await fetch(`${API_BASE}/api/players`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.players || [];
@@ -879,7 +880,7 @@ async function apiGetPlayers() {
 }
 
 async function apiUpdatePlayerStatus(id, status, token) {
-  const res = await fetch("http://localhost:8080/api/players/" + id + "/status", {
+  const res = await fetch(`${API_BASE}/api/players/` + id + "/status", {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -892,7 +893,7 @@ async function apiUpdatePlayerStatus(id, status, token) {
 }
 
 async function apiDeletePlayer(id, token) {
-  const res = await fetch("http://localhost:8080/api/players/" + id, {
+  const res = await fetch(`${API_BASE}/api/players/` + id, {
     method: "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });
@@ -1022,7 +1023,7 @@ async function initPlayersSection() {
 // Appels API
 async function apiGetEmployees() {
   try {
-    const res = await fetch("http://localhost:8080/api/employers");
+    const res = await fetch(`${API_BASE}/api/employers`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.employers || [];
@@ -1033,7 +1034,7 @@ async function apiGetEmployees() {
 }
 
 async function apiUpdateEmployeeStatus(id, status, token) {
-  const res = await fetch("http://localhost:8080/api/employers/" + id + "/status", {
+  const res = await fetch(`${API_BASE}/api/employers/` + id + "/status", {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -1046,7 +1047,7 @@ async function apiUpdateEmployeeStatus(id, status, token) {
 }
 
 async function apiDeleteEmployee(id, token) {
-  const res = await fetch("http://localhost:8080/api/employers/" + id, {
+  const res = await fetch(`${API_BASE}/api/employers/` + id, {
     method: "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });
@@ -1180,7 +1181,7 @@ async function initEmployeesSection() {
 // Appels API
 async function apiGetLogs(token) {
   try {
-    const res = await fetch("http://localhost:8080/api/logs", {
+    const res = await fetch(`${API_BASE}/api/logs`, {
       headers: { "Authorization": "Bearer " + token }
     });
     if (!res.ok) return [];

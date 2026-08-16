@@ -1,3 +1,4 @@
+import { API_BASE } from "../modules/config.js";
 import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail, isValidEmployerPseudo, isValidPassword } from "../modules/security.js";
 import { initBackReload } from "../modules/back-reload.js";
@@ -9,7 +10,7 @@ const RATE_KEY = "employer-sign-up";
 // Appel API
 async function checkEmailUnique(email) {
   try {
-    const res = await fetch("http://localhost:8080/api/check-email?email=" + encodeURIComponent(email));
+    const res = await fetch(`${API_BASE}/api/check-email?email=` + encodeURIComponent(email));
     if (!res.ok) return true;
     const data = await res.json();
     return data.unique !== false;
@@ -21,7 +22,7 @@ async function checkEmailUnique(email) {
 
 async function checkPseudoUnique(pseudo) {
   try {
-    const res = await fetch("http://localhost:8080/api/check-pseudo?pseudo=" + encodeURIComponent(pseudo));
+    const res = await fetch(`${API_BASE}/api/check-pseudo?pseudo=` + encodeURIComponent(pseudo));
     if (!res.ok) return true;
     const data = await res.json();
     return data.unique !== false;
@@ -199,7 +200,7 @@ function initEmployerSignUpForm() {
       password2: sanitize(password2Input.value)
     };
 
-    const res = await fetch("http://localhost:8080/api/employer-sign-up", {
+    const res = await fetch(`${API_BASE}/api/employer-sign-up`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)

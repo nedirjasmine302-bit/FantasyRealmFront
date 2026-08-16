@@ -1,3 +1,4 @@
+import { API_BASE } from "../modules/config.js";
 import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail, isValidPseudo } from "../modules/security.js";
 import { initBackReload } from "../modules/back-reload.js";
@@ -8,7 +9,7 @@ const RATE_KEY = "forgot-password";
 
 // Appel API
 async function apiForgotPassword(email, pseudo) {
-  const res = await fetch(`http://localhost:8080/api/auth/forgot-password`, {
+  const res = await fetch(`${API_BASE}/api/auth/forgot-password`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, pseudo })

@@ -1,3 +1,4 @@
+import { API_BASE } from "../modules/config.js";
 import { initReveal } from "../modules/animations.js";
 import { initCustomSelects } from "../modules/forms.js";
 import { initAutocomplete } from "../modules/autocomplete.js";
@@ -7,7 +8,7 @@ import { initDetailsOrigin } from "../modules/details-origin.js";
 // Appels API
 async function apiGetFavorites(token) {
   try {
-    const res = await fetch("http://localhost:8080/api/favorites", {
+    const res = await fetch(`${API_BASE}/api/favorites`, {
       headers: { "Authorization": "Bearer " + token }
     });
     if (!res.ok) return [];
@@ -20,7 +21,7 @@ async function apiGetFavorites(token) {
 }
 
 async function apiRemoveFavorite(id, token) {
-  const res = await fetch("http://localhost:8080/api/characters/" + id + "/favorite", {
+  const res = await fetch(`${API_BASE}/api/characters/` + id + "/favorite", {
     method: "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });

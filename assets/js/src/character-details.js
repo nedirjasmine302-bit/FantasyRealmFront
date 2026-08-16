@@ -1,3 +1,4 @@
+import { API_BASE } from "../modules/config.js";
 import { initReveal } from "../modules/animations.js";
 import { initCustomSelects } from "../modules/forms.js";
 import { sanitize } from "../modules/security.js";
@@ -20,7 +21,7 @@ function isLoggedIn() {
 // Appels API
 async function apiGetCharacter(id) {
   try {
-    const res = await fetch("http://localhost:8080/api/characters/" + id);
+    const res = await fetch(`${API_BASE}/api/characters/` + id);
     if (!res.ok) return null;
     const data = await res.json();
     return data.character;
@@ -32,7 +33,7 @@ async function apiGetCharacter(id) {
 
 async function apiGetComments(id) {
   try {
-    const res = await fetch("http://localhost:8080/api/characters/" + id + "/comments");
+    const res = await fetch(`${API_BASE}/api/characters/` + id + "/comments");
     if (!res.ok) return [];
     const data = await res.json();
     return data.comments || [];
@@ -43,7 +44,7 @@ async function apiGetComments(id) {
 }
 
 async function apiPostComment(id, payload, token) {
-  const res = await fetch("http://localhost:8080/api/characters/" + id + "/comments", {
+  const res = await fetch(`${API_BASE}/api/characters/` + id + "/comments", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -57,7 +58,7 @@ async function apiPostComment(id, payload, token) {
 
 async function apiIsFavorite(id, token) {
   try {
-    const res = await fetch("http://localhost:8080/api/favorites", {
+    const res = await fetch(`${API_BASE}/api/favorites`, {
       headers: { "Authorization": "Bearer " + token }
     });
     if (!res.ok) return false;
@@ -70,7 +71,7 @@ async function apiIsFavorite(id, token) {
 }
 
 async function apiToggleFavorite(id, token, add) {
-  const res = await fetch("http://localhost:8080/api/characters/" + id + "/favorite", {
+  const res = await fetch(`${API_BASE}/api/characters/` + id + "/favorite", {
     method: add ? "POST" : "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });
@@ -80,7 +81,7 @@ async function apiToggleFavorite(id, token, add) {
 
 async function apiGetAccessories() {
   try {
-    const res = await fetch("http://localhost:8080/api/accessories");
+    const res = await fetch(`${API_BASE}/api/accessories`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.accessories || [];
@@ -110,7 +111,7 @@ async function buildAccessoryOptions() {
 
 async function apiGetCharacterOptions() {
   try {
-    const res = await fetch("http://localhost:8080/api/character-options");
+    const res = await fetch(`${API_BASE}/api/character-options`);
     if (!res.ok) return {};
     return res.json();
   } catch (e) {

@@ -1,3 +1,4 @@
+import { API_BASE } from "../modules/config.js";
 // Animation du burger
 // Le click
 function initBurger() {
@@ -74,7 +75,7 @@ function initSpaceLink() {
 // Récupère l'utilisateur connecté
 async function apiGetMe(token) {
   try {
-    const res = await fetch("http://localhost:8080/api/me", {
+    const res = await fetch(`${API_BASE}/api/me`, {
       headers: { "Authorization": "Bearer " + token }
     });
     if (!res.ok) return null;

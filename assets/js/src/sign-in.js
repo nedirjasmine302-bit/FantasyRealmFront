@@ -1,3 +1,4 @@
+import { API_BASE } from "../modules/config.js";
 import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail } from "../modules/security.js";
 import { initBackReload } from "../modules/back-reload.js";
@@ -9,7 +10,7 @@ const RATE_KEY = "signin";
 // Appel API
 async function signInApi(email, password) {
   try {
-    const res = await fetch("http://localhost:8080/api/auth/sign-in", {
+    const res = await fetch(`${API_BASE}/api/auth/sign-in`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
@@ -29,7 +30,7 @@ async function signInApi(email, password) {
 // Récupère l'utilisateur connecté
 async function apiGetMe(token) {
   try {
-    const res = await fetch("http://localhost:8080/api/me", {
+    const res = await fetch(`${API_BASE}/api/me`, {
       headers: { "Authorization": "Bearer " + token }
     });
     if (!res.ok) return null;

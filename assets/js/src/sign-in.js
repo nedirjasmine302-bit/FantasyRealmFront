@@ -6,6 +6,7 @@ import { saveRateLimit, getRateLimitRemaining, clearRateLimit } from "../modules
 import { consumeAuthMessage } from "../modules/auth.js";
 
 const RATE_KEY = "signin";
+const RATE_MSG_KEY = "rateLimit:signin:msg";
 
 
 // Affiche un message si l'utilisateur arrive ici après expiration de sa session
@@ -158,6 +159,7 @@ function initSignInForm() {
       setTimeout(() => error.remove(), 300);
 
       clearRateLimit(RATE_KEY);
+      localStorage.removeItem(RATE_MSG_KEY);
       submitBtn.removeAttribute("disabled");
       validateForm();
     }, ms);
@@ -176,7 +178,8 @@ function initSignInForm() {
   // Restaure un blocage encore actif après un refresh / changement de page
   const remaining = getRateLimitRemaining(RATE_KEY);
   if (remaining > 0) {
-    applyBlock(remaining, "Trop de tentatives. Réessayez dans quelques instants.");
+    const savedMsg = localStorage.getItem(RATE_MSG_KEY) || "Trop de tentatives. Réessayez dans quelques instants.";
+    applyBlock(remaining, savedMsg);
   }
 
   form.addEventListener("submit", async (e) => {
@@ -194,9 +197,11 @@ function initSignInForm() {
 
     if (status === 429) {
       const waitSeconds = retryAfter ? parseInt(retryAfter) : 60;
+      const blockMsg = data.message || "Trop de tentatives. Réessayez dans quelques instants.";
 
       saveRateLimit(RATE_KEY, waitSeconds);
-      applyBlock(waitSeconds * 1000, data.message || "Trop de tentatives. Réessayez dans quelques instants.");
+      localStorage.setItem(RATE_MSG_KEY, blockMsg);
+      applyBlock(waitSeconds * 1000, blockMsg);
 
       return;
     }

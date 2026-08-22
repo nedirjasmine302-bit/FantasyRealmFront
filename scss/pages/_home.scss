@@ -576,7 +576,7 @@
 
   // Section: Hero
   .hero {
-    h2 { @include abs.text-style(1.3rem); }
+    h2 { @include abs.text-style(1.3rem, abs.$font-family-serif); }
     h1.logo { font-size: 2.2rem; }
     .lien { @include abs.text-style(0.7rem); }
 

@@ -3,8 +3,25 @@ import { initReveal } from "../modules/animations.js";
 import { sanitize, isValidEmail } from "../modules/security.js";
 import { initBackReload } from "../modules/back-reload.js";
 import { saveRateLimit, getRateLimitRemaining, clearRateLimit } from "../modules/rate-limit.js";
+import { consumeAuthMessage } from "../modules/auth.js";
 
 const RATE_KEY = "signin";
+
+
+// Affiche un message si l'utilisateur arrive ici après expiration de sa session
+function showAuthNotice() {
+  if (consumeAuthMessage() !== "expired") return;
+
+  const form = document.querySelector(".auth-form-container");
+  if (!form) return;
+
+  const notice = document.createElement("p");
+  notice.textContent = "Votre session a expiré, veuillez vous reconnecter.";
+  notice.classList.add("message", "error-message");
+  form.appendChild(notice);
+
+  setTimeout(() => notice.classList.add("show"), 10);
+}
 
 
 // Appel API
@@ -236,6 +253,7 @@ function initSignInForm() {
 // Lance le JS de la page Sign-in quand elle est chargée
 function start() {
   initReveal();
+  showAuthNotice();
   initSignInForm();
   initBackReload();
 }

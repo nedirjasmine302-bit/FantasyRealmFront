@@ -1,4 +1,5 @@
 import { API_BASE } from "../modules/config.js";
+import { isAuthenticated, clearSession, watchSessionExpiry } from "../modules/auth.js";
 
 
 // Animation du burger
@@ -38,7 +39,7 @@ function initAuthLink() {
   if (!authLink) return;
 
   function render() {
-    const isLogged = localStorage.getItem("userLogged") === "true";
+    const isLogged = isAuthenticated();
 
     if (isLogged) {
       authLink.textContent = "Déconnexion";
@@ -50,12 +51,11 @@ function initAuthLink() {
   }
 
   authLink.addEventListener("click", (e) => {
-    const isLogged = localStorage.getItem("userLogged") === "true";
+    const isLogged = isAuthenticated();
     if (!isLogged) return;
 
     e.preventDefault();
-    localStorage.removeItem("token");
-    localStorage.removeItem("userLogged");
+    clearSession();
     render();
     window.location.href = "/";
   });
@@ -69,7 +69,7 @@ function initSpaceLink() {
   const spaceItem = document.querySelector(".menu .space-item");
   if (!spaceItem) return;
 
-  const isLogged = localStorage.getItem("userLogged") === "true";
+  const isLogged = isAuthenticated();
   spaceItem.classList.toggle("d-none", !isLogged);
 }
 
@@ -95,7 +95,7 @@ async function initManagementLink() {
   if (!managementItem) return;
 
   const token = localStorage.getItem("token");
-  if (!token) return;
+  if (!isAuthenticated()) return;
 
   const me = await apiGetMe(token);
   const roles = me?.roles || [];
@@ -108,6 +108,7 @@ async function initManagementLink() {
 
 // Lance le js du Header quand elle est chargée
 function start() {
+  watchSessionExpiry();
   initBurger();
   initAuthLink();
   initSpaceLink();

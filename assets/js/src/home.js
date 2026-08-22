@@ -1,4 +1,5 @@
 import { initReveal } from "../modules/animations.js";
+import { isAuthenticated } from "../modules/auth.js";
 
 
 // Animation de l'image (Section: About)
@@ -77,7 +78,7 @@ function toggleCard(card) {
 // Envoie vers Mon Espace si connecté, sinon vers l'inscription
 function initAccountLinks() {
   const links = document.querySelectorAll(".account-link");
-  const isLogged = localStorage.getItem("userLogged") === "true";
+  const isLogged = isAuthenticated();
 
   links.forEach(link => {
     link.setAttribute("href", isLogged ? "my-space" : "sign-up");

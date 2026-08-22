@@ -494,6 +494,8 @@ function applyManagementView() {
 
   favBtn?.remove();
   wrapper?.classList.add("center");
+
+  document.querySelector(".add-comment-card")?.closest("section")?.remove();
 }
 
 

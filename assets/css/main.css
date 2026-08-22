@@ -14398,6 +14398,62 @@ input[type=password]::-ms-reveal {
     width: 17rem;
   }
 }
+.legal-page {
+  width: 90%;
+  max-width: 50rem;
+  margin: 4rem auto 5rem auto;
+  display: flex;
+  flex-direction: column;
+}
+.legal-page .legal-card {
+  background: #13172A;
+  padding: 3rem 3.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+.legal-page .section-title {
+  font-family: "Cinzel", serif;
+  font-size: 1.9rem;
+  font-weight: bold;
+  color: #B07CFF;
+  text-align: center;
+  margin: 2.6rem 0 0.9rem 0;
+}
+.legal-page .section-title:first-child {
+  margin-top: 0;
+}
+.legal-page p {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  line-height: 1.7;
+  opacity: 0.9;
+  margin: 0 0 1rem 0;
+}
+.legal-page p:last-child {
+  margin-bottom: 0;
+}
+.legal-page strong {
+  color: white;
+  opacity: 1;
+}
+
+@media (max-width: 600px) {
+  .legal-page {
+    margin: 2.5rem auto 3.5rem auto;
+  }
+  .legal-page .legal-card {
+    padding: 2rem 1.5rem;
+  }
+  .legal-page .section-title {
+    font-family: "Cinzel", serif;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #B07CFF;
+    text-align: center;
+  }
+}
 .admin-tabs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

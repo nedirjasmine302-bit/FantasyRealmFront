@@ -11878,7 +11878,7 @@ html {
     font-size: 10px;
   }
 }
-@media (max-width: 638px) {
+@media (max-width: 389px) {
   html {
     font-size: 9px;
   }

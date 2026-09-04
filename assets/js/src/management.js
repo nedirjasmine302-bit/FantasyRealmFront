@@ -602,7 +602,10 @@ async function initAccessoriesSection() {
 // Appels API
 async function apiGetComments() {
   try {
-    const res = await fetch(`${API_BASE}/api/comments`);
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${API_BASE}/api/comments`, {
+      headers: { "Authorization": "Bearer " + token }
+    });
     if (!res.ok) return [];
     const data = await res.json();
     return data.comments || [];
@@ -614,7 +617,10 @@ async function apiGetComments() {
 
 async function apiGetComment(id) {
   try {
-    const res = await fetch(`${API_BASE}/api/comments/` + id);
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${API_BASE}/api/comments/` + id, {
+      headers: { "Authorization": "Bearer " + token }
+    });
     if (!res.ok) return null;
     const data = await res.json();
     return data.comment;
@@ -869,7 +875,10 @@ async function initCommentsSection() {
 // Appels API
 async function apiGetPlayers() {
   try {
-    const res = await fetch(`${API_BASE}/api/players`);
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${API_BASE}/api/players`, {
+      headers: { "Authorization": "Bearer " + token }
+    });
     if (!res.ok) return [];
     const data = await res.json();
     return data.players || [];
@@ -1023,7 +1032,10 @@ async function initPlayersSection() {
 // Appels API
 async function apiGetEmployees() {
   try {
-    const res = await fetch(`${API_BASE}/api/employers`);
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${API_BASE}/api/employers`, {
+      headers: { "Authorization": "Bearer " + token }
+    });
     if (!res.ok) return [];
     const data = await res.json();
     return data.employers || [];

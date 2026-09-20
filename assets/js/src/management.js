@@ -83,8 +83,9 @@ async function initRoleAccess() {
   const admin = await isAdmin();
 
   if (!admin) {
-    document.querySelector('[data-tab="employees"]')?.classList.add('state-disabled');
-    document.querySelector('[data-tab="logs"]')?.classList.add('state-disabled');
+    document.querySelector('[data-tab="employees"]')?.classList.add('d-none');
+    document.querySelector('[data-tab="logs"]')?.classList.add('d-none');
+    document.querySelector('.admin-tabs')?.classList.add('tabs-employer');
   }
 
   return admin;

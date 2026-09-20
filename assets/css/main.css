@@ -14515,6 +14515,10 @@ input[type=password]::-ms-reveal {
   max-width: 75rem;
   padding: 0 3rem;
 }
+.admin-tabs.tabs-employer {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 50rem;
+}
 .admin-tabs .tab-card {
   background: #1A213D;
   padding: 0.8rem 0;

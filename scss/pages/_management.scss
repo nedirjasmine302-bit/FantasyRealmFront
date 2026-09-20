@@ -10,6 +10,11 @@
   max-width: 75rem;
   padding: 0 3rem;
 
+  &.tabs-employer {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 50rem;
+  }
+
   .tab-card {
     background: abs.$dark;
     padding: 0.8rem 0;

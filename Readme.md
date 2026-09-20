@@ -46,8 +46,8 @@ npx serve -l 3000
 
 Puis ouvrir **http://localhost:3000**.
 
-> Astuce : l'extension **Live Server** de VS Code marche aussi, mais pense à la configurer sur le
-> port **3000** (par défaut elle démarre sur 5500).
+> Astuce : tu peux aussi lancer le site avec l'extension VS Code **PHP Server**, en la configurant
+> sur le port **3000**.
 
 ## Connexion au back
 

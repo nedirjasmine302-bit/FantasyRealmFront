@@ -33,13 +33,17 @@ function toggleMenu() {
 }
 
 
-// Gestion du lien Connexion / Déconnexion
+// Gestion des liens Connexion / Inscription / Déconnexion
 function initAuthLink() {
   const authLink = document.querySelector(".menu .auth-link");
   if (!authLink) return;
 
+  const loginItem = document.querySelector(".menu .login-item");
+
   function render() {
     const isLogged = isAuthenticated();
+
+    if (loginItem) loginItem.classList.toggle("d-none", isLogged);
 
     if (isLogged) {
       authLink.textContent = "Déconnexion";

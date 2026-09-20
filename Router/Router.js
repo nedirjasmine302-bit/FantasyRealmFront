@@ -25,13 +25,13 @@ const LoadContentPage = async () => {
   const path = window.location.pathname;
   const actualRoute = getRouteByUrl(path);
 
-  const html = await fetch(actualRoute.pathHtml).then((data) => data.text());
+  const html = await fetch(actualRoute.pathHtml + "?v=" + Date.now()).then((data) => data.text());
   document.getElementById("main-page").innerHTML = html;
 
   if (actualRoute.pathJS != "") {
     var scriptTag = document.createElement("script");
     scriptTag.type = "module";
-    scriptTag.src = actualRoute.pathJS;
+    scriptTag.src = actualRoute.pathJS + "?v=" + Date.now();
     document.body.appendChild(scriptTag);
   }
 

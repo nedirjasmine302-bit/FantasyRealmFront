@@ -1259,7 +1259,7 @@ function renderLogCard(log) {
       <div class="card-content">
         <h3 class="card-name">${log.userTypeLabel}</h3>
         <div class="log-type">
-          <span class="label">Type d'utilisateur :</span>
+          <span class="label">Type d'action :</span>
           <div class="log-value">
             <span class="status status-type-accessory log-action">${log.label}</span>
           </div>

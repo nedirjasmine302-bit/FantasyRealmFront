@@ -167,13 +167,13 @@ function initEmployerSignUpForm() {
 
       clearRateLimit(RATE_KEY);
       submitBtn.removeAttribute("disabled");
-      validateForm();
+      validateForm().catch(() => {});
     }, ms);
   }
 
   function markTouched(field) {
     touched[field] = true;
-    validateForm();
+    validateForm().catch(() => {});
   }
 
   emailInput.addEventListener("input", () => markTouched("email"));
@@ -181,7 +181,7 @@ function initEmployerSignUpForm() {
   passwordInput.addEventListener("input", () => markTouched("password"));
   password2Input.addEventListener("input", () => markTouched("password2"));
 
-  validateForm();
+  validateForm().catch(() => {});
 
   const remaining = getRateLimitRemaining(RATE_KEY);
   if (remaining > 0) {

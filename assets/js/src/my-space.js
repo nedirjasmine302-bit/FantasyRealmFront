@@ -249,10 +249,10 @@ export function toggleFavoriteForTest(fav, name) {
 
 
 // Lance le js de la page My-space quand elle est chargée
-function start() {
+async function start() {
   initReveal();
   initConfirmModal();
-  initMySpace();
+  await initMySpace();
 }
 
-if (typeof window !== "undefined") start();
+if (typeof window !== "undefined") start().catch(() => {});

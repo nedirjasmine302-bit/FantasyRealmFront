@@ -209,11 +209,11 @@ export function filterPseudosForTest(list, query) {
 
 
 // Lance le js de la page Character quand elle est chargée
-function start() {
+async function start() {
   initReveal();
   initCustomSelects();
   initDetailsOrigin("character");
-  initCharacterPage();
+  await initCharacterPage();
 }
 
-if (typeof window !== "undefined") start();
+if (typeof window !== "undefined") start().catch(() => {});

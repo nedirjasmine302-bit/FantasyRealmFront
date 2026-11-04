@@ -74,6 +74,20 @@
     margin: 0rem;
   }
 
+  .comment-login-invite {
+    @include abs.text-style(0.95rem, abs.$font-family-sans-serif, white, left);
+    margin: 0 0 1rem;
+  }
+
+  .add-comment-card.comment-locked {
+    .field,
+    .rating-stars,
+    .comment-bottom {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+
 
 // Section: Player Reviews
   .character-comments {

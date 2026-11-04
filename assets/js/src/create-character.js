@@ -420,7 +420,7 @@ async function start() {
   await buildAccessoryOptions();
   initCustomSelects();
   initBackReload();
-  initCharacterForm();
+  await initCharacterForm();
 }
 
-if (typeof window !== "undefined") start();
+if (typeof window !== "undefined") start().catch(() => {});

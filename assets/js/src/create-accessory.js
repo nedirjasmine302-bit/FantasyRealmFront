@@ -352,10 +352,10 @@ export function validateAccessoryForTest({ name, description, image, selects }) 
 
 
 // Lance le JS de la page Create-accessory quand elle est chargée
-function start() {
+async function start() {
   initReveal();
   initImageUpload();
-  initCreateAccessory();
+  await initCreateAccessory();
 }
 
-if (typeof window !== "undefined") start();
+if (typeof window !== "undefined") start().catch(() => {});

@@ -111,12 +111,12 @@ async function initManagementLink() {
 
 
 // Lance le js du Header quand elle est chargée
-function start() {
+async function start() {
   watchSessionExpiry();
   initBurger();
   initAuthLink();
   initSpaceLink();
-  initManagementLink();
+  await initManagementLink();
 }
 
-if (typeof window !== "undefined") start();
+if (typeof window !== "undefined") start().catch(() => {});

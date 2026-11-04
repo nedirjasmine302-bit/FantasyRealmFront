@@ -171,7 +171,7 @@ async function start() {
   await buildTypeOptions();
   await buildRarityOptions();
   initCustomSelects();
-  initAccessoryDetails();
+  await initAccessoryDetails();
 }
 
-if (typeof window !== "undefined") start();
+if (typeof window !== "undefined") start().catch(() => {});

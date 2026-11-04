@@ -167,13 +167,13 @@ function initSignUpForm() {
 
       clearRateLimit(RATE_KEY);
       submitBtn.removeAttribute("disabled");
-      validateForm();
+      validateForm().catch(() => {});
     }, ms);
   }
 
   function markTouched(field) {
     touched[field] = true;
-    validateForm();
+    validateForm().catch(() => {});
   }
 
   emailInput.addEventListener("input", () => markTouched("email"));
@@ -181,7 +181,7 @@ function initSignUpForm() {
   passwordInput.addEventListener("input", () => markTouched("password"));
   password2Input.addEventListener("input", () => markTouched("password2"));
 
-  validateForm();
+  validateForm().catch(() => {});
 
   // Restaure un blocage encore actif après un refresh / changement de page
   const remaining = getRateLimitRemaining(RATE_KEY);

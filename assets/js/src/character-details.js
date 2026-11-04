@@ -327,6 +327,26 @@ function updateFavoriteButton(isLogged) {
 }
 
 
+// Affiche une invitation à se connecter si le visiteur n'est pas connecté
+function updateCommentSection(isLogged) {
+  if (isLogged) return;
+
+  const card = document.querySelector(".add-comment-card");
+  if (!card) return;
+
+  const textarea = card.querySelector("#userComment");
+
+  const invite = document.createElement("p");
+  invite.classList.add("comment-login-invite");
+  invite.textContent = "Vous devez être connecté pour laisser un avis.";
+  card.insertAdjacentElement("afterbegin", invite);
+
+  card.classList.add("comment-locked");
+  textarea?.setAttribute("readonly", true);
+  textarea?.setAttribute("disabled", true);
+}
+
+
 // Sécurise, valide et envoie le commentaire
 function initCommentSecurity(characterId) {
   const textarea = document.getElementById("userComment");
@@ -531,8 +551,9 @@ async function initCharacterDetails() {
 
   initAddCommentSection();
   updateFavoriteButton(isLoggedIn());
+  updateCommentSection(isLoggedIn());
   initCommentSecurity(id);
-  initFavoriteToggle(id);
+  await initFavoriteToggle(id);
 }
 
 
@@ -555,7 +576,7 @@ async function start() {
   initBackReload();
   initBackButton();
   applyManagementView();
-  initCharacterDetails();
+  await initCharacterDetails();
 }
 
-if (typeof window !== "undefined") start();
+if (typeof window !== "undefined") start().catch(() => {});

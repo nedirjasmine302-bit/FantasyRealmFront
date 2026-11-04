@@ -1321,16 +1321,16 @@ async function start() {
   initDetailsOrigin("management");
   initRejectModal();
   initConfirmModal();
-  initCharactersSection();
-  initAccessoriesSection();
-  initCommentsSection();
-  initPlayersSection();
+  initCharactersSection().catch(() => {});
+  initAccessoriesSection().catch(() => {});
+  initCommentsSection().catch(() => {});
+  initPlayersSection().catch(() => {});
 
   // Les sections Employés et Logs sont réservées aux administrateurs
   if (await initRoleAccess()) {
-    initEmployeesSection();
-    initLogsSection();
+    initEmployeesSection().catch(() => {});
+    initLogsSection().catch(() => {});
   }
 }
 
-if (typeof window !== "undefined") start();
+if (typeof window !== "undefined") start().catch(() => {});
